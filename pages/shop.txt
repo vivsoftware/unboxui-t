@@ -1,0 +1,187 @@
+
+import Head from 'next/head';
+import React, { useEffect, useState } from 'react';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { CommonPath } from '../Components/Constant';
+import BreadCrumb from '../Components/Element/BreadCrumb';
+import FlowerSubscribe from '../Components/FlowerDemo/FlowerSubscribe';
+import ShopLeftSidebarContain from './layout/Shop';
+import Layout4 from '../Layout/Layout4';
+import CanvasOffset from '../Components/Shop/ShopCanvasFilter/CanvasOffset';
+import Enquire from './layout/Enquire';
+import { fetchAPI } from '../Utils/api';
+import { useRouter } from 'next/router';
+
+const ShopLeftSidebar = (props) => {
+  const [productData, setProductData] = useState([]);
+  const [show, setsHOW] = useState([false]);
+  const [currentPages, setCurrentPage] = useState(0);
+  const [totalproducts, settotalproducts] = useState();
+  const [lastpage, setlastpage] = useState();
+
+  useEffect(() => {
+    setsHOW(false)
+    setProductData(props.alltopic.data);
+    fetchAPI(`/products`, {
+      populate: "*",
+      pagination: {
+        start: 0,
+        limit: -1,
+      },
+    }).then((res) => {
+      settotalproducts(res.data.length);
+      setlastpage(Math.floor(res.data.length / 20))
+
+    });
+  }, []);
+
+
+
+
+
+  const router = useRouter();
+  const handleLoadMore = async () => {
+    // const nextPage = 0++;
+    const nextPage = currentPages + 1;
+    router.push(`/shop?page=${nextPage}`);
+    // Redirect to the same page with a query parameter to specify the starting point
+    // window.location.href = `/shop?page=${nextPage}`;
+    setCurrentPage(nextPage)
+  };
+  const handleLoadless = async () => {
+    // const nextPage = 0++;
+
+    if (currentPages === Math.floor(totalproducts / 20)) {
+      const nextPage = currentPages - 5;
+      router.push(`/shop?page=${nextPage}`);
+      setCurrentPage(nextPage)
+    } else {
+      const nextPage = currentPages - 1;
+      router.push(`/shop?page=${nextPage}`);
+      setCurrentPage(nextPage)
+    }
+  };
+
+  const pageOne = async () => {
+    const nextPage = 0;
+    router.push(`/shop?page=${nextPage}`);
+    setCurrentPage(nextPage)
+  };
+
+  const pageTwo = async () => {
+    const nextPage = currentPages + 1;
+    router.push(`/shop?page=${nextPage}`);
+    setCurrentPage(nextPage)
+
+  };
+  const pageThree = async () => {
+    const nextPage = currentPages + 1;
+    router.push(`/shop?page=${nextPage}`);
+    setCurrentPage(nextPage)
+
+  };
+
+  const pageLast = async () => {
+    // const nextPage = 0++;
+    const nextPage = parseInt(totalproducts / 20);
+    router.push(`/shop?page=${nextPage}`);
+    // setCurrentPage(nextPage)
+    // if(currentPages=== lastpage){
+      setCurrentPage(`${lastpage}`-3)
+    // }
+  };
+
+  console.log("lastpage", lastpage)
+  return (
+    <Layout4>
+      <Head>
+        <title>Shop</title>
+        <meta name='viewport' content='width=device-width, initial-scale=1' />
+        <meta name="description" content="Shop automation products and solutions with high performance including grippers,industrial & mobile robots, cobots, dispensers and cameras at best price." />
+        <link rel='icon' type='image/x-icon' href={`${CommonPath}/favicon/2.png`} />
+      </Head>
+      <BreadCrumb parent={'All Products'} title={'All Products'} />
+      <ShopLeftSidebarContain productData={productData} products={props.alltopic.data} show={show} />
+      <div className="pagination-container">
+        <button
+          onClick={handleLoadless}
+          className={`prev_next_btn ${currentPages === 0 ? 'disabled-button' : ''}`}
+          disabled={currentPages === 0}
+        >
+          Prev
+        </button>
+        {currentPages === 0 ? (
+          <div className="Current-page-number-container" onClick={pageOne}>
+            <p style={{ fontSize: '20px', marginTop: '10px' }}>{1} </p>
+          </div>
+        ) : (
+          <div className="page-number-container" onClick={pageOne}>
+            <p style={{ fontSize: '20px', marginTop: '10px' }}>{1} </p>
+          </div>
+        )}
+        {currentPages > 1 ? (
+          <p>.....</p>
+
+        ) : (
+          <p></p>
+        )}
+        {currentPages === 0 ? (
+          <div className="page-number-container" onClick={pageTwo}>
+            <p style={{ fontSize: '20px', marginTop: '10px' }}>{currentPages + 2} </p>
+          </div>
+        ) : (
+          <div className="Current-page-number-container" onClick={pageTwo}>
+            <p style={{ fontSize: '20px', marginTop: '10px' }}>{currentPages + 1} </p>
+          </div>
+        )}
+        {currentPages === 0 ? (
+          <div className="page-number-container" onClick={pageThree}>
+            <p style={{ fontSize: '20px', marginTop: '10px' }}>{currentPages + 3} </p>
+          </div>
+        ) : (
+          <div className="page-number-container" onClick={pageThree}>
+            <p style={{ fontSize: '20px', marginTop: '10px' }}>{currentPages + 2} </p>
+          </div>
+        )}
+        <p>.....</p>
+        <div className="page-number-container" onClick={pageLast}>
+          <p style={{ fontSize: '20px', marginTop: '10px' }}>{parseInt(totalproducts / 20)}</p>
+        </div>
+        <button onClick={handleLoadMore}
+          className={`prev_next_btn ${currentPages >= parseInt(totalproducts / 20) ? 'disabled-button' : ''}`}
+          disabled={currentPages >= parseInt(totalproducts / 20)}
+        >Next</button>
+      </div>
+     
+      <Enquire />
+      <FlowerSubscribe />
+      <CanvasOffset productData={productData} products={props.alltopic.data} />
+    </Layout4>
+  );
+}
+export async function getServerSideProps(context) {
+  const { locale, query } = context;
+  const page = parseInt(query.page) || 0; // Get the page from the query parameters
+  // Calculate the start index based on the page and limit
+  const start = page * 20;
+  // Fetch data from the API endpoint
+  const data = await fetchAPI('/products', {
+    populate: '*',
+    pagination: {
+      start,
+      limit: 20,
+    },
+  });
+  return {
+    props: {
+      alltopic: data,
+      ...(await serverSideTranslations(locale, ['common'])),
+    },
+  };
+}
+export default ShopLeftSidebar;
+
+
+
+code
+

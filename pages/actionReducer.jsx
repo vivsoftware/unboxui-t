@@ -1,0 +1,26 @@
+import { FETCH_USERS_SUCCESS, FETCH_USERS_FAILURE } from "./actionType";
+
+
+const initialState = {
+    userDe: [],
+    error: null,
+};
+
+const actionReducer = (state = initialState, action) => {
+    switch (action.type) {
+        case FETCH_USERS_SUCCESS:
+            return {
+             ...state,
+                userDe: action.payload,
+            };
+        case FETCH_USERS_FAILURE:
+            return {
+             ...state,
+                error: action.payload,
+            };
+        default:
+            return state;
+    }
+};
+
+export default actionReducer;

@@ -1,0 +1,10 @@
+{
+    "data": {
+        "welcome": "Bienvenue",
+        "HOME": "domicile",
+        "SHOP": "magasin",
+        "PRODUCT": "producto",
+        "PAGES": "pages",
+        "BLOG": "blog"
+    }
+}

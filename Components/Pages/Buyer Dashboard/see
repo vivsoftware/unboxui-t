@@ -1,0 +1,560 @@
+import React, { Fragment, useEffect, useState } from 'react';
+import { Col, Row } from 'reactstrap'
+import DashboardLoader from '../../Element/DashboardLoader';
+
+const Dashboard = (rfq) => {
+
+   
+console.log("RFQ", rfq.rfq)
+const formatDate = (dateString) => {
+    const originalDate = new Date(dateString);
+    const day = originalDate.getDate();
+    const month = originalDate.getMonth() + 1; // Months are zero-indexed, so add 1
+    const year = originalDate.getFullYear() % 100; // Getting last two digits of the year
+  
+    // Padding single digits with a leading zero
+    const formattedDay = day < 10 ? `0${day}` : day;
+    const formattedMonth = month < 10 ? `0${month}` : month;
+    const formattedYear = year < 10 ? `0${year}` : year;
+  
+    return `${formattedDay}-${formattedMonth}-${formattedYear}`;
+  };
+  if(!rfq) {
+    return (
+        <>
+            <div className='container'>
+                <div className='row mt-3'>
+                    <h4>UserName</h4>
+                    <p>Hello , Welcome to dashboard</p>
+                </div>
+                <div className='d-none d-xl-block d-md-block d-sm-none'>
+                    <div className='row mt-3'>
+                        <div className='col-4 '>
+                            <div className='admin-card'>
+                                <div className='row'>
+                                    <div className='col-8'>
+                                        <h5>RFQs</h5>
+                                        <DashboardLoader/>
+                                    </div>
+                                    <div className='col-4 text-end'>
+                                        <img src='/RFQ icon.svg' height={20} width={20} />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className='col-4 '>
+                            <div className='admin-card'>
+                                <div className='row'>
+                                    <div className='col-8'>
+                                        <h5>Tenders</h5>
+                                        <DashboardLoader/>
+                                    </div>
+                                    <div className='col-4 text-end'>
+                                        <img src='/tender.svg' height={20} width={20} />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className='col-4 '>
+                            <div className='admin-card'>
+                                <div className='row'>
+                                    <div className='col-8'>
+                                        <h5>Purchase</h5>
+                                        <DashboardLoader/>
+                                    </div>
+                                    <div className='col-4 text-end'>
+                                        <img src='/purchase.svg' height={20} width={20} />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className='d-block d-xl-none d-md-none d-sm-block'>
+                    <div className='row mt-3'>
+                        <div className='col-4 '>
+                            <div className='admin-card'>
+                                <div className='row'>
+                                    <div className='col-8'>
+                                        <h5>RFQs</h5>
+                                       <DashboardLoader/>
+                                    </div>
+                                    <div className='col-4 text-end'>
+                                        <img src='/RFQ icon.svg' height={20} width={20} />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className='col-4 '>
+                            <div className='admin-card'>
+                                <div className='row'>
+                                    <div className='col-8'>
+                                        <h5>Sellers</h5>
+                                        <DashboardLoader/>
+                                    </div>
+                                    <div className='col-4 text-end'>
+                                        <img src='/user.svg' height={20} width={20} />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className='col-4 '>
+                            <div className='admin-card'>
+                                <div className='row'>
+                                    <div className='col-8'>
+                                        <h5>Service Providers</h5>
+                                        <DashboardLoader/>
+                                    </div>
+                                    <div className='col-4 text-end'>
+                                        <img src='/SI icon.svg' height={20} width={20} />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className='col-4 '>
+                            <div className='admin-card'>
+                                <div className='row'>
+                                    <div className='col-8'>
+                                        <h5>Buyers</h5>
+                                        <DashboardLoader/>
+                                    </div>
+                                    <div className='col-4 text-end'>
+                                        <img src='/user.svg' height={20} width={20} />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className='col-4 '>
+                            <div className='admin-card'>
+                                <div className='row'>
+                                    <div className='col-8'>
+                                        <h5>Tenders</h5>
+                                        <DashboardLoader/>
+                                    </div>
+                                    <div className='col-4 text-end'>
+                                        <img src='/tender.svg' height={20} width={20} />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className='col-4 '>
+                            <div className='admin-card'>
+                                <div className='row'>
+                                    <div className='col-8'>
+                                        <h5>Purchase</h5>
+                                        <DashboardLoader/>
+                                    </div>
+                                    <div className='col-4 text-end'>
+                                        <img src='/purchase.svg' height={20} width={20} />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {/* /////Info Table//// */}
+                <div className='row mt-3'>
+                    <div className='col-lg-4 col-md-6 col-sm-6 mt-3'>
+                        <div className='info-table'>
+                            <h3 className='text-center mb-1'>RFQ Details</h3>
+                            <div className='row ms-1'>
+                                <table>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>RFQ Id</th>
+                                        <th>PName</th>
+                                    </tr>
+                                   
+                                </table>
+                                <div style={{display:'flex', justifyContent:'center'}}>
+                                    <DashboardLoader/>
+                                </div>
+                            </div>
+                            <div className='row'>
+                                <div className='col-12 text-end'>
+                                    <button className='btn' style={{ backgroundColor: 'white', color: "#FF8400", height: '20px', padding: '0' }} >View All</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className='col-lg-4 col-md-6 col-sm-6 mt-3'>
+                        <div className='info-table'>
+                            <h3 className='text-center mb-1'>Tender Details</h3>
+                            <div className='row ms-1'>
+                                <table>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>TId</th>
+                                        <th>PName</th>
+                                    </tr>
+                                    
+                                </table>
+                                <div style={{display:'flex', justifyContent:'center'}}>
+                                    <DashboardLoader/>
+                                </div>
+                            </div>
+                            <div className='row'>
+                                <div className='col-12 text-end'>
+                                    <button className='btn' style={{ backgroundColor: 'white', color: "#FF8400", height: '20px', padding: '0' }} >View All</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className='col-lg-4 col-md-6 col-sm-6 mt-3'>
+                        <div className='info-table'>
+                            <h3 className='text-center mb-1'>Finance Details</h3>
+                            <div className='row ms-1'>
+                                 <table>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>SId</th>
+                                        <th>SName</th>
+                                    </tr>
+                                    
+                                </table> 
+                                <div style={{display:'flex', justifyContent:'center'}}>
+                                    <DashboardLoader/>
+                                </div>
+                            </div>
+                            <div className='row'>
+                                <div className='col-12 text-end'>
+                                    <button className='btn' style={{ backgroundColor: 'white', color: "#FF8400", height: '20px', padding: '0' }} >View All</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div >
+                <div className='row mt-3'>
+                    <div className='col-lg-4 col-md-6 col-sm-6 mt-3'>
+                        <div className='info-table'>
+                            <h3 className='text-center mb-1'>Purchase Details</h3>
+                            <div className='row ms-1'>
+                                <table>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>PId</th>
+                                        <th>PName</th>
+                                    </tr>
+                                    
+                                </table>
+                                <div style={{display:'flex', justifyContent:'center'}}>
+                                    <DashboardLoader/>
+                                </div>
+                            </div>
+                            <div className='row'>
+                                <div className='col-12 text-end'>
+                                    <button className='btn' style={{ backgroundColor: 'white', color: "#FF8400", height: '20px', padding: '0' }} >View All</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div >
+            </div>
+        </>
+    )
+  }
+
+    return (
+        <>
+            <div className='container'>
+                <div className='row mt-3'>
+                    <h4>UserName</h4>
+                    <p>Hello, Welcome to dashboard</p>
+                </div>
+                <div className='d-none d-xl-block d-md-block d-sm-none'>
+                    <div className='row mt-3'>
+                        <div className='col-4 '>
+                            <div className='admin-card'>
+                                <div className='row'>
+                                    <div className='col-8'>
+                                        <h5>RFQs</h5>
+                                        <p style={{ fontSize: '50px', marginTop: '38px', color: '#015867' }}>{rfq?.rfq?.length}</p>
+                                    </div>
+                                    <div className='col-4 text-end'>
+                                        <img src='/RFQ icon.svg' height={20} width={20} />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className='col-4 '>
+                            <div className='admin-card'>
+                                <div className='row'>
+                                    <div className='col-8'>
+                                        <h5>Tenders</h5>
+                                        <p style={{ fontSize: '50px', marginTop: '38px', color: '#015867' }}>113</p>
+                                    </div>
+                                    <div className='col-4 text-end'>
+                                        <img src='/tender.svg' height={20} width={20} />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className='col-4 '>
+                            <div className='admin-card'>
+                                <div className='row'>
+                                    <div className='col-8'>
+                                        <h5>Purchase</h5>
+                                        <p style={{ fontSize: '50px', marginTop: '38px', color: '#015867' }}>11</p>
+                                    </div>
+                                    <div className='col-4 text-end'>
+                                        <img src='/purchase.svg' height={20} width={20} />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className='d-block d-xl-none d-md-none d-sm-block'>
+                    <div className='row mt-3'>
+                        <div className='col-4 '>
+                            <div className='admin-card'>
+                                <div className='row'>
+                                    <div className='col-8'>
+                                        <h5>RFQs</h5>
+                                        <p style={{ fontSize: '50px', marginTop: '38px', color: '#015867' }}>83</p>
+                                    </div>
+                                    <div className='col-4 text-end'>
+                                        <img src='/RFQ icon.svg' height={20} width={20} />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className='col-4 '>
+                            <div className='admin-card'>
+                                <div className='row'>
+                                    <div className='col-8'>
+                                        <h5>Sellers</h5>
+                                        {/* <p style={{ fontSize: '50px', marginTop: '38px', color: '#015867' }}>{getSellerLength()}</p> */}
+                                    </div>
+                                    <div className='col-4 text-end'>
+                                        <img src='/user.svg' height={20} width={20} />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className='col-4 '>
+                            <div className='admin-card'>
+                                <div className='row'>
+                                    <div className='col-8'>
+                                        <h5>Service Providers</h5>
+                                        {/* <p style={{ fontSize: '50px', marginTop: '20px', color: '#015867' }}>{getServiceProviderLength()}</p> */}
+                                    </div>
+                                    <div className='col-4 text-end'>
+                                        <img src='/SI icon.svg' height={20} width={20} />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className='col-4 '>
+                            <div className='admin-card'>
+                                <div className='row'>
+                                    <div className='col-8'>
+                                        <h5>Buyers</h5>
+                                        {/* <p style={{ fontSize: '50px', marginTop: '38px', color: '#015867' }}>{getBuyerLength()}</p> */}
+                                    </div>
+                                    <div className='col-4 text-end'>
+                                        <img src='/user.svg' height={20} width={20} />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className='col-4 '>
+                            <div className='admin-card'>
+                                <div className='row'>
+                                    <div className='col-8'>
+                                        <h5>Tenders</h5>
+                                        <p style={{ fontSize: '50px', marginTop: '38px', color: '#015867' }}>113</p>
+                                    </div>
+                                    <div className='col-4 text-end'>
+                                        <img src='/tender.svg' height={20} width={20} />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className='col-4 '>
+                            <div className='admin-card'>
+                                <div className='row'>
+                                    <div className='col-8'>
+                                        <h5>Purchase</h5>
+                                        <p style={{ fontSize: '50px', marginTop: '38px', color: '#015867' }}>11</p>
+                                    </div>
+                                    <div className='col-4 text-end'>
+                                        <img src='/purchase.svg' height={20} width={20} />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {/* /////Info Table//// */}
+                <div className='row mt-3'>
+                    <div className='col-lg-4 col-md-6 col-sm-6 mt-3'>
+                        <div className='info-table'>
+                            <h3 className='text-center mb-1'>RFQ Details</h3>
+                            <div className='row ms-1'>
+                                <table>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>RFQ Id</th>
+                                        <th>PName</th>
+                                    </tr>
+                                    {rfq.rfq && rfq.rfq.map((elem, index) =>(
+                                            <tr key={index}>
+                                                <td>{formatDate(elem.createdAt)}</td>
+                                                <td>{elem.id}</td>
+                                                <td>{elem.productName}</td>
+                                            </tr>
+                                        ))}
+
+                                </table>
+                            </div>
+                            <div className='row'>
+                                <div className='col-12 text-end'>
+                                    <button className='btn' style={{ backgroundColor: 'white', color: "#FF8400", height: '20px', padding: '0' }} >View All</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className='col-lg-4 col-md-6 col-sm-6 mt-3'>
+                        <div className='info-table'>
+                            <h3 className='text-center mb-1'>Tender Details</h3>
+                            <div className='row ms-1'>
+                                <table>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>TId</th>
+                                        <th>PName</th>
+                                    </tr>
+                                    <tr>
+                                        <td>2/11/23</td>
+                                        <td>1</td>
+                                        <td>Machine Vision</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2/11/23</td>
+                                        <td>1</td>
+                                        <td>Machine Vision</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2/11/23</td>
+                                        <td>1</td>
+                                        <td>Machine Vision</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2/11/23</td>
+                                        <td>1</td>
+                                        <td>Machine Vision</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2/11/23</td>
+                                        <td>1</td>
+                                        <td>Machine Vision</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div className='row'>
+                                <div className='col-12 text-end'>
+                                    <button className='btn' style={{ backgroundColor: 'white', color: "#FF8400", height: '20px', padding: '0' }} >View All</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className='col-lg-4 col-md-6 col-sm-6 mt-3'>
+                        <div className='info-table'>
+                            <h3 className='text-center mb-1'>Finance Details</h3>
+                            <div className='row ms-1'>
+                                {/* <table>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>SId</th>
+                                        <th>SName</th>
+                                    </tr>
+                                    <tr>
+                                        <td>2/11/23</td>
+                                        <td>1</td>
+                                        <td>Pooja Sharma</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2/11/23</td>
+                                        <td>1</td>
+                                        <td>Pooja Sharma</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2/11/23</td>
+                                        <td>1</td>
+                                        <td>Pooja Sharma</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2/11/23</td>
+                                        <td>1</td>
+                                        <td>Pooja Sharma</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2/11/23</td>
+                                        <td>1</td>
+                                        <td>Pooja Sharma</td>
+                                    </tr>
+                                </table> */}
+                            </div>
+                            <div className='row'>
+                                <div className='col-12 text-end'>
+                                    <button className='btn' style={{ backgroundColor: 'white', color: "#FF8400", height: '20px', padding: '0' }} >View All</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div >
+                <div className='row mt-3'>
+                    <div className='col-lg-4 col-md-6 col-sm-6 mt-3'>
+                        <div className='info-table'>
+                            <h3 className='text-center mb-1'>Purchase Details</h3>
+                            <div className='row ms-1'>
+                                <table>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>PId</th>
+                                        <th>PName</th>
+                                    </tr>
+                                    <tr>
+                                        <td>2/11/23</td>
+                                        <td>1</td>
+                                        <td>Pooja Sharma</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2/11/23</td>
+                                        <td>1</td>
+                                        <td>Pooja Sharma</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2/11/23</td>
+                                        <td>1</td>
+                                        <td>Pooja Sharma</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2/11/23</td>
+                                        <td>1</td>
+                                        <td>Pooja Sharma</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2/11/23</td>
+                                        <td>1</td>
+                                        <td>Pooja Sharma</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div className='row'>
+                                <div className='col-12 text-end'>
+                                    <button className='btn' style={{ backgroundColor: 'white', color: "#FF8400", height: '20px', padding: '0' }} >View All</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div >
+            </div>
+        </>
+    )
+}
+
+export default Dashboard

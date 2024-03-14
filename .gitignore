@@ -1,0 +1,17 @@
+#next
+.next/
+.vscode/
+public/sw.js.map
+# Sentry
+.sentryclirc
+
+*.js.map
+
+# Sentry
+# next.config.original.js
+node_modules
+public/workbox-5d40c1ff.js
+public/sw.js.map
+public/sw.js
+
+.vercel
