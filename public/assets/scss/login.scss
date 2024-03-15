@@ -2667,8 +2667,16 @@ textarea {
 }
 
 .back-btn {
-    width: 60px;
+    width: 80px;
+
 }
+.unsend-btn {
+    width: 80px ;
+    height: 40px;
+    background-color: rgb(255, 255, 255);
+
+}
+
 
 .back-btn:hover {
     background-color: white;
