@@ -23,11 +23,14 @@ const BSMContain = ({ Tender, Rfq }) => {
   const [showUsers, setShowUsers] = useState(true);
   const [showSearchCard, setShowSearchCard] = useState(false);
   const searchRef = useRef(null);
-  const [body1, setbody1] = useState(false);
-  const [body2, setbody2] = useState(false);
-  const [body3, setbody3] = useState(false);
-  const [body4, setbody4] = useState(false);
-  const [body5, setbody5] = useState(false);
+  const [body1, setbody1] = useState(null);
+  const [body2, setbody2] = useState(null);
+  const [body3, setbody3] = useState(null);
+  const [body4, setbody4] = useState(null);
+  const [body5, setbody5] = useState(null);
+  const [subject, setsubject] = useState(false);
+  const [mailId, setmailId] = useState(false);
+
   const [selectTender, setselectTender] = useState(false);
   const [selectTenderdata, setselectTenderdata] = useState(false);
   const [selectUser, setselectUser] = useState(false);
@@ -207,31 +210,74 @@ const BSMContain = ({ Tender, Rfq }) => {
 
 
   //////////////////////////////////////////////////////////////send email to user//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  
-  const SelecTender= (elem) => {
+
+  const SelecTender = (elem) => {
     setselectTender(true);
     setselectTenderdata(elem);
-  
+
   }
-  const SelecUser= (elem) => {
+  const UnSelecTender = () => {
+    setselectTender(false);
+    setselectTenderdata(null);
+  }
+  const SelecUser = (elem) => {
     setselectUser(true);
     setselectUserdata(elem);
-  
+
   }
-  
-  
+  const UnSelecUser = () => {
+    setselectUser(false);
+    setselectUserdata(null)
+
+  }
+  const sendmail = async (e) => {
+    const formdata = new FormData();
+    // formdata.append("fileName", "file");
+    formdata.append('to', `${selectUserdata.email}`);
+
+    // formdata.append('files', SelectedFile);
+    // formdata.fileName('fileName' , fileName);
+    try {
+      const response = await axios.post(`${spring_boot_url}api/mails/send/${mailId}`, formdata, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      console.log('File uploaded successfully:', response.data);
+      toast.success(`Email sende to ${selectUserdata.email}`, {
+        position: toast.POSITION.BOTTOM_CENTER,
+      });
+
+      // Assuming handleReload and toggle are functions defined in your component
+      handleReload();
+      toggle();
+    } catch (error) {
+      // setDocError(true)
+      // console.error('Error uploading file:', error);
+      // toast.error('Error uploading file. Please try again.', {
+      //   position: toast.POSITION.BOTTOM_CENTER,
+      // });
+    };
+  }
+
+
   const savaeEmail = async (e) => {
+    setbody1("Hi.... " + `${selectUserdata.firstName}`, +" a new tender has been received. Please find details and for more information check your respective dashboard.");
+    setbody2(`Tender Name ${selectTenderdata.purpose}`)
+    setbody3(`Tender delivery date ${selectTenderdata.deliveryDate}`)
+    setbody4(`this mail is send by unboxindustry.com Admin`)
+    setbody5(`please loging Yourself to unboxindusty.com`)
     toast(`Wait...`, {
       position: toast.POSITION.BOTTOM_CENTER,
     });
     const formdata = new FormData();
     // formdata.append("fileName", "file");
-    formdata.append('body1', '1');
-    formdata.append('body2', '2');
-    formdata.append('body3', '3');
-    formdata.append('body4', '4');
-    formdata.append('body5', '5');
-    formdata.append('subject', 'fffff');
+    formdata.append('body1', body1);
+    formdata.append('body2', body2);
+    formdata.append('body3', body3);
+    formdata.append('body4', body4);
+    formdata.append('body5', body5);
+    formdata.append('subject', 'Tender ');
     // formdata.append('files', SelectedFile);
     // formdata.fileName('fileName' , fileName);
     try {
@@ -241,25 +287,25 @@ const BSMContain = ({ Tender, Rfq }) => {
         },
       });
       console.log('File uploaded successfully:', response.data);
-      toast.success(`Thanks for your request, we will get back to you`, {
+      setmailId(response.data.id)
+      toast.success(`Sending...........`, {
         position: toast.POSITION.BOTTOM_CENTER,
       });
-
+      sendmail()
       // Assuming handleReload and toggle are functions defined in your component
       handleReload();
       toggle();
     } catch (error) {
       // setDocError(true)
       console.error('Error uploading file:', error);
-      toast.error('Error uploading file. Please try again.', {
-        position: toast.POSITION.BOTTOM_CENTER,
-      });
+      // toast.error('Error uploading file. Please try again.', {
+      //   position: toast.POSITION.BOTTOM_CENTER,
+      // });
     };
   }
-  
-  
-  console.log("bsmmmmmmmmmmm", selectUserdata)
 
+  console.log("tenderbms", selectTenderdata)
+  console.log("userbms", selectUserdata)
 
   return (
     <>
@@ -292,22 +338,6 @@ const BSMContain = ({ Tender, Rfq }) => {
                   </div>
                 )}
 
-
-
-
-
-                <button onClick={savaeEmail}>testmaillllll..</button>
-
-
-
-
-
-
-
-
-
-
-
                 <div className='row mt-2  SI-table'>
 
                   {Array.isArray(Tender) && Tender.map((elem, index) =>
@@ -315,7 +345,13 @@ const BSMContain = ({ Tender, Rfq }) => {
                       <div className='container'>
                         <div className='row'>
                           <div className='col-10'>
-                            <input type='checkbox' onChange={() => SelecTender(elem)}/>
+                            <input type='checkbox' onChange={(event) => {
+                              if (event.target.checked) {
+                                SelecTender(elem);
+                              } else {
+                                UnSelecTender();
+                              }
+                            }} />
                             <h5>TName : {elem.purpose}</h5>
                             <h5>Email Id : {elem.email}</h5>
                             <h5>Phone No. : {elem.phoneNumber}</h5>
@@ -381,9 +417,7 @@ const BSMContain = ({ Tender, Rfq }) => {
                         <div className='custom-dropdown-item' onClick={() => handleFilterOptionClick('Buyer')}>
                           Buyer
                         </div>
-                        <div className='custom-dropdown-item' onClick={() => handleFilterOptionClick('Service Provider')}>
-                          Service Provider
-                        </div>
+                      
                       </div>
                     )}
                   </div>
@@ -425,7 +459,13 @@ const BSMContain = ({ Tender, Rfq }) => {
                           <div className='container'>
                             <div className='row'>
                               <div className='col-10'>
-                              <input type='checkbox' onChange={() => SelecUser(elem)} />
+                                <input type='checkbox' onChange={(event) => {
+                                  if (event.target.checked) {
+                                    SelecUser(elem);
+                                  } else {
+                                    UnSelecUser();
+                                  }
+                                }} />
                                 {/* <p key={index + 1}>{index + 1} </p> */}
                                 <h5>Name : {elem.firstName}</h5>
                                 <p>Email Id : {elem.email}</p>
@@ -462,11 +502,27 @@ const BSMContain = ({ Tender, Rfq }) => {
                 Back
               </button>
             </div>
+
+
             <div className='col-1'>
-              <button className='btn back-btn' disabled onClick={handleBackToDetails}>
+
+              {selectTender && selectUser ? (
+
+                <button className='btn back-btn' onClick={savaeEmail}>
+                  Send
+                </button>
+
+              ) : (
+                <button className=' unsend-btn'   onClick={() => alert('Please select your choice first !')}>
                 Send
               </button>
+              
+              )}
+
             </div>
+
+
+
           </div>
         </div>
       </div>
@@ -670,17 +726,29 @@ const BSMContain = ({ Tender, Rfq }) => {
             </div>
           </div>
           <div className='row mt-5'>
-
             <div className='col-6'>
               <button className='btn back-btn' onClick={handleBackToDetails}>
                 Back
               </button>
             </div>
-            <div className='col-6'>
-              <button className='btn back-btn' disabled onClick={handleBackToDetails}>
-                Send
-              </button>
-            </div>
+            {selectTender === true ? (
+
+              <div className='col-6'>
+                <button className='btn back-btn' onClick={handleBackToDetails}>
+                  Send
+                </button>
+              </div>
+
+            ) : (
+              <div className='col-6'>
+                <button className='btn back-btn' disabled onClick={handleBackToDetails}>
+                  Send
+                </button>
+              </div>
+            )}
+
+
+
           </div>
         </div>
       </div>
