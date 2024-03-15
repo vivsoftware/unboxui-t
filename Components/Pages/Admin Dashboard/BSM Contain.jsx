@@ -9,7 +9,7 @@ import Link from 'next/link';
 import ModalComponent from './ModalComponent';
 import { useRef } from 'react';
 
-const BSMContain = () => {
+const BSMContain = () => {     
   const [isDropdownVisible, setDropdownVisible] = useState(false);
   const [showDetails, setShowDetails] = useState(true);
   const [userDe, setUserDe] = useState(true);
