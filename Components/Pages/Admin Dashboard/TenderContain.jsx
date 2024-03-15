@@ -27,7 +27,9 @@ const TenderContain = () => {
   const [RFQDe, setRFQDe] = useState(true);
   const [searchdata, setsearchdata] = useState(true);
   const [searchRFQdata, setsearchRFQdata] = useState(true);
+  const [searchTenderdata, setsearchTenderdata] = useState(true);
   const [searchQuery, setSearchQuery] = useState(true);
+  const [searchTenderQuery, setTenderSearchQuery] = useState(true);
   const [searchRFQQuery, setSearchRFQQuery] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState('All');
@@ -163,6 +165,18 @@ const TenderContain = () => {
       searchSi();
     }
   };
+
+  const handleTenderSearchChange = (e) => {
+    // Clear searchdata if the input is empty
+    if (e.target.value.trim() === '') {
+      setsearchdata(null);
+    } else {
+      // const query = e.target.value;
+      setTenderSearchQuery(e.target.value);
+      searchTender();
+    }
+  };
+
   const handleSearchRFQChange = (e) => {
     // Clear searchdata if the input is empty
     if (e.target.value.trim() === '') {
@@ -190,6 +204,17 @@ const TenderContain = () => {
       });
 
   };
+
+  const searchTender = (e) => {
+    axios.get(`${spring_boot_url}api/tender/find?query=${searchTenderQuery}`) //chnaged 
+      .then(resp => {
+        console.log("tender serach reslut :- ", resp.data);
+        console.log(resp.data.json);
+        setsearchdata(resp.data);
+      });
+
+  };
+
   const handleModalClose = () => {
     setModalOpen(false);
   };
@@ -301,7 +326,32 @@ const TenderContain = () => {
                       <button className='btn register-btn' onClick={handleCreateTender} style={{marginLeft: '10px', marginTop: '60px'}}>Create Tender</button>
                     </div>
                     <div className='col-10'>
-                      <input type="search" className="form-control" placeholder="Search Tender ..." aria-label="Search" style={{ height: '40px', border: "1px solid #ddd", borderRadius: '8px', marginLeft: '-220px' }} />
+                      <input 
+                        type="search" 
+                        className="form-control" 
+                        placeholder="Search Tender ..." 
+                        aria-label="Search" 
+                        style={{ height: '40px', border: "1px solid #ddd", borderRadius: '8px', marginLeft: '-220px' }} 
+                        onChange={handleTenderSearchChange}
+                      />
+                      {searchTenderdata && searchTenderdata.length === 0 && (
+                        <p style={{ color: 'red' }}>No Tender found.</p>
+                      )}
+                      { searchTenderdata && searchTenderdata.length > 0 && (
+                        <div className='user-searchCard'>
+                        {searchTenderdata.map((elem, index) => (
+                          <div className='user-searchCard' key={index}>
+                            <p onClick = {() => handleOpen(elem)}>
+                              {elem.purpose} 
+                              <hr></hr>
+                              {elem.email}
+                              </p>
+                            <hr></hr>
+                          </div>
+                        ))}
+                      </div>
+                      )}
+
                     </div>
                   </div>
                   <div className='row mt-5 SI-table'>

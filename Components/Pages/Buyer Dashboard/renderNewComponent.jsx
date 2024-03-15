@@ -9,7 +9,7 @@ import axios from 'axios';
 import spring_boot_url from '../../../Utils/springApi';
 
 
-const RenderNewComponent = ({handleBackToDetails}) => {
+const RenderNewComponent = ({}) => {
 
     const [nextButton, setNextButton] = useState(false);
     const [searchRFQdata, setsearchRFQdata] = useState(true);
@@ -22,6 +22,7 @@ const RenderNewComponent = ({handleBackToDetails}) => {
     const [searchQuery, setSearchQuery] = useState(true);
     const [selectedUserData, setSelectedUserData] = useState(null);
     const [isModalOpen, setModalOpen] = useState(false);
+    const [showDetails, setShowDetails] = useState(true);
 
 
     const handleClickOutside = (e) => {
@@ -43,6 +44,7 @@ const RenderNewComponent = ({handleBackToDetails}) => {
       };
     const handleNextButton = () => {
         setNextButton(!nextButton);
+        console.log("clicked next");
       }
     const handleSearchRFQChange = (e) => {
         // Clear searchdata if the input is empty
@@ -117,6 +119,9 @@ const RenderNewComponent = ({handleBackToDetails}) => {
         console.log("clicked eye");
       };
 
+      const handleBackToDetails = () => {
+        setShowDetails(true);
+      };
 
     return (
       <>
