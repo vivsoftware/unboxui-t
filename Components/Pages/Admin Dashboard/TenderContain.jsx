@@ -10,13 +10,8 @@ import ModalComponent from './ModalComponent';
 import { useRef } from 'react';
 import DashboardLoader from '../../Element/DashboardLoader';
 import { useRouter } from 'next/router';
-// import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
-// import Button from '@mui/material/Button';
-// import Typography from '@mui/material/Typography';
-// import { auth } from '../../../Config/firebase';
-
-import TenderNextStep from './TenderNextStep';   //changes
+import TenderNextStep from './TenderNextStep';
 import BidContain from './BidContain';
 
 
@@ -27,9 +22,7 @@ const TenderContain = () => {
   const [RFQDe, setRFQDe] = useState(true);
   const [searchdata, setsearchdata] = useState(true);
   const [searchRFQdata, setsearchRFQdata] = useState(true);
-  const [searchTenderdata, setsearchTenderdata] = useState(true);
   const [searchQuery, setSearchQuery] = useState(true);
-  const [searchTenderQuery, setTenderSearchQuery] = useState(true);
   const [searchRFQQuery, setSearchRFQQuery] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState('All');
@@ -41,6 +34,8 @@ const TenderContain = () => {
   const [showBid, setShowBid] = useState(false);
   const [nextButton, setNextButton] = useState(false);
   const searchRef = useRef(null);
+  const [Checkbox, setCheckbox] = useState(false);
+  const [selectedRFQ, setSelectedRFQ] = useState(null);
 
   const handleClickOutside = (e) => {
     if (searchRef.current && !searchRef.current.contains(e.target)) {
@@ -165,18 +160,6 @@ const TenderContain = () => {
       searchSi();
     }
   };
-
-  const handleTenderSearchChange = (e) => {
-    // Clear searchdata if the input is empty
-    if (e.target.value.trim() === '') {
-      setsearchdata(null);
-    } else {
-      // const query = e.target.value;
-      setTenderSearchQuery(e.target.value);
-      searchTender();
-    }
-  };
-
   const handleSearchRFQChange = (e) => {
     // Clear searchdata if the input is empty
     if (e.target.value.trim() === '') {
@@ -204,17 +187,6 @@ const TenderContain = () => {
       });
 
   };
-
-  const searchTender = (e) => {
-    axios.get(`${spring_boot_url}api/tender/find?query=${searchTenderQuery}`) //chnaged 
-      .then(resp => {
-        console.log("tender serach reslut :- ", resp.data);
-        console.log(resp.data.json);
-        setsearchdata(resp.data);
-      });
-
-  };
-
   const handleModalClose = () => {
     setModalOpen(false);
   };
@@ -227,6 +199,26 @@ const TenderContain = () => {
     openModal(userData);
     setsearchRFQdata(null);
   };
+
+
+
+  /////////////changes start////////
+  useEffect(() => {
+    axios.get(`${spring_boot_url}api/userRfq`)
+      .then(resp => {
+        console.log(resp.data.json);
+        localStorage.setItem("data", JSON.stringify(resp.data));
+        setRFQDe(resp.data);
+      });
+  }, []);
+
+  const handleRFQSelection = (elem) => {
+    setCheckbox(true)
+    setSelectedRFQ(elem)
+  };
+  //////////////changes end////////
+
+
   const formatDate = (dateString) => {
     const originalDate = new Date(dateString);
     const day = originalDate.getDate();
@@ -247,73 +239,12 @@ const TenderContain = () => {
   }
   const handleNextButton = () => {
     setNextButton(!nextButton);
+
   }
 
 
   const renderDetails = () => {
-    // if (!userDe) {
-    //   return (
-    //     <>
-    //       {showBid ? <BidContain /> : (
-    //         <>
-    //           <div className='d-none d-xl-block d-md-block d-sm-none'>
-    //             <div className=' RFQ-card'>
-    //               <div className='container'>
-    //                 <div className='row mt-5'>
-    //                   <div className='col-2'>
-    //                     <button className='btn register-btn' >Create Tender</button>
-    //                   </div>
-    //                   <div className='col-10'>
-    //                     <input type="search" className="form-control" placeholder="Search Tender ..." aria-label="Search" style={{ height: '40px', border: "1px solid #ddd", borderRadius: '8px' }} />
-    //                   </div>
-    //                 </div>
-    //                 <div className='row mt-5 SI-table'>
-    //                   <h2 className='mb-2'>Tender List</h2>
-    //                   <table className="table">
-    //                     <thead className='table-header'>
-    //                       <tr>
-    //                         <th>Sr.No</th>
-    //                         <th>RFQ Name</th>
-    //                         <th>Tender Create Date</th>
-    //                         <th>Status</th>
-    //                         <th>No. of Bids</th>
-    //                         <th>Options</th>
-    //                       </tr>
-    //                     </thead>
 
-    //                   </table>
-    //                   <DashboardLoader />
-    //                 </div>
-                    
-    //               </div>
-    //             </div>
-    //           </div>
-    //           <div className='d-block d-xl-none d-md-none d-sm-block'>
-    //             <div className=' RFQ-card'>
-    //               <div className='container-fluid'>
-    //                 <div className='row mt-5'>
-    //                   <div className='col-5'>
-    //                     <button className='btn register-btn'  >Create Tender</button>
-    //                   </div>
-    //                   <div className='col-6'>
-    //                     <input type="search" className="form-control" placeholder="Search Tender ..." aria-label="Search" style={{ height: '40px', border: "1px solid #ddd", borderRadius: '8px' }} />
-    //                   </div>
-    //                 </div>
-    //                 <div className='row mt-5 SI-table'>
-    //                   <h2 className='mb-2'>Tender List</h2>
-    //                   <DashboardLoader />
-    //                 </div>
-    //               </div>
-    //             </div>
-    //           </div>
-    //         </>
-    //       )}
-
-
-
-    //     </>
-    //   )
-    // }
     return (
       <>
         {showBid ? <BidContain /> : (
@@ -323,35 +254,10 @@ const TenderContain = () => {
                 <div className='container'>
                   <div className='row mt-5'>
                     <div className='col-2'>
-                      <button className='btn register-btn' onClick={handleCreateTender} style={{marginLeft: '10px', marginTop: '60px'}}>Create Tender</button>
+                      <button className='btn register-btn' onClick={handleCreateTender} style={{ marginLeft: '10px', marginTop: '60px' }}>Create Tender</button>
                     </div>
                     <div className='col-10'>
-                      <input 
-                        type="search" 
-                        className="form-control" 
-                        placeholder="Search Tender ..." 
-                        aria-label="Search" 
-                        style={{ height: '40px', border: "1px solid #ddd", borderRadius: '8px', marginLeft: '-220px' }} 
-                        onChange={handleTenderSearchChange}
-                      />
-                      {searchTenderdata && searchTenderdata.length === 0 && (
-                        <p style={{ color: 'red' }}>No Tender found.</p>
-                      )}
-                      { searchTenderdata && searchTenderdata.length > 0 && (
-                        <div className='user-searchCard'>
-                        {searchTenderdata.map((elem, index) => (
-                          <div className='user-searchCard' key={index}>
-                            <p onClick = {() => handleOpen(elem)}>
-                              {elem.purpose} 
-                              <hr></hr>
-                              {elem.email}
-                              </p>
-                            <hr></hr>
-                          </div>
-                        ))}
-                      </div>
-                      )}
-
+                      <input type="search" className="form-control" placeholder="Search Tender ..." aria-label="Search" style={{ height: '40px', border: "1px solid #ddd", borderRadius: '8px', marginLeft: '-220px' }} />
                     </div>
                   </div>
                   <div className='row mt-5 SI-table'>
@@ -442,13 +348,13 @@ const TenderContain = () => {
   const renderNewComponent = () => {
     return (
       <>
-        {nextButton ? <TenderNextStep /> : (
+        {nextButton ? <TenderNextStep selectedRFQ={selectedRFQ} /> : (
           <>
             <div className='d-none d-xl-block d-md-block d-sm-none'>
               <div className='fluid-container'>
                 <div className='row'>
                   <div className='col-12'>
-                    <h2 className='mb-2 mt-2' style={{marginLeft: '10px'}}>RFQ List</h2>
+                    <h2 className='mb-2 mt-2' style={{ marginLeft: '10px' }}>RFQ List</h2>
                     <div className='row mt-2'>
                       <input
                         type="search"
@@ -482,7 +388,14 @@ const TenderContain = () => {
                                 <div className='container'>
                                   <div className='row'>
                                     <div className='col-10'>
-                                      <input type='checkbox' />
+                                      {/* <input type='checkbox' /> */}
+
+                                      <input
+                                        type='checkbox'
+                                        checked={selectedRFQ === elem}
+                                        onChange={() => handleRFQSelection(elem)}
+                                      />
+
                                       <h5>Project Name : {elem.productName}</h5>
                                       <p>RFQ Create Date : {formatDate(elem.createdAt)}</p>
                                       <p>Created By : {elem.createdBy}</p>
@@ -507,7 +420,15 @@ const TenderContain = () => {
                                 <div className='container'>
                                   <div className='row'>
                                     <div className='col-10'>
-                                      <input type='checkbox' />
+                                      {/* <input type='checkbox' /> */}
+
+                                      <input
+                                        type='checkbox'
+                                        checked={selectedRFQ === elem}
+                                        onChange={() => handleRFQSelection(elem)}
+                                      />
+
+
                                       <h5>Project Name : {elem.productName}</h5>
                                       <p>RFQ Create Date : {formatDate(elem.createdAt)}</p>
                                       <p>Created By : {elem.createdBy}</p>
@@ -524,9 +445,7 @@ const TenderContain = () => {
                             )}
                           </>
                         )}
-
                     </div>
-
                   </div>
                 </div>
                 <div className='row mt-2'>
@@ -537,9 +456,15 @@ const TenderContain = () => {
                     </button>
                   </div>
                   <div className='col-1'>
-                    <button className='btn back-btn' onClick={handleNextButton}>
-                      Next
-                    </button>
+                    {Checkbox ? (
+                      <button className='btn back-btn' onClick={handleNextButton}>
+                        Next
+                      </button>
+                    ) : (
+                      <button className='btn back-btn' disabled >
+                        Next
+                      </button>
+                    )}
                   </div>
                 </div>
               </div>
@@ -583,7 +508,14 @@ const TenderContain = () => {
                                 <div className='container'>
                                   <div className='row'>
                                     <div className='col-10'>
-                                      <input type='checkbox' />
+                                      {/* <input type='checkbox' /> */}
+
+                                      <input
+                                        type='checkbox'
+                                        checked={selectedRFQ === elem}
+                                        onChange={() => handleRFQSelection(elem)}
+                                      />
+
                                       <h5>Project Name : {elem.productName}</h5>
                                       <p>RFQ Create Date : {elem.createdAt}</p>
                                       <p>Created By : {elem.createdBy}</p>
@@ -629,7 +561,7 @@ const TenderContain = () => {
                   </div>
                 </div>
 
-                <div className='row mt-5'>
+                {/* <div className='row mt-5'>
 
                   <div className='col-6'>
                     <button className='btn back-btn' onClick={handleBackToDetails}>
@@ -641,7 +573,7 @@ const TenderContain = () => {
                       Send
                     </button>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           </>
