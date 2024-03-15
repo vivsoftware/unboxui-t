@@ -1,30 +1,30 @@
-import React, { useEffect } from 'react'
-import { useDispatch } from 'react-redux';
-import { useState } from 'react';
-import { FaPlus, FaMinus, FaEye } from 'react-icons/fa';
-import { Input } from 'reactstrap';
-import axios from 'axios';
-import spring_boot_url from '../../../Utils/springApi';
-import Link from 'next/link';
-import ModalComponent from './ModalComponent';
-import { useRef } from 'react';
-import DashboardLoader from '../../Element/DashboardLoader';
-import { useRouter } from 'next/router';
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { useState } from "react";
+import { FaPlus, FaMinus, FaEye } from "react-icons/fa";
+import { Input } from "reactstrap";
+import axios from "axios";
+import spring_boot_url from "../../../Utils/springApi";
+import Link from "next/link";
+import ModalComponent from "./ModalComponent";
+import { useRef } from "react";
+import DashboardLoader from "../../Element/DashboardLoader";
+import { useRouter } from "next/router";
 // import Box from '@mui/material/Box';
-import Modal from '@mui/material/Modal';
+import Modal from "@mui/material/Modal";
 // import Button from '@mui/material/Button';
 // import Typography from '@mui/material/Typography';
 // import { auth } from '../../../Config/firebase';
 
-import TenderNextStep from './TenderNextStep';   //changes
-import BidContain from './BidContain';
+import TenderNextStep from "./TenderNextStep"; //changes
+import BidContain from "./BidContain";
 
-
-const TenderContain = () => {
+const TenderContain = ({ Tender }) => {
   const [isDropdownVisible, setDropdownVisible] = useState(false);
   const [showDetails, setShowDetails] = useState(true);
   const [userDe, setUserDe] = useState(true);
   const [RFQDe, setRFQDe] = useState(true);
+  const [tenderDe, setTenderDe] = useState(true);
   const [searchdata, setsearchdata] = useState(true);
   const [searchRFQdata, setsearchRFQdata] = useState(true);
   const [searchTenderdata, setsearchTenderdata] = useState(true);
@@ -32,7 +32,7 @@ const TenderContain = () => {
   const [searchTenderQuery, setTenderSearchQuery] = useState(true);
   const [searchRFQQuery, setSearchRFQQuery] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState('All');
+  const [selectedOption, setSelectedOption] = useState("All");
   const [isModalOpen, setModalOpen] = useState(false);
   const [selectedUserData, setSelectedUserData] = useState(null);
   const [showRFQ, setShowRFQ] = useState(true);
@@ -50,15 +50,15 @@ const TenderContain = () => {
   };
 
   useEffect(() => {
-    document.addEventListener('click', handleClickOutside);
+    document.addEventListener("click", handleClickOutside);
 
     return () => {
-      document.removeEventListener('click', handleClickOutside);
+      document.removeEventListener("click", handleClickOutside);
     };
   }, []);
 
   useEffect(() => {
-    const savedOption = localStorage.getItem('selectedOption');
+    const savedOption = localStorage.getItem("selectedOption");
     if (savedOption) {
       setSelectedOption(savedOption);
     }
@@ -74,26 +74,25 @@ const TenderContain = () => {
     setIsOpen(!isOpen);
   };
   useEffect(() => {
-    axios.get(`${spring_boot_url}api/userRfq`)
-      .then(resp => {
-        console.log(resp.data.json);
-        localStorage.setItem("data", JSON.stringify(resp.data));
-        setRFQDe(resp.data);
-      });
+    axios.get(`${spring_boot_url}api/userRfq`).then((resp) => {
+      console.log(resp.data.json);
+      localStorage.setItem("data", JSON.stringify(resp.data));
+      setRFQDe(resp.data);
+    });
   }, []);
 
   const handleFilterOptionClick = (option) => {
     setSelectedOption(option);
-    localStorage.setItem('selectedOption', option);
+    localStorage.setItem("selectedOption", option);
 
     switch (option) {
-      case 'Seller':
+      case "Seller":
         seller();
         break;
-      case 'Buyer':
+      case "Buyer":
         buyer();
         break;
-      case 'Service Provider':
+      case "Service Provider":
         serviceProvider();
         break;
       default:
@@ -103,38 +102,40 @@ const TenderContain = () => {
     setIsOpen(false);
   };
   const allUsers = () => {
-    axios.get(`${spring_boot_url}api/adminuser/allusers`)
-      .then(resp => {
-        console.log(resp.data.json);
-        localStorage.setItem("data", JSON.stringify(resp.data));
-        setUserDe(resp.data);
-      });
-  }
+    axios.get(`${spring_boot_url}api/adminuser/allusers`).then((resp) => {
+      console.log(resp.data.json);
+      localStorage.setItem("data", JSON.stringify(resp.data));
+      setUserDe(resp.data);
+    });
+  };
   const seller = () => {
-    axios.get(`${spring_boot_url}api/adminuser/search?query=seller`)
-      .then(resp => {
+    axios
+      .get(`${spring_boot_url}api/adminuser/search?query=seller`)
+      .then((resp) => {
         console.log(resp.data.json);
         setUserDe(resp.data);
       });
-  }
+  };
   const buyer = () => {
-    axios.get(`${spring_boot_url}api/adminuser/search?query=buyer`)
-      .then(resp => {
+    axios
+      .get(`${spring_boot_url}api/adminuser/search?query=buyer`)
+      .then((resp) => {
         console.log(resp.data.json);
         setUserDe(resp.data);
       });
-  }
+  };
   const serviceProvider = () => {
-    axios.get(`${spring_boot_url}api/adminuser/search?query=service provider`)
-      .then(resp => {
+    axios
+      .get(`${spring_boot_url}api/adminuser/search?query=service provider`)
+      .then((resp) => {
         console.log(resp.data.json);
         setUserDe(resp.data);
       });
-  }
+  };
 
   const handleCreateTender = () => {
     setShowDetails(false);
-  }
+  };
   const toggleDropdown = () => {
     setDropdownVisible(!isDropdownVisible);
   };
@@ -149,15 +150,14 @@ const TenderContain = () => {
   };
   const openRFQDropdown = () => {
     setShowRFQ(!showRFQ);
-  }
+  };
   const openUsersDropdown = () => {
     setShowUsers(!showUsers);
-  }
-
+  };
 
   const handleSearchChange = (e) => {
     // Clear searchdata if the input is empty
-    if (e.target.value.trim() === '') {
+    if (e.target.value.trim() === "") {
       setsearchdata(null);
     } else {
       // const query = e.target.value;
@@ -168,7 +168,7 @@ const TenderContain = () => {
 
   const handleTenderSearchChange = (e) => {
     // Clear searchdata if the input is empty
-    if (e.target.value.trim() === '') {
+    if (e.target.value.trim() === "") {
       setsearchdata(null);
     } else {
       // const query = e.target.value;
@@ -179,7 +179,7 @@ const TenderContain = () => {
 
   const handleSearchRFQChange = (e) => {
     // Clear searchdata if the input is empty
-    if (e.target.value.trim() === '') {
+    if (e.target.value.trim() === "") {
       setsearchRFQdata(null);
     } else {
       // const query = e.target.value;
@@ -188,33 +188,45 @@ const TenderContain = () => {
     }
   };
   const searchRFQ = (e) => {
-    axios.get(`${spring_boot_url}api/userRfq/search?query=${searchQuery}`)
-      .then(resp => {
+    axios
+      .get(`${spring_boot_url}api/userRfq/search?query=${searchQuery}`)
+      .then((resp) => {
         console.log(resp.data.json);
         setsearchRFQdata(resp.data);
       });
   };
 
-
   const searchSi = (e) => {
-    axios.get(`${spring_boot_url}api/adminuser/search?query=${searchQuery}`)
-      .then(resp => {
+    axios
+      .get(`${spring_boot_url}api/adminuser/search?query=${searchQuery}`)
+      .then((resp) => {
         console.log(resp.data.json);
         setsearchdata(resp.data);
       });
-
   };
 
   const searchTender = (e) => {
-    axios.get(`${spring_boot_url}api/tender/find?query=${searchTenderQuery}`) //chnaged 
-      .then(resp => {
+    axios
+      .get(`${spring_boot_url}api/tender/find?query=${searchTenderQuery}`) //chnaged
+      .then((resp) => {
         console.log("tender serach reslut :- ", resp.data);
         console.log(resp.data.json);
-        setsearchdata(resp.data);
+        setTenderDe(resp.data);
+        
+        setsearchTenderdata(resp.data);
       });
-
   };
 
+  const searchAllTender = (e) => {
+    axios
+      .get(`${spring_boot_url}api/tender`) 
+      .then((resp) => {
+        console.log("All tender serach reslut :- ", resp.data);
+        console.log(resp.data.json);
+        setTenderDe(resp.data);
+        setsearchTenderdata(resp.data);
+      });
+  };
   const handleModalClose = () => {
     setModalOpen(false);
   };
@@ -241,184 +253,178 @@ const TenderContain = () => {
     return `${formattedDay}-${formattedMonth}-${formattedYear}`;
   };
 
-
   const handleBidClick = () => {
     setShowBid(!showBid);
-  }
+  };
   const handleNextButton = () => {
     setNextButton(!nextButton);
-  }
-
+  };
 
   const renderDetails = () => {
-    // if (!userDe) {
-    //   return (
-    //     <>
-    //       {showBid ? <BidContain /> : (
-    //         <>
-    //           <div className='d-none d-xl-block d-md-block d-sm-none'>
-    //             <div className=' RFQ-card'>
-    //               <div className='container'>
-    //                 <div className='row mt-5'>
-    //                   <div className='col-2'>
-    //                     <button className='btn register-btn' >Create Tender</button>
-    //                   </div>
-    //                   <div className='col-10'>
-    //                     <input type="search" className="form-control" placeholder="Search Tender ..." aria-label="Search" style={{ height: '40px', border: "1px solid #ddd", borderRadius: '8px' }} />
-    //                   </div>
-    //                 </div>
-    //                 <div className='row mt-5 SI-table'>
-    //                   <h2 className='mb-2'>Tender List</h2>
-    //                   <table className="table">
-    //                     <thead className='table-header'>
-    //                       <tr>
-    //                         <th>Sr.No</th>
-    //                         <th>RFQ Name</th>
-    //                         <th>Tender Create Date</th>
-    //                         <th>Status</th>
-    //                         <th>No. of Bids</th>
-    //                         <th>Options</th>
-    //                       </tr>
-    //                     </thead>
-
-    //                   </table>
-    //                   <DashboardLoader />
-    //                 </div>
-                    
-    //               </div>
-    //             </div>
-    //           </div>
-    //           <div className='d-block d-xl-none d-md-none d-sm-block'>
-    //             <div className=' RFQ-card'>
-    //               <div className='container-fluid'>
-    //                 <div className='row mt-5'>
-    //                   <div className='col-5'>
-    //                     <button className='btn register-btn'  >Create Tender</button>
-    //                   </div>
-    //                   <div className='col-6'>
-    //                     <input type="search" className="form-control" placeholder="Search Tender ..." aria-label="Search" style={{ height: '40px', border: "1px solid #ddd", borderRadius: '8px' }} />
-    //                   </div>
-    //                 </div>
-    //                 <div className='row mt-5 SI-table'>
-    //                   <h2 className='mb-2'>Tender List</h2>
-    //                   <DashboardLoader />
-    //                 </div>
-    //               </div>
-    //             </div>
-    //           </div>
-    //         </>
-    //       )}
-
-
-
-    //     </>
-    //   )
-    // }
+   
     return (
       <>
-        {showBid ? <BidContain /> : (
+        {showBid ? (
+          <BidContain />
+        ) : (
           <>
-            <div className='d-none d-xl-block d-md-block d-sm-none'>
-              <div className=' RFQ-card'>
-                <div className='container'>
-                  <div className='row mt-5'>
-                    <div className='col-2'>
-                      <button className='btn register-btn' onClick={handleCreateTender} style={{marginLeft: '10px', marginTop: '60px'}}>Create Tender</button>
+            <div className="d-none d-xl-block d-md-block d-sm-none">
+              <div className=" RFQ-card">
+                <div className="container">
+                  <div className="row mt-5">
+                    <div className="col-2">
+                      <button
+                        className="btn register-btn"
+                        onClick={handleCreateTender}
+                        style={{ marginLeft: "10px", marginTop: "60px" }}
+                      >
+                        Create Tender
+                      </button>
                     </div>
-                    <div className='col-10'>
-                      <input 
-                        type="search" 
-                        className="form-control" 
-                        placeholder="Search Tender ..." 
-                        aria-label="Search" 
-                        style={{ height: '40px', border: "1px solid #ddd", borderRadius: '8px', marginLeft: '-220px' }} 
+                    <div className="col-10">
+                      <input
+                        type="search"
+                        className="form-control"
+                        placeholder="Search Tender ..."
+                        aria-label="Search"
+                        style={{
+                          height: "40px",
+                          border: "1px solid #ddd",
+                          borderRadius: "8px",
+                          marginLeft: "-220px",
+                        }}
                         onChange={handleTenderSearchChange}
                       />
                       {searchTenderdata && searchTenderdata.length === 0 && (
-                        <p style={{ color: 'red' }}>No Tender found.</p>
+                        <p style={{ color: "red" }}>No Tender found.</p>
                       )}
-                      { searchTenderdata && searchTenderdata.length > 0 && (
-                        <div className='user-searchCard'>
-                        {searchTenderdata.map((elem, index) => (
-                          <div className='user-searchCard' key={index}>
-                            <p onClick = {() => handleOpen(elem)}>
-                              {elem.purpose} 
-                              <hr></hr>
-                              {elem.email}
+                      {searchTenderdata && searchTenderdata.length > 0 && (
+                        <div className="user-searchCard">
+                          {searchTenderdata.map((elem, index) => (
+                            <div className="user-searchCard" key={index}>
+                              <p onClick={() => handleOpen(elem)}>
+                                {elem.purpose}
+                                <hr></hr>
+                                {elem.email}
                               </p>
-                            <hr></hr>
-                          </div>
-                        ))}
-                      </div>
+                              <hr></hr>
+                            </div>
+                          ))}
+                        </div>
                       )}
-
                     </div>
                   </div>
-                  <div className='row mt-5 SI-table'>
-                    <h2 className='mb-2'>Tender List</h2>
-                    <table className="table">
-                      <thead className='table-header'>
+
+                  <h2 className="mb-2">Tender List</h2>
+                  <div>
+                    <table className="table  ">
+                      <thead className="table-header">
                         <tr>
                           <th>Sr.No</th>
-                          <th>RFQ Name</th>
+                          <th>Tender Name</th>
                           <th>Tender Create Date</th>
+                          <th>Created By</th>
+                          <th>Customer Email Id</th>
+                          <th>Customer Phone No.</th>
                           <th>Status</th>
-                          <th>No. of Bids</th>
                           <th>Options</th>
                         </tr>
                       </thead>
-                      <tbody>
-                        <tr className='table-row'>
-                          <td>1</td>
-                          <td>Machine Vision</td>
-                          <td>1/12/23</td>
-                          <td>Published</td>
-                          <td>2</td>
-                          <td style={{ position: 'relative' }}>
-                            <button className="option-button" onClick={toggleDropdown}>
-                              <img src="/option.svg" width="20px" height="20px" alt="Options" />
-                            </button>
-                            {isDropdownVisible && (
-                              <div className='options-card' style={{ position: 'absolute', top: '100%', left: '65px', transform: 'translateY(-100%)', zIndex: '1' }}>
-                                <p onClick={handleBidClick}>View Bid</p>
-                                <p>Edit</p>
-                                <p>Delete</p>
-                              </div>
-                            )}
-                          </td>
-                        </tr>
-                      </tbody>
+                      {!searchTenderdata ? (
+                        <tbody>
+                          {Array.isArray(Tender) &&
+                            Tender.map((elem, index) => (
+                              <tr key={index + 1} className="table-row">
+                                <td>{index + 1}</td>
+                                <td>{elem.purpose}</td>
+                                <td>{formatDate(elem.createdAt)}</td>
+                                <td>{elem.createdBy}</td>
+                                <td>{elem.email}</td>
+                                <td>{elem.phoneNumber}</td>
+                                <td>{elem.status}</td>
+                                <td>
+                                  <button
+                                    className="option-button"
+                                    onClick={() => handleOpen(elem)}
+                                  >
+                                    {/* <button onClick={handleOpen}>Open modal</button> */}
+                                    <FaEye />
+                                  </button>
+                                </td>
+                              </tr>
+                            ))}
+                        </tbody>
+                      ) : (
+                        <tbody>
+                          {Array.isArray(tenderDe) &&
+                            tenderDe.map((elem, index) => (
+                              <tr key={index + 1} className="table-row">
+                                <td>{index + 1}</td>
+                                <td>{elem.purpose}</td>
+                                <td>{formatDate(elem.createdAt)}</td>
+                                <td>{elem.createdBy}</td>
+                                <td>{elem.email}</td>
+                                <td>{elem.phoneNumber}</td>
+                                <td>{elem.status}</td>
+                                <td>
+                                  <button
+                                    className="option-button"
+                                    onClick={() => handleOpen(elem)}
+                                  >
+                                    {/* <button onClick={handleOpen}>Open modal</button> */}
+                                    <FaEye />
+                                  </button>
+                                </td>
+                              </tr>
+                            ))}
+                        </tbody>
+                      )}
                     </table>
                   </div>
-
                 </div>
               </div>
             </div>
-            <div className='d-block d-xl-none d-md-none d-sm-block'>
-              <div className=' RFQ-card'>
-                <div className='container-fluid'>
-                  <div className='row mt-5'>
-                    <div className='col-5'>
-                      <button className='btn register-btn' onClick={handleCreateTender} >Create Tender</button>
+
+            <div className="d-block d-xl-none d-md-none d-sm-block">
+              <div className=" RFQ-card">
+                <div className="container-fluid">
+                  <div className="row mt-5">
+                    <div className="col-5">
+                      <button
+                        className="btn register-btn"
+                        onClick={handleCreateTender}
+                      >
+                        Create Tender
+                      </button>
                     </div>
-                    <div className='col-6'>
-                      <input type="search" className="form-control" placeholder="Search Tender ..." aria-label="Search" style={{ height: '40px', border: "1px solid #ddd", borderRadius: '8px' }} />
+                    <div className="col-6">
+                      <input
+                        type="search"
+                        className="form-control"
+                        placeholder="Search Tender ..."
+                        aria-label="Search"
+                        style={{
+                          height: "40px",
+                          border: "1px solid #ddd",
+                          borderRadius: "8px",
+                        }}
+                      />
                     </div>
                   </div>
-                  <div className='row mt-5 SI-table'>
-                    <h2 className='mb-2'>Tender List</h2>
-                    <div className='col-12'>
-                      <div className='RFQ-Card' >
-                        <div className='container'>
-                          <div className='row'>
-                            <div className='col-10'>
+                  <div className="row mt-5 SI-table">
+                    <h2 className="mb-2">Tender List</h2>
+                    <div className="col-12">
+                      <div className="RFQ-Card">
+                        <div className="container">
+                          <div className="row">
+                            <div className="col-10">
                               <h5>RFQ Name : </h5>
-                              <p className='mt-1'>Tender Create Date : </p>
+                              <p className="mt-1">Tender Create Date : </p>
                               <p>Status : </p>
                               <p>No. of Bids : </p>
                             </div>
-                            <div className='col-2'>
-                              <button className="option-button" >
+                            <div className="col-2">
+                              <button className="option-button">
                                 <FaEye />
                               </button>
                             </div>
@@ -432,64 +438,81 @@ const TenderContain = () => {
             </div>
           </>
         )}
-
-
-
       </>
-    )
-  }
+    );
+  };
 
   const renderNewComponent = () => {
     return (
       <>
-        {nextButton ? <TenderNextStep /> : (
+        {nextButton ? (
+          <TenderNextStep />
+        ) : (
           <>
-            <div className='d-none d-xl-block d-md-block d-sm-none'>
-              <div className='fluid-container'>
-                <div className='row'>
-                  <div className='col-12'>
-                    <h2 className='mb-2 mt-2' style={{marginLeft: '10px'}}>RFQ List</h2>
-                    <div className='row mt-2'>
+            <div className="d-none d-xl-block d-md-block d-sm-none">
+              <div className="fluid-container">
+                <div className="row">
+                  <div className="col-12">
+                    <h2 className="mb-2 mt-2" style={{ marginLeft: "10px" }}>
+                      RFQ List
+                    </h2>
+                    <div className="row mt-2">
                       <input
                         type="search"
                         className="form-control otp-phone"
                         placeholder="Search RFQ ..."
                         aria-label="Search"
-                        style={{ height: '40px', border: "1px solid #ddd", borderRadius: '8px', marginLeft: '10px' }}
+                        style={{
+                          height: "40px",
+                          border: "1px solid #ddd",
+                          borderRadius: "8px",
+                          marginLeft: "10px",
+                        }}
                         onChange={handleSearchRFQChange}
                       />
                       {searchRFQdata && searchRFQdata.length === 0 && (
-                        <p style={{ color: 'red' }}>No RFQ found.</p>
+                        <p style={{ color: "red" }}>No RFQ found.</p>
                       )}
                       {searchRFQdata && searchRFQdata.length > 0 && (
-                        <div className='user-searchCard'>
+                        <div className="user-searchCard">
                           {searchRFQdata.map((elem, index) => (
-                            <div className='user-search' key={index}>
-                              <p onClick={() => handleViewRFQDetailsClick(elem)}>{elem.productName}</p>
+                            <div className="user-search" key={index}>
+                              <p
+                                onClick={() => handleViewRFQDetailsClick(elem)}
+                              >
+                                {elem.productName}
+                              </p>
                               <hr></hr>
                             </div>
-
                           ))}
                         </div>
                       )}
                     </div>
-                    <div className='row mt-2  SI-table'>
+                    <div className="row mt-2  SI-table">
                       {searchRFQdata?.length > 0 ? (
                         <>
-                          <div className='RFQ-Card'>
+                          <div className="RFQ-Card">
                             {searchRFQdata.map((elem, index) => (
-                              <div className='RFQ-Card' key={index}>
-                                <div className='container'>
-                                  <div className='row'>
-                                    <div className='col-10'>
-                                      <input type='checkbox' />
+                              <div className="RFQ-Card" key={index}>
+                                <div className="container">
+                                  <div className="row">
+                                    <div className="col-10">
+                                      <input type="checkbox" />
                                       <h5>Project Name : {elem.productName}</h5>
-                                      <p>RFQ Create Date : {formatDate(elem.createdAt)}</p>
+                                      <p>
+                                        RFQ Create Date :{" "}
+                                        {formatDate(elem.createdAt)}
+                                      </p>
                                       <p>Created By : {elem.createdBy}</p>
                                       <h5>Status : {elem.status}</h5>
                                     </div>
-                                    <div className='col-2'>
-                                      <button className="option-button" onClick={() => handleViewRFQDetailsClick(elem)}>
+                                    <div className="col-2">
+                                      <button
+                                        className="option-button"
+                                        onClick={() =>
+                                          handleViewRFQDetailsClick(elem)
+                                        }
+                                      >
                                         <FaEye />
                                       </button>
                                     </div>
@@ -499,98 +522,116 @@ const TenderContain = () => {
                             ))}
                           </div>
                         </>
-                      ) :
-                        (
-                          <>
-                            {Array.isArray(RFQDe) && RFQDe.map((elem, index) =>
-                              <div className='RFQ-Card' key={index}>
-                                <div className='container'>
-                                  <div className='row'>
-                                    <div className='col-10'>
-                                      <input type='checkbox' />
+                      ) : (
+                        <>
+                          {Array.isArray(RFQDe) &&
+                            RFQDe.map((elem, index) => (
+                              <div className="RFQ-Card" key={index}>
+                                <div className="container">
+                                  <div className="row">
+                                    <div className="col-10">
+                                      <input type="checkbox" />
                                       <h5>Project Name : {elem.productName}</h5>
-                                      <p>RFQ Create Date : {formatDate(elem.createdAt)}</p>
+                                      <p>
+                                        RFQ Create Date :{" "}
+                                        {formatDate(elem.createdAt)}
+                                      </p>
                                       <p>Created By : {elem.createdBy}</p>
                                       <h5>Status : {elem.status}</h5>
                                     </div>
-                                    <div className='col-2'>
-                                      <button className="option-button" onClick={() => handleViewRFQDetailsClick(elem)}>
+                                    <div className="col-2">
+                                      <button
+                                        className="option-button"
+                                        onClick={() =>
+                                          handleViewRFQDetailsClick(elem)
+                                        }
+                                      >
                                         <FaEye />
                                       </button>
                                     </div>
                                   </div>
                                 </div>
                               </div>
-                            )}
-                          </>
-                        )}
-
+                            ))}
+                        </>
+                      )}
                     </div>
-
                   </div>
                 </div>
-                <div className='row mt-2'>
-                  <div className='col-10'></div>
-                  <div className='col-1'>
-                    <button className='btn back-btn' onClick={handleBackToDetails}>
+                <div className="row mt-2">
+                  <div className="col-10"></div>
+                  <div className="col-1">
+                    <button
+                      className="btn back-btn"
+                      onClick={handleBackToDetails}
+                    >
                       Back
                     </button>
                   </div>
-                  <div className='col-1'>
-                    <button className='btn back-btn' onClick={handleNextButton}>
+                  <div className="col-1">
+                    <button className="btn back-btn" onClick={handleNextButton}>
                       Next
                     </button>
                   </div>
                 </div>
               </div>
             </div>
-            <div className='d-block d-xl-none d-md-none d-sm-block'>
-              <div className='container-fluid'>
-                <h2 className='mb-2 mt-2'>RFQ List</h2>
-                <div className='row mt-2'>
-                  <div className='col-11'>
+            <div className="d-block d-xl-none d-md-none d-sm-block">
+              <div className="container-fluid">
+                <h2 className="mb-2 mt-2">RFQ List</h2>
+                <div className="row mt-2">
+                  <div className="col-11">
                     <input
                       type="search"
                       className="form-control otp-phone"
                       placeholder="Search RFQ ..."
                       aria-label="Search"
-                      style={{ height: '40px', border: "1px solid #ddd", borderRadius: '8px' }}
+                      style={{
+                        height: "40px",
+                        border: "1px solid #ddd",
+                        borderRadius: "8px",
+                      }}
                       onChange={handleSearchRFQChange}
                     />
                     {searchRFQdata && searchRFQdata.length === 0 && (
-                      <p style={{ color: 'red' }}>No RFQ found.</p>
+                      <p style={{ color: "red" }}>No RFQ found.</p>
                     )}
                     {searchRFQdata && searchRFQdata.length > 0 && (
-                      <div className='user-searchCard'>
+                      <div className="user-searchCard">
                         {searchRFQdata.map((elem, index) => (
-                          <div className='user-search' key={index}>
-                            <p onClick={() => handleViewRFQDetailsClick(elem)}>{elem.productName}</p>
+                          <div className="user-search" key={index}>
+                            <p onClick={() => handleViewRFQDetailsClick(elem)}>
+                              {elem.productName}
+                            </p>
                             <hr></hr>
                           </div>
-
                         ))}
                       </div>
                     )}
                   </div>
-                  <div className='row'>
-
-                    <div className='mobile-userCard'>
+                  <div className="row">
+                    <div className="mobile-userCard">
                       {searchRFQdata?.length > 0 ? (
                         <>
-                          <div className='RFQ-Card'>
+                          <div className="RFQ-Card">
                             {searchRFQdata.map((elem, index) => (
-                              <div className='RFQ-Card' key={index}>
-                                <div className='container'>
-                                  <div className='row'>
-                                    <div className='col-10'>
-                                      <input type='checkbox' />
+                              <div className="RFQ-Card" key={index}>
+                                <div className="container">
+                                  <div className="row">
+                                    <div className="col-10">
+                                      <input type="checkbox" />
                                       <h5>Project Name : {elem.productName}</h5>
                                       <p>RFQ Create Date : {elem.createdAt}</p>
                                       <p>Created By : {elem.createdBy}</p>
                                       <h5>Status : {elem.status}</h5>
                                     </div>
-                                    <div className='col-2'>
-                                      <button className="option-button" onClick={() => handleViewRFQDetailsClick(elem)}>
+                                    <div className="col-2">
+                                      <button
+                                        className="option-button"
+                                        onClick={() =>
+                                          handleViewRFQDetailsClick(elem)
+                                        }
+                                      >
                                         <FaEye />
                                       </button>
                                     </div>
@@ -600,44 +641,58 @@ const TenderContain = () => {
                             ))}
                           </div>
                         </>
-                      ) :
-                        (
-                          <>
-                            {Array.isArray(RFQDe) && RFQDe.map((elem, index) =>
-                              <div className='RFQ-Card' key={index}>
-                                <div className='container'>
-                                  <div className='row'>
-                                    <div className='col-10'>
-                                      <input type='checkbox' />
+                      ) : (
+                        <>
+                          {Array.isArray(RFQDe) &&
+                            RFQDe.map((elem, index) => (
+                              <div className="RFQ-Card" key={index}>
+                                <div className="container">
+                                  <div className="row">
+                                    <div className="col-10">
+                                      <input type="checkbox" />
                                       <h5>Project Name : {elem.productName}</h5>
-                                      <p>RFQ Create Date : {formatDate(elem.createdAt)}</p>
+                                      <p>
+                                        RFQ Create Date :{" "}
+                                        {formatDate(elem.createdAt)}
+                                      </p>
                                       <p>Created By : {elem.createdBy}</p>
                                       <h5>Status : {elem.status}</h5>
                                     </div>
-                                    <div className='col-2'>
-                                      <button className="option-button" onClick={() => handleViewRFQDetailsClick(elem)}>
+                                    <div className="col-2">
+                                      <button
+                                        className="option-button"
+                                        onClick={() =>
+                                          handleViewRFQDetailsClick(elem)
+                                        }
+                                      >
                                         <FaEye />
                                       </button>
                                     </div>
                                   </div>
                                 </div>
                               </div>
-                            )}
-                          </>
-                        )}
+                            ))}
+                        </>
+                      )}
                     </div>
                   </div>
                 </div>
 
-                <div className='row mt-5'>
-
-                  <div className='col-6'>
-                    <button className='btn back-btn' onClick={handleBackToDetails}>
+                <div className="row mt-5">
+                  <div className="col-6">
+                    <button
+                      className="btn back-btn"
+                      onClick={handleBackToDetails}
+                    >
                       Back
                     </button>
                   </div>
-                  <div className='col-6'>
-                    <button className='btn back-btn' disabled onClick={handleBackToDetails}>
+                  <div className="col-6">
+                    <button
+                      className="btn back-btn"
+                      disabled
+                      onClick={handleBackToDetails}
+                    >
                       Send
                     </button>
                   </div>
@@ -646,21 +701,17 @@ const TenderContain = () => {
             </div>
           </>
         )}
-
-
-
-
       </>
-    )
-  }
+    );
+  };
 
   return (
     <>
-      <div className=''>
+      <div className="">
         {showDetails ? renderDetails() : renderNewComponent()}
       </div>
     </>
-  )
-}
+  );
+};
 
 export default TenderContain;

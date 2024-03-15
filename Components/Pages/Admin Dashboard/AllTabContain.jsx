@@ -58,7 +58,7 @@ useEffect(() => {
             <RFQContain />
           </TabPane>
           <TabPane className={`${activeTab === '4' ? 'active' : ''}`} tabId={4} >
-            <TenderContain />
+            <TenderContain Tender={Tender}/>
           </TabPane>
           <TabPane className={`${activeTab === '1' ? 'active' : ''}`} tabId={1} >
               {/* <Marketplace activeTab={activeTab}/> */}
