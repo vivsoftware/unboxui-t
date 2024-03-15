@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { Input, Modal, ModalBody, ModalHeader } from 'reactstrap';
@@ -16,7 +16,6 @@ const CreateRFQModal = () => {
     const [purpose, setPurpose] = useState('');
     const [solutionDescription, setSolutionDescription] = useState('');
     const [description, setDescription] = useState('');
-    const [searchQuery, setSearchQuery] = useState(true);
     const [searchdata, setsearchdata] = useState(true);
     const [selectedItem, setSelectedItem] = useState('');
     const [showSearchCard, setShowSearchCard] = useState('');
@@ -32,8 +31,11 @@ const CreateRFQModal = () => {
     const [fileName, setfileName] = useState("");
     const [createdBy, setcreatedBy] = useState("");
     const [projectName, setprojectName] = useState("");
-
+    const [searchQuery, setSearchQuery] = useState('');
+    const searchResultContainerRef = useRef(null);
     const dispatch = useDispatch();
+
+
     const toggle = () => {
         // Clear form fields and reset radio button selection when modal is closed
         setSelectedOption('');
@@ -66,15 +68,11 @@ const CreateRFQModal = () => {
         }
     };
     const handleSearchChange = (e) => {
-        // Clear searchdata if the input is empty
-        if (e.target.value.trim() === '') {
-            setsearchdata(null);
-        } else {
+
             // const query = e.target.value;
             setSearchQuery(e.target.value);
             searchSi()
-        }
-        setShowSearchCard(true);
+        
     };
     const handleItemClick = (selectedItem) => {
         setuserId(selectedItem.id)
@@ -94,6 +92,27 @@ const CreateRFQModal = () => {
             });
     };
 
+    useEffect(() => {
+        const handleOutsideClick = (event) => {
+          if (
+            searchOpen &&
+            searchResultContainerRef.current &&
+            !searchResultContainerRef.current.contains(event.target)
+          ) {
+            setSearchOpen(false);
+          }
+        };
+      
+        document.addEventListener('click', handleOutsideClick);
+      
+        return () => {
+          document.removeEventListener('click', handleOutsideClick);
+        };
+      }, [searchOpen]);
+
+    useEffect(() => {
+        searchSi();
+      }, [searchQuery]);
 
     // const [user, setUser] = useState(null);
     const [DocError, setDocError] = useState(false);
@@ -238,33 +257,33 @@ const CreateRFQModal = () => {
                         <input
                             type="search"
                             className="form-control otp-phone"
-                            placeholder="Search User ..."
+                            placeholder="Search User By Phone Number Or Email..."
                             aria-label="Search"
-                            style={{ height: '40px', border: "1px solid #ddd", borderRadius: '8px' }}
-                            onChange={handleSearchChange}
-                            value={selectedItem}
+                            style={{ height: '40px', border: "1px solid #ddd", borderRadius: '8px',color:"black" }}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            value={searchQuery}
                             onKeyDown={(e) => {
-                                if (e.key === 'Backspace') {
-                                    setSelectedItem((prevSelectedItem) =>
-                                        prevSelectedItem.slice(0, -1)
-                                    );
+                                if (e.key === 'Backspace' && selectedItem.length > 0) {
+                                    setSelectedItem(selectedItem.slice(0, -1));
                                 }
                             }}
-                            onFocus={() => setSearchOpen(true)}
+                            onFocus={() => setSearchOpen(true)} //
                         />
                         {searchdata && searchdata.length === 0 && (
                             <p style={{ color: 'red' }}>No SI found.</p>
                         )}
-                        {searchOpen && searchdata && searchdata.length > 0 && (
-                            <div className='user-searchCard'>
+                        
+                        {searchOpen && searchQuery.trim() !== '' && searchdata && searchdata.length > 0 && (
+                           <div className='user-searchCard' ref={searchResultContainerRef}>
                                 {searchdata.map((elem, index) => (
                                     <div className='user-search' key={index} onClick={() => handleItemClick(elem)}>
                                         <p>{elem.firstName}</p>
                                         <hr></hr>
                                     </div>
                                 ))}
-                            </div>
+                           </div>
                         )}
+                        
                     </div>
                     {/* <div className='mb-3'>
                         <label htmlFor='name' className='form-label font-light'>
