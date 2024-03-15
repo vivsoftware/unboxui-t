@@ -584,7 +584,7 @@ const BSMContain = ({ Tender, Rfq }) => {
                   </>
                 ) :
                   (
-                    <>
+                    <>    
                       {Array.isArray(RFQDe) && RFQDe.map((elem, index) =>
                         <div className='RFQ-Card' key={index}>
                           <div className='container'>
