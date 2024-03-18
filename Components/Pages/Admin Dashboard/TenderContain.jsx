@@ -11,19 +11,21 @@ import BidContain from "./BidContain";
 import TenderNextStep from "./TenderNextStep"; //changes
 
 const TenderContain = ({ Tender }) => {
+
+  const [tenderDe, setTenderDe] = useState(true);
+  const [searchTenderdata, setsearchTenderdata] = useState(true);
+  const [searchTenderQuery, setTenderSearchQuery] = useState(true);
+
   const [isDropdownVisible, setDropdownVisible] = useState(false);
   const [showDetails, setShowDetails] = useState(true);
   const [userDe, setUserDe] = useState(true);
   const [RFQDe, setRFQDe] = useState(true);
-  const [tenderDe, setTenderDe] = useState(true);
   const [searchdata, setsearchdata] = useState(true);
   const [searchRFQdata, setsearchRFQdata] = useState(true);
-  const [searchTenderdata, setsearchTenderdata] = useState(true);
   const [searchQuery, setSearchQuery] = useState(true);
-  const [searchTenderQuery, setTenderSearchQuery] = useState(true);
   const [searchRFQQuery, setSearchRFQQuery] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState("All");
+  const [selectedOption, setSelectedOption] = useState('All');
   const [isModalOpen, setModalOpen] = useState(false);
   const [selectedUserData, setSelectedUserData] = useState(null);
   const [showRFQ, setShowRFQ] = useState(true);
@@ -32,7 +34,15 @@ const TenderContain = ({ Tender }) => {
   const [showBid, setShowBid] = useState(false);
   const [nextButton, setNextButton] = useState(false);
   const searchRef = useRef(null);
-
+  const [searchResults, setSearchResults] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [rfqdata, ssetrfqdata] = useState(true);
+  const [uploadRfq, setuploadRfq] = useState("");
+  const [open, setOpen] = React.useState(false);
+  const [nextBtn, setnextBtn] = React.useState(false);
+  const [tenderid, settenderid] = React.useState(null);
+  const [tenderbid, settenderbid] = React.useState(null);
+  const [tenderBids, setTenderBids] = useState({});
   const handleClickOutside = (e) => {
     if (searchRef.current && !searchRef.current.contains(e.target)) {
       // Clicked outside the search card, close it
@@ -203,14 +213,14 @@ const TenderContain = ({ Tender }) => {
         console.log("tender serach reslut :- ", resp.data);
         console.log(resp.data.json);
         setTenderDe(resp.data);
-        
+
         setsearchTenderdata(resp.data);
       });
   };
 
   const searchAllTender = (e) => {
     axios
-      .get(`${spring_boot_url}api/tender`) 
+      .get(`${spring_boot_url}api/tender`)
       .then((resp) => {
         console.log("All tender serach reslut :- ", resp.data);
         console.log(resp.data.json);
@@ -252,7 +262,7 @@ const TenderContain = ({ Tender }) => {
   };
 
   const renderDetails = () => {
-   
+
     return (
       <>
         {showBid ? (

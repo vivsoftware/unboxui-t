@@ -2,14 +2,10 @@ import axios from 'axios';
 import React, { useEffect, useRef, useState } from 'react';
 import { Chart } from "react-google-charts";
 import spring_boot_url from '../../../Utils/springApi';
-import { useDispatch } from 'react-redux';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Modal from '@mui/material/Modal';
-import { FaEye } from "react-icons/fa";
-import DashboardLoader from '../../Element/DashboardLoader';
-import ModalComponent from './ModalComponent';
 
+
+import Box from '@mui/material/Box';
+import Modal from '@mui/material/Modal';
 const Dashboard = ({ userDe, activeTab, sellers, buyers }) => {
     const [data1, setdata1] = useState(null);
     const [options, setoptions] = useState(null);
@@ -21,12 +17,15 @@ const Dashboard = ({ userDe, activeTab, sellers, buyers }) => {
     const [data, setData] = useState(null);
 
     //////////////changes for view all////////////////
+
     const [buyer, setBuyer] = useState(false);
     const [open, setOpen] = React.useState(false);
     const [isModalOpen, setModalOpen] = useState(false);
     const [selectedUserData, setSelectedUserData] = useState(null);
     const [searchdata, setsearchdata] = useState(true);
-
+    const [opentender, setopentender] = useState(null);
+    const [openseller, setopenseller] = useState(null);
+    const [openrfq, setopenrfq] = useState(null);
     const [isDropdownVisible, setDropdownVisible] = useState(false);
     const [showDetails, setShowDetails] = useState(true);
     const [userData, setUserData] = useState(null);
@@ -35,31 +34,31 @@ const Dashboard = ({ userDe, activeTab, sellers, buyers }) => {
     const [selectedOption, setSelectedOption] = useState('All');
     const searchRef = useRef(null);
 
-    const allUsers = () =>{
+    const allUsers = () => {
         axios.get(`${spring_boot_url}api/adminuser/allusers`)
-        .then(resp => {
-         console.log(resp.data.json);
-         console.log("Dash");
-          console.log(resp.data.json);
-          localStorage.setItem("data", JSON.stringify(resp.data));
-          setUserData(resp.data);
-        });
-      }
+            .then(resp => {
+                console.log(resp.data.json);
+                console.log("Dash");
+                console.log(resp.data.json);
+                localStorage.setItem("data", JSON.stringify(resp.data));
+                setUserData(resp.data);
+            });
+    }
 
     const allbuyer = () => {
         axios.get(`${spring_boot_url}api/adminuser/search?query=buyer`)
-          .then(resp => {
-            console.log(resp.data.json);
-            setUserData(resp.data);
-          });
-      }
-      const allseller = () => {
+            .then(resp => {
+                console.log(resp.data.json);
+                setUserData(resp.data);
+            });
+    }
+    const allseller = () => {
         axios.get(`${spring_boot_url}api/adminuser/search?query=seller`)
-          .then(resp => {
-            console.log(resp.data.json);
-            setUserData(resp.data);
-          });
-      }
+            .then(resp => {
+                console.log(resp.data.json);
+                setUserData(resp.data);
+            });
+    }
 
 
     const openModal = (userData) => {
@@ -80,6 +79,29 @@ const Dashboard = ({ userDe, activeTab, sellers, buyers }) => {
     }
     const handleOpen = () => {
         setOpen(true);
+    };
+    const handleOpenseller = () => {
+        setopenseller(true);
+    };
+
+    const handleCloseseller = () => {
+        setopenseller(false);
+    }
+
+    const handleOpenTender = () => {
+        setopentender(true);
+    };
+
+    const handleCloseTender = () => {
+        setopentender(false);
+    };
+
+    const handleOpenrfq = () => {
+        setopenrfq(true);
+    };
+
+    const handleCloserfq = () => {
+        setopenrfq(false);
     };
 
     const handleViewDetailsClick = (userData) => {
@@ -103,29 +125,29 @@ const Dashboard = ({ userDe, activeTab, sellers, buyers }) => {
     const handleSearchChange = (e) => {
         // Clear searchdata if the input is empty
         if (e.target.value.trim() === '') {
-          setsearchdata(null);
+            setsearchdata(null);
         } else {
-          // const query = e.target.value;
-          setSearchQuery(e.target.value);
-          searchSi()
+            // const query = e.target.value;
+            setSearchQuery(e.target.value);
+            searchSi()
         }
-      };
-      const searchSi = (e) => {
+    };
+    const searchSi = (e) => {
         axios.get(`${spring_boot_url}api/adminuser/search?query=${searchQuery}`)
-          .then(resp => {
-            console.log(resp.data.json);
-            setsearchdata(resp.data);
-          });
-      };
+            .then(resp => {
+                console.log(resp.data.json);
+                setsearchdata(resp.data);
+            });
+    };
 
-      useEffect(() => {
+    useEffect(() => {
         const savedOption = localStorage.getItem('selectedOption');
         if (savedOption) {
-          setSelectedOption(savedOption);
+            setSelectedOption(savedOption);
         }
         // allUsers();
         allbuyer();
-      }, []);
+    }, []);
     //////////////////////changes end///////////////////////
 
 
@@ -256,6 +278,59 @@ const Dashboard = ({ userDe, activeTab, sellers, buyers }) => {
                                 ))}
                             </tbody>
                         </table>
+
+
+
+
+                        {/* //////////////////////////////////////////////buyer-view pop modal////////////// */}
+                        <div>
+                            <Modal
+                                keepMounted
+                                open={open}
+                                onClose={handleClose}
+                                aria-labelledby="keep-mounted-modal-title"
+                                aria-describedby="keep-mounted-modal-description"
+                            >
+                                <Box sx={style}>
+                                    <h3 className='mb-2' style={{ marginLeft: '350px', marginTop: '-10px' }}>Buyer List</h3>
+                                    <div className="my-modal-content1" style={{ display: "flex-relative" }}>
+
+                                        <div className='row mt-5 SI-table' style={{ height: '960px', width: '760px', marginLeft: '0px' }}>
+                                            <table className="table">
+                                                <thead className='table-header'>
+                                                    <tr>
+                                                        <th>Sr.No</th>
+                                                        <th>Name</th>
+                                                        <th>User Id</th>
+                                                        <th>Email Id</th>
+                                                        <th>Phone No.</th>
+                                                        <th>Company Name</th>
+                                                        <th>Type</th>
+                                                    </tr>
+                                                </thead>
+                                                {(
+                                                    <tbody>
+                                                        {buyers?.map((buyer, index) => (
+                                                            <tr key={index + 1}>
+                                                                {/* <td>{index + 1}</td> */}
+                                                                <td>{buyer.id}</td>
+                                                                <td>{buyer?.firstName}</td>
+                                                                <td>{buyer?.phoneNumber}</td>
+                                                            </tr>
+                                                        ))}
+                                                    </tbody>
+                                                )}
+                                            </table>
+                                        </div>
+                                        <div style={{ display: 'flex' }}>
+                                            <button onClick={handleClose}>Close</button>
+                                        </div>
+                                    </div>
+                                </Box>
+                            </Modal>
+
+                        </div>
+
                     </div>
                     <div className='row'>
                         <div className='col-12 text-end'>
@@ -285,10 +360,68 @@ const Dashboard = ({ userDe, activeTab, sellers, buyers }) => {
                                 ))}
                             </tbody>
                         </table>
+
+
+
+
+
+                        {/* //////////////////////////////////////////////seller-view pop modal////////////// */}
+                        <div>
+                            <Modal
+                                keepMounted
+                                open={openseller}
+                                onClose={handleCloseseller}
+                                aria-labelledby="keep-mounted-modal-title"
+                                aria-describedby="keep-mounted-modal-description"
+                            >
+                                <Box sx={style}>
+                                    <h3 className='mb-2' style={{ marginLeft: '350px', marginTop: '-10px' }}>Seller List</h3>
+                                    <div className="my-modal-content1" style={{ display: "flex-relative" }}>
+
+
+                                        <div className='row mt-5 SI-table' style={{ height: '960px', width: '760px', marginLeft: '0px' }}>
+                                            <table className="table">
+                                                <thead className='table-header'>
+                                                    <tr>
+                                                        <th>Sr.No</th>
+                                                        <th>Name</th>
+                                                        <th>User Id</th>
+                                                        <th>Email Id</th>
+                                                        <th>Phone No.</th>
+                                                        <th>Company Name</th>
+                                                        <th>Type</th>
+
+                                                    </tr>
+                                                </thead>
+                                                {(
+                                                    <tbody>
+                                                        {Array.isArray(sellers) && sellers.map((elem, index) => (
+                                                            <tr key={index + 1} className='table-row'>
+                                                                <td>{index + 1}</td>
+                                                                <td>{elem.firstName}</td>
+                                                                <td>{elem.id}</td>
+                                                                <td>{elem.email}</td>
+                                                                <td>{elem.phoneNumber}</td>
+                                                                <td>{elem.company}</td>
+                                                                <td>{elem.userTypes}</td>
+                                                            </tr>
+                                                        ))}
+                                                    </tbody>
+                                                )}
+                                            </table>
+                                        </div>
+                                        <div style={{ display: 'flex' }}>
+                                            <button onClick={handleCloseseller}>Close</button>
+                                        </div>
+                                    </div>
+                                </Box>
+                            </Modal>
+
+                        </div>
                     </div>
                     <div className='row'>
                         <div className='col-12 text-end'>
-                            <button className='btn' onClick={() => handleOpen()} style={{ backgroundColor: 'white', color: "#FF8400", height: '20px', padding: '0' }} >View All</button>
+                            <button className='btn' onClick={() => handleOpenseller()} style={{ backgroundColor: 'white', color: "#FF8400", height: '20px', padding: '0' }} >View All</button>
                         </div>
                     </div>
                 </div>
@@ -315,8 +448,62 @@ const Dashboard = ({ userDe, activeTab, sellers, buyers }) => {
                         </div>
                         <div className='row'>
                             <div className='col-12 text-end'>
-                                <button className='btn' onClick={() => handleOpen()} style={{ backgroundColor: 'white', color: "#FF8400", height: '20px', padding: '0' }} >View All</button>
+                                <button className='btn' onClick={() => handleOpenrfq()} style={{ backgroundColor: 'white', color: "#FF8400", height: '20px', padding: '0' }} >View All</button>
                             </div>
+                        </div>
+
+
+                        {/* ////////////////////////////rfq view pop modal//////////////////////////////// */}
+                        <div>
+                            <Modal
+                                keepMounted
+                                open={openrfq}
+                                onClose={handleCloserfq}
+                                aria-labelledby="keep-mounted-modal-title"
+                                aria-describedby="keep-mounted-modal-description"
+                            >
+                                <Box sx={style}>
+                                    <h3 className='mb-2' style={{ marginLeft: '350px', marginTop: '-10px' }}>Seller List</h3>
+                                    <div className="my-modal-content1" style={{ display: "flex-relative" }}>
+
+
+                                        <div className='row mt-5 SI-table' style={{ height: '960px', width: '760px', marginLeft: '0px' }}>
+                                            <table className="table">
+                                                <thead className='table-header'>
+                                                    <tr>
+                                                        <th>Sr.No</th>
+                                                        <th>Name</th>
+                                                        <th>User Id</th>
+                                                        <th>Email Id</th>
+                                                        <th>Phone No.</th>
+                                                        <th>Company Name</th>
+                                                        <th>Type</th>
+
+                                                    </tr>
+                                                </thead>
+                                                {(
+                                                    <tbody>
+                                                        {Array.isArray(RfqNo) && RfqNo.map((elem, index) => (
+                                                            <tr key={index + 1} className='table-row'>
+                                                                <td>{index + 1}</td>
+                                                                <td>{elem.firstName}</td>
+                                                                <td>{elem.id}</td>
+                                                                <td>{elem.email}</td>
+                                                                <td>{elem.phoneNumber}</td>
+                                                                <td>{elem.company}</td>
+                                                                <td>{elem.userTypes}</td>
+                                                            </tr>
+                                                        ))}
+                                                    </tbody>
+                                                )}
+                                            </table>
+                                        </div>
+                                        <div style={{ display: 'flex' }}>
+                                            <button onClick={handleCloserfq}>Close</button>
+                                        </div>
+                                    </div>
+                                </Box>
+                            </Modal>
                         </div>
                     </div>
                     <div className='details' id='grid'>
@@ -333,7 +520,7 @@ const Dashboard = ({ userDe, activeTab, sellers, buyers }) => {
                                         <tr key={index + 1}>
                                             <td>{index + 1}</td>
                                             <td>{tender.id}</td>
-                                            <td>{tender?.projectName}</td>
+                                            <td>{tender?.purpose}</td>
                                         </tr>
                                     ))}
                                 </tbody>
@@ -341,125 +528,52 @@ const Dashboard = ({ userDe, activeTab, sellers, buyers }) => {
                         </div>
                         <div className='row'>
                             <div className='col-12 text-end'>
-                                <button className='btn' onClick={() => handleOpen()} style={{ backgroundColor: 'white', color: "#FF8400", height: '20px', padding: '0' }} >View All</button>
+                                <button className='btn' onClick={() => handleOpenTender()} style={{ backgroundColor: 'white', color: "#FF8400", height: '20px', padding: '0' }} >View All</button>
                             </div>
                         </div>
                     </div>
+
                 </div >
 
                 {/* ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */}
 
-
-                {/* //////////////////////////////////////////////buyer-view pop modal////////////// */}
+                {/* ////////////////////////////tender view pop modal//////////////////////////////// */}
                 <div>
                     <Modal
                         keepMounted
-                        open={open}
-                        onClose={handleClose}
-                        aria-labelledby="keep-mounted-modal-title"
-                        aria-describedby="keep-mounted-modal-description"
-                    >
-                        <Box sx={style}>
-                            <h3 className='mb-2' style={{ marginLeft: '350px', marginTop: '-10px' }}>Buyer List</h3>
-                             <div className="my-modal-content1" style={{ display: "flex-relative" }}>
-
-                                <div className='row mt-5 SI-table' style={{ height: '960px', width: '760px', marginLeft: '0px' }}>
-                                    <table className="table">
-                                        <thead className='table-header'>
-                                            <tr>
-                                                <th>Sr.No</th>
-                                                <th>Name</th>
-                                                <th>User Id</th>
-                                                <th>Email Id</th>
-                                                <th>Phone No.</th>
-                                                <th>Company Name</th>
-                                                <th>Type</th>
-                                            </tr>
-                                        </thead>
-                                        { (
-                                            <tbody>
-                                                {Array.isArray(userData) && userData.map((elem, index) => (
-                                                    <tr key={index + 1} className='table-row'>
-                                                        <td>{index + 1}</td>
-                                                        <td>{elem.firstName}</td>
-                                                        <td>{elem.id}</td>
-                                                        <td>{elem.email}</td>
-                                                        <td>{elem.phoneNumber}</td>
-                                                        <td>{elem.company}</td>
-                                                        <td>{elem.userTypes}</td>
-                                                    </tr>
-                                                ))}
-                                            </tbody>
-                                        )}
-                                    </table>
-                                </div>
-                                <div style={{ display: 'flex' }}>
-                                    <button onClick={handleClose}>Close</button>
-                                </div>
-                            </div>
-                        </Box>
-                    </Modal>
-
-                </div>
-
-
-                {/* //////////////////////////////////////////////seller-view pop modal////////////// */}
-                <div>
-                    <Modal
-                        keepMounted
-                        open={open}
-                        onClose={handleClose}
+                        open={opentender}
+                        onClose={handleCloseTender}
                         aria-labelledby="keep-mounted-modal-title"
                         aria-describedby="keep-mounted-modal-description"
                     >
                         <Box sx={style}>
                             <h3 className='mb-2' style={{ marginLeft: '350px', marginTop: '-10px' }}>Seller List</h3>
-                             <div className="my-modal-content1" style={{ display: "flex-relative" }}>
-                               {/* <div className='row ms-1'>
-                                    <table>
-                                        <tr>
-                                            <th>Id</th>
-                                            <th>Name</th>
-                                            <th>Phone</th>
-                                        </tr>
-                                        <tbody>
-                                            {buyers?.slice(0, 5).map((buyer, index) => (
-                                                <tr key={index + 1}>
-                                                    <td>{index + 1}</td>
-                                                    <td>{buyer.id}</td>
-                                                    <td>{buyer?.firstName}</td>
-                                                    <td>{buyer?.phoneNumber}</td>
-                                                </tr>
-                                            ))}
-                                        </tbody>
-                                    </table>
-                                </div> */}
-
+                            <div className="my-modal-content1" style={{ display: "flex-relative" }}>
                                 <div className='row mt-5 SI-table' style={{ height: '960px', width: '760px', marginLeft: '0px' }}>
                                     <table className="table">
                                         <thead className='table-header'>
                                             <tr>
-                                                <th>Sr.No</th>
+                                                <th>T.Id</th>
                                                 <th>Name</th>
-                                                <th>User Id</th>
                                                 <th>Email Id</th>
                                                 <th>Phone No.</th>
-                                                <th>Company Name</th>
-                                                <th>Type</th>
+                                                {/* <th>Company Name</th>
+                                                <th>Type</th> */}
 
                                             </tr>
                                         </thead>
-                                        { (
+                                        {(
                                             <tbody>
-                                                {Array.isArray(sellers) && sellers.map((elem, index) => (
+                                                {Array.isArray(TenderNo) && TenderNo.map((elem, index) => (
                                                     <tr key={index + 1} className='table-row'>
-                                                        <td>{index + 1}</td>
-                                                        <td>{elem.firstName}</td>
+                                                        {/* <td>{index + 1}</td> */}
                                                         <td>{elem.id}</td>
+
+                                                        <td>{elem.purpose}</td>
                                                         <td>{elem.email}</td>
                                                         <td>{elem.phoneNumber}</td>
-                                                        <td>{elem.company}</td>
-                                                        <td>{elem.userTypes}</td>
+                                                        {/* <td>{elem.company}</td>
+                                                        <td>{elem.userTypes}</td> */}
                                                     </tr>
                                                 ))}
                                             </tbody>
@@ -467,159 +581,13 @@ const Dashboard = ({ userDe, activeTab, sellers, buyers }) => {
                                     </table>
                                 </div>
                                 <div style={{ display: 'flex' }}>
-                                    <button onClick={handleClose}>Close</button>
-                                </div>
-                            </div>
-                        </Box>
-                    </Modal>
-
-                </div>
-
-                {/* ////////////////////////////rfq view pop modal//////////////////////////////// */}
-                <div>
-                    <Modal
-                        keepMounted
-                        open={open}
-                        onClose={handleClose}
-                        aria-labelledby="keep-mounted-modal-title"
-                        aria-describedby="keep-mounted-modal-description"
-                    >
-                        <Box sx={style}>
-                            <h3 className='mb-2' style={{ marginLeft: '350px', marginTop: '-10px' }}>Seller List</h3>
-                             <div className="my-modal-content1" style={{ display: "flex-relative" }}>
-                               {/* <div className='row ms-1'>
-                                    <table>
-                                        <tr>
-                                            <th>Id</th>
-                                            <th>Name</th>
-                                            <th>Phone</th>
-                                        </tr>
-                                        <tbody>
-                                            {buyers?.slice(0, 5).map((buyer, index) => (
-                                                <tr key={index + 1}>
-                                                    <td>{index + 1}</td>
-                                                    <td>{buyer.id}</td>
-                                                    <td>{buyer?.firstName}</td>
-                                                    <td>{buyer?.phoneNumber}</td>
-                                                </tr>
-                                            ))}
-                                        </tbody>
-                                    </table>
-                                </div> */}
-
-                                <div className='row mt-5 SI-table' style={{ height: '960px', width: '760px', marginLeft: '0px' }}>
-                                    <table className="table">
-                                        <thead className='table-header'>
-                                            <tr>
-                                                <th>Sr.No</th>
-                                                <th>Name</th>
-                                                <th>User Id</th>
-                                                <th>Email Id</th>
-                                                <th>Phone No.</th>
-                                                <th>Company Name</th>
-                                                <th>Type</th>
-
-                                            </tr>
-                                        </thead>
-                                        { (
-                                            <tbody>
-                                                {Array.isArray(sellers) && sellers.map((elem, index) => (
-                                                    <tr key={index + 1} className='table-row'>
-                                                        <td>{index + 1}</td>
-                                                        <td>{elem.firstName}</td>
-                                                        <td>{elem.id}</td>
-                                                        <td>{elem.email}</td>
-                                                        <td>{elem.phoneNumber}</td>
-                                                        <td>{elem.company}</td>
-                                                        <td>{elem.userTypes}</td>
-                                                    </tr>
-                                                ))}
-                                            </tbody>
-                                        )}
-                                    </table>
-                                </div>
-                                <div style={{ display: 'flex' }}>
-                                    <button onClick={handleClose}>Close</button>
+                                    <button onClick={handleCloseTender}>Close</button>
                                 </div>
                             </div>
                         </Box>
                     </Modal>
                 </div>
-
-                {/* ////////////////////////////rfq view pop modal//////////////////////////////// */}
-                <div>
-                    <Modal
-                        keepMounted
-                        open={open}
-                        onClose={handleClose}
-                        aria-labelledby="keep-mounted-modal-title"
-                        aria-describedby="keep-mounted-modal-description"
-                    >
-                        <Box sx={style}>
-                            <h3 className='mb-2' style={{ marginLeft: '350px', marginTop: '-10px' }}>Seller List</h3>
-                             <div className="my-modal-content1" style={{ display: "flex-relative" }}>
-                               {/* <div className='row ms-1'>
-                                    <table>
-                                        <tr>
-                                            <th>Id</th>
-                                            <th>Name</th>
-                                            <th>Phone</th>
-                                        </tr>
-                                        <tbody>
-                                            {buyers?.slice(0, 5).map((buyer, index) => (
-                                                <tr key={index + 1}>
-                                                    <td>{index + 1}</td>
-                                                    <td>{buyer.id}</td>
-                                                    <td>{buyer?.firstName}</td>
-                                                    <td>{buyer?.phoneNumber}</td>
-                                                </tr>
-                                            ))}
-                                        </tbody>
-                                    </table>
-                                </div> */}
-
-                                <div className='row mt-5 SI-table' style={{ height: '960px', width: '760px', marginLeft: '0px' }}>
-                                    <table className="table">
-                                        <thead className='table-header'>
-                                            <tr>
-                                                <th>Sr.No</th>
-                                                <th>Name</th>
-                                                <th>User Id</th>
-                                                <th>Email Id</th>
-                                                <th>Phone No.</th>
-                                                <th>Company Name</th>
-                                                <th>Type</th>
-
-                                            </tr>
-                                        </thead>
-                                        { (
-                                            <tbody>
-                                                {Array.isArray(sellers) && sellers.map((elem, index) => (
-                                                    <tr key={index + 1} className='table-row'>
-                                                        <td>{index + 1}</td>
-                                                        <td>{elem.firstName}</td>
-                                                        <td>{elem.id}</td>
-                                                        <td>{elem.email}</td>
-                                                        <td>{elem.phoneNumber}</td>
-                                                        <td>{elem.company}</td>
-                                                        <td>{elem.userTypes}</td>
-                                                    </tr>
-                                                ))}
-                                            </tbody>
-                                        )}
-                                    </table>
-                                </div>
-                                <div style={{ display: 'flex' }}>
-                                    <button onClick={handleClose}>Close</button>
-                                </div>
-                            </div>
-                        </Box>
-                    </Modal>
-                </div>
-
                 {/* /////////////////////view modal ends///////////////// */}
-
-
                 {/* mobile view 2nd block */}
                 <div className='secondblock' id="grid2_mobile">
                     <div className='detailsmobile' id="grid2_mobile">
@@ -731,7 +699,6 @@ const Dashboard = ({ userDe, activeTab, sellers, buyers }) => {
                     </div>
                 </div >
             </div >
-
             {/* desktop view of 3rd block */}
             <div className='detailsP' id='last'>
                 <h3 className='text-center mb-1'>Purchase Details</h3>
