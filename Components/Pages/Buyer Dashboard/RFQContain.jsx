@@ -57,10 +57,6 @@ const RFQContain = ({ rfq }) => {
   const handleOpen = (elem) => {
     setOpen(true);
     ssetrfqdata(elem);
-
-
-
-
   };
     
 
