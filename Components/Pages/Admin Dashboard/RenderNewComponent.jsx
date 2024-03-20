@@ -7,9 +7,10 @@ import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import axios from 'axios';
 import spring_boot_url from '../../../Utils/springApi';
+import RenderDetails from './RenderDetails';
 
 
-const RenderNewComponent = ({}) => {
+const RenderNewComponent = (tender) => {
 
     const [nextButton, setNextButton] = useState(false);
     const [searchRFQdata, setsearchRFQdata] = useState(true);
@@ -22,8 +23,8 @@ const RenderNewComponent = ({}) => {
     const [searchQuery, setSearchQuery] = useState(true);
     const [selectedUserData, setSelectedUserData] = useState(null);
     const [isModalOpen, setModalOpen] = useState(false);
-    const [showDetails, setShowDetails] = useState(true);
-
+    const [showDetails, setShowDetails] = useState(false);
+    const [tenderBack, setTenderBack] = useState(null);
 
     const handleClickOutside = (e) => {
         if (searchRef.current && !searchRef.current.contains(e.target)) {
@@ -78,8 +79,18 @@ const RenderNewComponent = ({}) => {
             localStorage.setItem("data", JSON.stringify(resp.data));
             setRFQDe(resp.data);
           });
+          
       }, []);
 
+      useEffect(() => {
+        
+          setTenderBack(tender);
+          console.log("tender Back Set Tender: ", tenderBack);
+      });
+      
+      if(tenderBack == null){
+        setTenderBack(tender);
+      }
 
     const searchRFQ = (e) => {
         axios.get(`${spring_boot_url}api/userRfq/search?query=${searchQuery}`)
@@ -117,17 +128,24 @@ const RenderNewComponent = ({}) => {
         setSelectedUserData(userData);
         setModalOpen(true);
         console.log("clicked eye");
-      };
+        if(userData) {
+            setrfqdata(userData);
+        }
+    };
+    
 
       const handleBackToDetails = () => {
         setShowDetails(true);
         console.log("Back Details");
-      };
+        setTenderBack(tender);
 
+      };
+      console.log("Render New Component", tender);
     return (
       <>
-        {nextButton ? (<TenderNextStep /> 
-        ) : (
+        {showDetails ? (<RenderDetails handleIsComponentVisible  tenderBack={tenderBack} formatDate={formatDate} tender={tender} handleBackToDetails = {handleBackToDetails}/>) :  
+            nextButton ? (<TenderNextStep />) :
+        (
           <>
             <div className='d-none d-xl-block d-md-block d-sm-none'>
               <div className='fluid-container'>
@@ -187,6 +205,7 @@ const RenderNewComponent = ({}) => {
                       ) :
                         (
                           <>
+                           
                             {Array.isArray(RFQDe) && RFQDe.map((elem, index) =>
                               <div className='RFQ-Card' key={index}>
                                 <div className='container'>
