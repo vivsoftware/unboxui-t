@@ -12,6 +12,7 @@ const RegisterSIModal = () => {
   const toggle = () => {
     dispatch({ type: 'REGISTERSIMODAL' });
   };
+
   const [name, setName] = useState('')
   const [company, setCompanyName] = useState('')
   const [imageUrl, setimageurl] = useState('')
@@ -99,9 +100,8 @@ const RegisterSIModal = () => {
       setuserDe(resp.body);
       if (resp.ok === true) {
         const { user } = createUserWithEmailAndPassword(auth, email, passwordfirebase);
-        const handleReload = () => {
           router.reload();
-        };
+        
       }
     });
   };
@@ -264,7 +264,7 @@ const RegisterSIModal = () => {
             </div>
             <div>
               <label htmlFor='country' className='form-label font-light'>
-                SubuserTypes
+                SubuserTypes(optional)
               </label>
               <Input type='text' className='form-control otp-phone' id='country' placeholder='India' onChange={(e) => setsubuserTypes(e.target.value)} required />
               {formErrors.subType && <div className="error" style={{ color: 'red' }}>{formErrors.subType}</div>}

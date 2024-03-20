@@ -2,9 +2,10 @@ import axios from 'axios';
 import React, { useEffect, useRef, useState } from 'react';
 import { Chart } from "react-google-charts";
 import spring_boot_url from '../../../Utils/springApi';
+
+
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
-
 const Dashboard = ({ userDe, activeTab, sellers, buyers }) => {
     const [data1, setdata1] = useState(null);
     const [options, setoptions] = useState(null);
@@ -16,6 +17,7 @@ const Dashboard = ({ userDe, activeTab, sellers, buyers }) => {
     const [data, setData] = useState(null);
 
     //////////////changes for view all////////////////
+
     const [buyer, setBuyer] = useState(false);
     const [open, setOpen] = React.useState(false);
     const [isModalOpen, setModalOpen] = useState(false);
@@ -24,8 +26,6 @@ const Dashboard = ({ userDe, activeTab, sellers, buyers }) => {
     const [opentender, setopentender] = useState(null);
     const [openseller, setopenseller] = useState(null);
     const [openrfq, setopenrfq] = useState(null);
-    const [openPurchase, setopenPurchase] = useState(null);
-
     const [isDropdownVisible, setDropdownVisible] = useState(false);
     const [showDetails, setShowDetails] = useState(true);
     const [userData, setUserData] = useState(null);
@@ -102,14 +102,6 @@ const Dashboard = ({ userDe, activeTab, sellers, buyers }) => {
 
     const handleCloserfq = () => {
         setopenrfq(false);
-    };
-
-    const handleOpenPurchase = () => {
-        setopenPurchase(true);
-    };
-
-    const handleClosePurchase = () => {
-        setopenPurchase(false);
     };
 
     const handleViewDetailsClick = (userData) => {
@@ -287,6 +279,9 @@ const Dashboard = ({ userDe, activeTab, sellers, buyers }) => {
                             </tbody>
                         </table>
 
+
+
+
                         {/* //////////////////////////////////////////////buyer-view pop modal////////////// */}
                         <div>
                             <Modal
@@ -333,7 +328,9 @@ const Dashboard = ({ userDe, activeTab, sellers, buyers }) => {
                                     </div>
                                 </Box>
                             </Modal>
+
                         </div>
+
                     </div>
                     <div className='row'>
                         <div className='col-12 text-end'>
@@ -363,6 +360,9 @@ const Dashboard = ({ userDe, activeTab, sellers, buyers }) => {
                                 ))}
                             </tbody>
                         </table>
+
+
+
 
 
                         {/* //////////////////////////////////////////////seller-view pop modal////////////// */}
@@ -463,7 +463,7 @@ const Dashboard = ({ userDe, activeTab, sellers, buyers }) => {
                                 aria-describedby="keep-mounted-modal-description"
                             >
                                 <Box sx={style}>
-                                    <h3 className='mb-2' style={{ marginLeft: '350px', marginTop: '-10px' }}>RFQ List</h3>
+                                    <h3 className='mb-2' style={{ marginLeft: '350px', marginTop: '-10px' }}>Seller List</h3>
                                     <div className="my-modal-content1" style={{ display: "flex-relative" }}>
 
 
@@ -532,11 +532,10 @@ const Dashboard = ({ userDe, activeTab, sellers, buyers }) => {
                             </div>
                         </div>
                     </div>
+
                 </div >
 
                 {/* ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */}
-
-
 
                 {/* ////////////////////////////tender view pop modal//////////////////////////////// */}
                 <div>
@@ -548,10 +547,8 @@ const Dashboard = ({ userDe, activeTab, sellers, buyers }) => {
                         aria-describedby="keep-mounted-modal-description"
                     >
                         <Box sx={style}>
-                            <h3 className='mb-2' style={{ marginLeft: '350px', marginTop: '-10px' }}>Tender List</h3>
+                            <h3 className='mb-2' style={{ marginLeft: '350px', marginTop: '-10px' }}>Seller List</h3>
                             <div className="my-modal-content1" style={{ display: "flex-relative" }}>
-
-
                                 <div className='row mt-5 SI-table' style={{ height: '960px', width: '760px', marginLeft: '0px' }}>
                                     <table className="table">
                                         <thead className='table-header'>
@@ -591,8 +588,6 @@ const Dashboard = ({ userDe, activeTab, sellers, buyers }) => {
                     </Modal>
                 </div>
                 {/* /////////////////////view modal ends///////////////// */}
-
-
                 {/* mobile view 2nd block */}
                 <div className='secondblock' id="grid2_mobile">
                     <div className='detailsmobile' id="grid2_mobile">
@@ -715,7 +710,6 @@ const Dashboard = ({ userDe, activeTab, sellers, buyers }) => {
                     </div>
                 </div >
             </div >
-
             {/* desktop view of 3rd block */}
             <div className='detailsP' id='last'>
                 <h3 className='text-center mb-1'>Purchase Details</h3>
