@@ -387,7 +387,6 @@ const Dashboard = ({ tender, rfq, userDe,sellers }) => {
                                                     <th>Phone No.</th>
                                                     <th>Company Name</th>
                                                     <th>Type</th>
-
                                                 </tr>
                                             </thead>
                                             {(
@@ -755,7 +754,6 @@ const Dashboard = ({ tender, rfq, userDe,sellers }) => {
                                                     <th>Phone No.</th>
                                                     <th>Company Name</th>
                                                     <th>Type</th>
-
                                                 </tr>
                                             </thead>
                                             {(

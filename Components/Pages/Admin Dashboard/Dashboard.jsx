@@ -26,6 +26,7 @@ const Dashboard = ({ userDe, activeTab, sellers, buyers }) => {
     const [opentender, setopentender] = useState(null);
     const [openseller, setopenseller] = useState(null);
     const [openrfq, setopenrfq] = useState(null);
+    const [openPurchase, setopenPurchase] = useState(null);
     const [isDropdownVisible, setDropdownVisible] = useState(false);
     const [showDetails, setShowDetails] = useState(true);
     const [userData, setUserData] = useState(null);
@@ -101,6 +102,13 @@ const Dashboard = ({ userDe, activeTab, sellers, buyers }) => {
     };
 
     const handleCloserfq = () => {
+        setopenrfq(false);
+    };
+    const handleOpenPurchase = () => {
+        setopenrfq(true);
+    };
+
+    const handleClosePurchase = () => {
         setopenrfq(false);
     };
 
