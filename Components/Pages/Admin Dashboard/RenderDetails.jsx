@@ -8,6 +8,9 @@ import axios from "axios";
 import RenderNewComponent from "./RenderNewComponent";
 import spring_boot_url from "../../../Utils/springApi";
 
+//check component how many renders ouccring and check stats and data in each render.
+// to fix the issue of re-rendering.
+
 const RenderDetails = ({
   tender,
   tenderBids,

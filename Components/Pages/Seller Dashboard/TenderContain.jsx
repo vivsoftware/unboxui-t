@@ -3,6 +3,8 @@ import Modal from '@mui/material/Modal';
 import React, { useEffect, useRef, useState } from 'react';
 import { FaEye } from 'react-icons/fa';
 import TenderNextStep from './TenderNextStep';
+import spring_boot_url from '../../../Utils/springApi';
+import axios from 'axios';
 const TenderContain = ({ rfq, tender, userDe }) => {
   const [isDropdownVisible, setDropdownVisible] = useState(false);
   const [showDetails, setShowDetails] = useState(true);
@@ -29,6 +31,8 @@ const TenderContain = ({ rfq, tender, userDe }) => {
   const [searchResults, setSearchResults] = useState([]);
   const [nextBtn, setnextBtn] = React.useState(false);
   const [Tenderselectdata, setTenderselectdata] = useState(true);
+  const [searchData, setSearchData] = useState(true);
+  
 
   const handleClickOutside = (e) => {
     if (searchRef.current && !searchRef.current.contains(e.target)) {
@@ -99,10 +103,31 @@ const TenderContain = ({ rfq, tender, userDe }) => {
     if (e.target.value.trim() === '') {
       setSearchResults(null);
     } else {
-      setSearchTerm(event.target.value);
-
+      setSearchTerm(e.target.value);
     }
   };
+// tender search start
+  const handleTenderSearchChange = (e) => {
+    
+    if(e.target.value.trim() === ""){
+      setsearchdata(null);
+    }else{
+      setSearchQuery(e.target.value);
+      serachTender();
+    }
+  }
+
+  const serachTender = (e) => {
+    axios.get(`${spring_boot_url}api/tender/find?query=${searchQuery}`)
+      .then(resp => {
+        setsearchdata(resp.data);
+      });
+    console.log(searchQuery);
+  }
+
+  useEffect()
+
+// tender search end
   const handleSearchRFQChange = (e) => {
     // Clear searchdata if the input is empty
     if (e.target.value.trim() === '') {
@@ -177,7 +202,7 @@ const TenderContain = ({ rfq, tender, userDe }) => {
                   <button className='btn register-btn' onClick={handleCreateTender} >Create Tender</button>
                 </div>
                 <div className='col-10'>
-                  <input type="search" className="form-control" placeholder="Search Tender ..." aria-label="Search" style={{ height: '40px', border: "1px solid #ddd", borderRadius: '8px' }} />
+                  <input type="search" className="form-control" onChange={handleTenderSearchChange} placeholder="Search Tender ..." aria-label="Search" style={{ height: '40px', border: "1px solid #ddd", borderRadius: '8px' }} />
                 </div>
               </div>
               <div className='row mt-5 SI-table'>
