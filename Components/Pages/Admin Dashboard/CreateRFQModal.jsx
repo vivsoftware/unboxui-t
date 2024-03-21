@@ -6,7 +6,6 @@ import { toast } from 'react-toastify';
 import { Input, Modal, ModalBody, ModalHeader } from 'reactstrap';
 import { auth } from '../../../Config/firebase';
 import spring_boot_url from '../../../Utils/springApi';
-
 const CreateRFQModal = () => {
     const [selectedOption, setSelectedOption] = useState('');
     const [modelNo, setModelNo] = useState('');
@@ -33,9 +32,29 @@ const CreateRFQModal = () => {
     const [projectName, setprojectName] = useState("");
     const [searchQuery, setSearchQuery] = useState('');
     const searchResultContainerRef = useRef(null);
+    const [open, setOpen] = React.useState(false);
+    const [Yes, setYes] = React.useState(false);
     const dispatch = useDispatch();
-
-
+    const style = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: 400,
+        bgcolor: 'background.paper',
+        border: '4px solid #ff8400',
+        boxShadow: 24,
+        p: 4,
+    };
+    const handleClose = () => {
+        setOpen(false);
+        // setuploadRfq(null);
+    }
+    const handleOpen = (elem) => {
+        setOpen(true);
+        setYes(true)
+        // ssetrfqdata(elem);
+    };
     const toggle = () => {
         // Clear form fields and reset radio button selection when modal is closed
         setSelectedOption('');
@@ -49,9 +68,6 @@ const CreateRFQModal = () => {
 
     };
     const [user, setUser] = useState(null);
-
-
-
     const handleOptionChange = (value) => {
         setSelectedOption(value);
         // Clear form fields when an option other than 'product' is selected
@@ -64,15 +80,12 @@ const CreateRFQModal = () => {
         }
         else {
             setpurposeofRfq(value)
-
         }
     };
     const handleSearchChange = (e) => {
-
-            // const query = e.target.value;
-            setSearchQuery(e.target.value);
-            searchSi()
-        
+        // const query = e.target.value;
+        setSearchQuery(e.target.value);
+        searchSi()
     };
     const handleItemClick = (selectedItem) => {
         setuserId(selectedItem.id)
@@ -91,32 +104,26 @@ const CreateRFQModal = () => {
                 setsearchdata(resp.data);
             });
     };
-
     useEffect(() => {
         const handleOutsideClick = (event) => {
-          if (
-            searchOpen &&
-            searchResultContainerRef.current &&
-            !searchResultContainerRef.current.contains(event.target)
-          ) {
-            setSearchOpen(false);
-          }
+            if (
+                searchOpen &&
+                searchResultContainerRef.current &&
+                !searchResultContainerRef.current.contains(event.target)
+            ) {
+                setSearchOpen(false);
+            }
         };
-      
         document.addEventListener('click', handleOutsideClick);
-      
         return () => {
-          document.removeEventListener('click', handleOutsideClick);
+            document.removeEventListener('click', handleOutsideClick);
         };
-      }, [searchOpen]);
-
+    }, [searchOpen]);
     useEffect(() => {
         searchSi();
-      }, [searchQuery]);
-
+    }, [searchQuery]);
     // const [user, setUser] = useState(null);
     const [DocError, setDocError] = useState(false);
-
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -129,15 +136,9 @@ const CreateRFQModal = () => {
                 // Set error state or show an error message to the user
             }
         };
-
         fetchData();
     }, []); // Empty dependency array ensures that this effect runs once on mount
-
     useEffect(() => {
-
-
-
-
         const fetchUserData = async () => {
             try {
                 if (user && user.email) {
@@ -205,10 +206,10 @@ const CreateRFQModal = () => {
             phoneNumber,
             deliveryDate,
             purposeOfRfq,
-            projectName, 
+            projectName,
             description,
             quantity,
-            createdBy, 
+            createdBy,
             originalFilename: "FILE"
         };
         fetch(`${spring_boot_url}api/userRfq/${userId}`, {
@@ -245,6 +246,8 @@ const CreateRFQModal = () => {
             }
         });
     };
+
+    console.log("uploloajiah", uploadShow)
     return (
         <>
             <Modal className='add-address-modal' centered={true} id='addAddress' isOpen={createRFQModal} toggle={toggle} backdrop="static" keyboard={false}>
@@ -259,7 +262,7 @@ const CreateRFQModal = () => {
                             className="form-control otp-phone"
                             placeholder="Search User By Phone Number Or Email..."
                             aria-label="Search"
-                            style={{ height: '40px', border: "1px solid #ddd", borderRadius: '8px',color:"black" }}
+                            style={{ height: '40px', border: "1px solid #ddd", borderRadius: '8px', color: "black" }}
                             onChange={(e) => setSearchQuery(e.target.value)}
                             value={searchQuery}
                             onKeyDown={(e) => {
@@ -272,18 +275,16 @@ const CreateRFQModal = () => {
                         {searchdata && searchdata.length === 0 && (
                             <p style={{ color: 'red' }}>No SI found.</p>
                         )}
-                        
                         {searchOpen && searchQuery.trim() !== '' && searchdata && searchdata.length > 0 && (
-                           <div className='user-searchCard' ref={searchResultContainerRef}>
+                            <div className='user-searchCard' ref={searchResultContainerRef}>
                                 {searchdata.map((elem, index) => (
                                     <div className='user-search' key={index} onClick={() => handleItemClick(elem)}>
                                         <p>{elem.firstName}</p>
                                         <hr></hr>
                                     </div>
                                 ))}
-                           </div>
+                            </div>
                         )}
-                        
                     </div>
                     {/* <div className='mb-3'>
                         <label htmlFor='name' className='form-label font-light'>
@@ -292,15 +293,10 @@ const CreateRFQModal = () => {
                         <Input type='text' className='form-control otp-phone' id='name' placeholder='Name' required />
                     </div> */}
                     <div className="form-group">
-                    {/* <label className='form-label font-light'>Coustmer Name</label>
-                    
+                        {/* <label className='form-label font-light'>Coustmer Name</label>
                     <Input type='text' className='form-control otp-phone' id='name' placeholder='Coustmer Name' required   value={createdBy} onChange={(e) => setcreatedBy(e.target.value)}/> */}
-
-
-                    <label className='form-label font-light'>Project Name</label>
-                    
-                    <Input type='text' className='form-control otp-phone' id='name' placeholder='Project Name' required   value={projectName} onChange={(e) => setprojectName(e.target.value)}/>
-
+                        <label className='form-label font-light'>Project Name</label>
+                        <Input type='text' className='form-control otp-phone' id='name' placeholder='Project Name' required value={projectName} onChange={(e) => setprojectName(e.target.value)} />
 
                         <label className='form-label font-light'>Purpose of RFQ</label>
                         <div className="form-check">
@@ -403,11 +399,15 @@ const CreateRFQModal = () => {
                     )}
                     {(selectedOption === 'solution') && (
                         <div>
+
                             <h4 className='mt-3'>RFQ for Solution</h4>
+
                             <form>
+
                                 <label htmlFor='projectName'>Project Name:</label>
                                 <Input type='text' className='otp-phone' placeholder='Machine Vision' />
                                 <label htmlFor="description">Description:</label>
+
                                 <textarea
                                     id="description"
                                     className='otp-phone'
@@ -417,16 +417,20 @@ const CreateRFQModal = () => {
                                     required
                                 />
                             </form>
+
                         </div>
                     )}
                     {(selectedOption === 'services') && (
                         <div>
+
+
                             <h4 className='mt-3'>RFQ for Service</h4>
+
+
                             <form>
                                 <label htmlFor='projectName'>Project Name:</label>
                                 <Input type='text' className='otp-phone' placeholder='Machine Vision' />
                                 <label htmlFor="description">Description:</label>
-
                                 <textarea
                                     id="description"
                                     className='otp-phone'
@@ -439,7 +443,7 @@ const CreateRFQModal = () => {
                         </div>
                     )}
                     <div className="form-group">
-                        {uploadShow ? (
+                        {Yes ? (
                             <div>
                                 <label htmlFor="document">Upload Document(optional)</label>
                                 <input type="file" id="document" name="document" className='input-field otp-phone' onChange={registerRfq} />
@@ -448,7 +452,25 @@ const CreateRFQModal = () => {
                         ) : (
                             <p></p>
                         )}
+                        {uploadShow ? (
+                            <div className="form-group">
 
+                                <div style={{ display: 'flex' }}>
+                                    <p>DO YOU wANT TO UPLOAD ANY FILE </p>
+                                    <button onClick={handleOpen}>YES</button>
+                                    <button onClick={handleReload}> NO</button>
+                                    {/* <button onClick={handleClose}>Close</button> */}
+                                </div>
+                            </div>
+                        ) : (
+                            <p></p>
+                        )}
+                        {/* <div style={{ display: 'flex' }}>
+                            <p>DO YOU wANT TO UPLOAD ANY FILE </p>
+                            <button>YES</button>
+                            <button onClick={CreateRfq}> NO</button>
+                            <button onClick={handleClose}>Close</button>
+                        </div> */}
                     </div>
                     <div className='row'>
                         <div className='col-lg-6 col-md-12 col-sm-12'>
@@ -459,7 +481,8 @@ const CreateRFQModal = () => {
                         </div>
                     </div>
                 </ModalBody>
-            </Modal>
+
+            </Modal >
         </>
     )
 }

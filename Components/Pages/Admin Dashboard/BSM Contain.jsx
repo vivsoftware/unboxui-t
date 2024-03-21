@@ -788,40 +788,9 @@ const BSMContain = ({ Tender, Rfq }) => {
                 </button>
               </div>
             )}
-
-
           </div>
         </div>
       </div>
-
-
-
-
-
-
-
-      <div className="footer2" >
-      <p>
-        <strong className='textsize' style={{ textAlign: 'center' }}>CAUTION:</strong> This email originated from outside of the organization. Do not click links or open attachments unless you recognize the sender and know the content is safe.
-      </p>
-     
-    </div>
-    <br>
-      </br>
-
-
-
-
-
-
-      {/* <div id=”footer” style=”background-color: #ffeb9c; width: 100%; border: 1px solid #FFEB9C; padding: 2pt; border-style: solid; border-color: #9C6500;”> CAUTION: 
-      This email originated from outside of the organization. Do not click links or open attachments unless you recognize the sender and know the content is safe.
-      </div > */}
-
-
-
-
-
     </>
   )
 }
