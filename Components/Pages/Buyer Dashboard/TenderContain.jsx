@@ -1,26 +1,12 @@
 
-// import Link from 'next/link';
-// import React, { useEffect, useRef, useState } from 'react';
-// import { FaEye } from 'react-icons/fa';
-// import spring_boot_url from '../../../Utils/springApi';
-// import BidContain from './BidContain';
- //import TenderNextStep from './TenderNextStep';
-// import Box from '@mui/material/Box';
-// import Modal from '@mui/material/Modal';
 
-import React, { useEffect, useRef, useState } from 'react';
-import { FaEye } from 'react-icons/fa';
-import Link from 'next/link';
-import BidContain from './BidContain';
-import TenderNextStep from './TenderNextStep';
-import Box from '@mui/material/Box';
-import Modal from '@mui/material/Modal';
 import axios from 'axios';
+import React, { useEffect, useRef, useState } from 'react';
+import spring_boot_url from '../../../Utils/springApi';
 import RenderDetails from './renderDetails';
 import RenderNewComponent from './renderNewComponent';
-import spring_boot_url from '../../../Utils/springApi';
 
-const TenderContain = ({tender, rfq}) => {
+const TenderContain = ({ tender, rfq }) => {
   const [isDropdownVisible, setDropdownVisible] = useState(false);
   const [showDetails, setShowDetails] = useState(true);
   const [userDe, setUserDe] = useState(true);
@@ -49,7 +35,7 @@ const TenderContain = ({tender, rfq}) => {
   const [tenderbid, settenderbid] = React.useState(null);
   const [tenderBids, setTenderBids] = useState({});
 
-  
+
   useEffect(() => {
     document.addEventListener('click', handleClickOutside);
 
@@ -265,20 +251,20 @@ const TenderContain = ({tender, rfq}) => {
 
 
 
-return (
-  <div>
-    {
-      showDetails ? <RenderDetails 
-                      tender={tender}
-                      tenderBids={tenderBids}
-                      formatDate={formatDate}
-                      handleOpen={handleOpen}
-                      handleBidClick={handleBidClick}
-                      /> : (
-                        <RenderNewComponent handleBackToDetails={handleBackToDetails} 
-                        />
-                      )}
-  </div>
+  return (
+    <div>
+      {
+        showDetails ? <RenderDetails
+          tender={tender}
+          tenderBids={tenderBids}
+          formatDate={formatDate}
+          handleOpen={handleOpen}
+          handleBidClick={handleBidClick}
+        /> : (
+          <RenderNewComponent handleBackToDetails={handleBackToDetails}
+          />
+        )}
+    </div>
   )
 }
 export default TenderContain;

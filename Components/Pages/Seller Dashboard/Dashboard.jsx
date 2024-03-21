@@ -1,8 +1,148 @@
 // import React from 'react'
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Chart } from "react-google-charts";
+import axios from 'axios';
+import spring_boot_url from '../../../Utils/springApi';
+import Box from '@mui/material/Box';
+import Modal from '@mui/material/Modal';
 
-const Dashboard = ({ tender, rfq, userDe }) => {
+const Dashboard = ({ tender, rfq, userDe,sellers }) => {
+
+    const [user, setUser] = useState(null);
+    const [RfqNo, setRfqNo] = useState(null);
+    const [TenderNo, setTenderNo] = useState(null);
+    const [opentender, setopentender] = useState(null);
+    const [openrfq, setopenrfq] = useState(null);
+    const [openPurchase, setopenPurchase] = useState(null);
+    const [openBids, setopenBids] = useState(null);
+    const [openUser, setopenUser] = useState(null);
+    const [openseller, setopenseller] = useState(null);
+    const [userData, setUserData] = useState(null);
+   
+
+
+
+    //////////////////changes//////////////////
+
+    const allUsers = () => {
+        axios.get(`${spring_boot_url}api/adminuser/allusers`)
+            .then(resp => {
+                console.log(resp.data.json);
+                console.log("Dash");
+                localStorage.setItem("data", JSON.stringify(resp.data));
+                setUserData(resp.data);
+            });
+    }
+
+    const allbuyer = () => {
+        axios.get(`${spring_boot_url}api/adminuser/search?query=buyer`)
+            .then(resp => {
+                console.log(resp.data.json);
+                setUserData(resp.data);
+            });
+    }
+    const allseller = () => {
+        axios.get(`${spring_boot_url}api/adminuser/search?query=seller`)
+            .then(resp => {
+                console.log(resp.data.json);
+                setUserData(resp.data);
+            });
+    }
+
+    const openModal = (userData) => {
+        setSelectedUserData(userData);
+        setModalOpen(true);
+    };
+    // Function to close modal
+    const closeModal = () => {
+        setModalOpen(false);
+    };
+
+    const handleModalClose = () => {
+        setModalOpen(false);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    }
+    const handleOpen = () => {
+        setOpen(true);
+    };
+    const handleOpenseller = () => {
+        setopenseller(true);
+    };
+
+    const handleCloseseller = () => {
+        setopenseller(false);
+    }
+
+    const handleOpenTender = () => {
+        setopentender(true);
+    };
+
+    const handleCloseTender = () => {
+        setopentender(false);
+    };
+
+    const handleOpenrfq = () => {
+        setopenrfq(true);
+    };
+
+    const handleCloserfq = () => {
+        setopenrfq(false);
+    };
+
+    const handleOpenPurchase = () => {
+        setopenPurchase(true);
+    };
+
+    const handleClosePurchase = () => {
+        setopenPurchase(false);
+    };
+
+    const handleOpenBids = () => {
+        setopenBids(true);
+    }
+    const handleCloseBids = () => {
+        setopenBids(false);
+    }
+
+    const handleOpenUser = () => {
+        setopenUser(true);
+    }
+    const handleCloseUser = () => {
+        setopenUser(false);
+    }
+    const handleViewDetailsClick = (userData) => {
+        openModal(userData);
+        setIsOpen(false);
+    };
+
+    const style = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: 900,
+        height: 700,
+        bgcolor: 'background.paper',
+        border: '4px solid #ff8400',
+        boxShadow: 24,
+        p: 4,
+    };
+
+
+    useEffect(() => {
+        allUsers();
+        allseller();
+        setRfqNo(rfq);
+        setTenderNo(tender);
+        setopenseller(sellers);
+        setUserData(userDe);
+
+
+    }, [])
+    //////////////////////changes end///////////////////////
 
     const data11 = [
         ["RFQs", "Tenders"],
@@ -132,7 +272,7 @@ const Dashboard = ({ tender, rfq, userDe }) => {
                     </div>
                     <div className='row'>
                         <div className='col-12 text-end'>
-                            <button className='btn' style={{ backgroundColor: 'white', color: "#FF8400", height: '20px', padding: '0' }} >View All</button>
+                            <button className='btn' onClick={() => handleOpenrfq()} style={{ backgroundColor: 'white', color: "#FF8400", height: '20px', padding: '0' }} >View All</button>
                         </div>
                     </div>
                 </div>
@@ -160,7 +300,7 @@ const Dashboard = ({ tender, rfq, userDe }) => {
                     </div>
                     <div className='row'>
                         <div className='col-12 text-end'>
-                            <button className='btn' style={{ backgroundColor: 'white', color: "#FF8400", height: '20px', padding: '0' }} >View All</button>
+                            <button className='btn' onClick={() => handleOpenTender()} style={{ backgroundColor: 'white', color: "#FF8400", height: '20px', padding: '0' }} >View All</button>
                         </div>
                     </div>
                 </div>
@@ -174,20 +314,20 @@ const Dashboard = ({ tender, rfq, userDe }) => {
                                     <th>Id</th>
                                     <th>Project Name</th>
                                 </tr>
-                                {/* <tbody>
-                              {RfqNo?.slice(0, 5).map((rfq, index) => (
-                                  <tr key={index + 1}>
-                                      <td>{index + 1}</td>
-                                      <td>{rfq.id}</td>
-                                      <td>{rfq?.purposeOfRfq}</td>
-                                  </tr>
-                              ))}
-                          </tbody> */}
+                                <tbody>
+                                    {RfqNo?.slice(0, 5).map((rfq, index) => (
+                                        <tr key={index + 1}>
+                                            <td>{index + 1}</td>
+                                            <td>{rfq.id}</td>
+                                            <td>{rfq?.purposeOfRfq}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
                             </table>
                         </div>
                         <div className='row'>
                             <div className='col-12 text-end'>
-                                <button className='btn' style={{ backgroundColor: 'white', color: "#FF8400", height: '20px', padding: '0' }} >View All</button>
+                                <button className='btn' onClick={() => handleOpenBids()} style={{ backgroundColor: 'white', color: "#FF8400", height: '20px', padding: '0' }} >View All</button>
                             </div>
                         </div>
                     </div>
@@ -200,23 +340,240 @@ const Dashboard = ({ tender, rfq, userDe }) => {
                                     <th>Name</th>
                                     <th>Phone</th>
                                 </tr>
-                                {/* <tbody>
-                              {TenderNo?.slice(0, 5).map((tender, index) => (
-                                  <tr key={index + 1}>
-                                      <td>{index + 1}</td>
-                                      <td>{tender.id}</td>
-                                      <td>{tender?.purposeOfRfq}</td>
-                                  </tr>
-                              ))}
-                          </tbody> */}
+                                <tbody>
+                                    {TenderNo?.slice(0, 5).map((tender, index) => (
+                                        <tr key={index + 1}>
+                                            <td>{index + 1}</td>
+                                            <td>{tender.id}</td>
+                                            <td>{tender?.purposeOfRfq}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
                             </table>
                         </div>
                         <div className='row'>
-                            <div className='col-12 text-end'>
-                                <button className='btn' style={{ backgroundColor: 'white', color: "#FF8400", height: '20px', padding: '0' }} >View All</button>
-                            </div>
+                        <div className='col-12 text-end'>
+                            <button className='btn' onClick={() => handleOpenUser()} style={{ backgroundColor: 'white', color: "#FF8400", height: '20px', padding: '0' }} >View All</button>
+                        </div>
                         </div>
                     </div>
+
+
+                    {/* /////////////////////view modal////////////////// */}
+
+
+                    {/* ////////////////////////////rfq view pop modal//////////////////////////////// */}
+                    <div>
+                        <Modal
+                            keepMounted
+                            open={openrfq}
+                            onClose={handleCloserfq}
+                            aria-labelledby="keep-mounted-modal-title"
+                            aria-describedby="keep-mounted-modal-description"
+                        >
+                            <Box sx={style}>
+                                <h3 className='mb-2' style={{ marginLeft: '350px', marginTop: '-10px' }}>RFQ List</h3>
+                                <div className="my-modal-content1" style={{ display: "flex-relative" }}>
+
+
+                                    <div className='row mt-5 SI-table' style={{ height: '960px', width: '760px', marginLeft: '0px' }}>
+                                        <table className="table">
+                                            <thead className='table-header'>
+                                                <tr>
+                                                    <th>Sr.No</th>
+                                                    <th>Name</th>
+                                                    <th>User Id</th>
+                                                    <th>Email Id</th>
+                                                    <th>Phone No.</th>
+                                                    <th>Company Name</th>
+                                                    <th>Type</th>
+
+                                                </tr>
+                                            </thead>
+                                            {(
+                                                <tbody>
+                                                    {Array.isArray(RfqNo) && RfqNo.map((elem, index) => (
+                                                        <tr key={index + 1} className='table-row'>
+                                                            <td>{index + 1}</td>
+                                                            <td>{elem.firstName}</td>
+                                                            <td>{elem.id}</td>
+                                                            <td>{elem.email}</td>
+                                                            <td>{elem.phoneNumber}</td>
+                                                            <td>{elem.company}</td>
+                                                            <td>{elem.userTypes}</td>
+                                                        </tr>
+                                                    ))}
+                                                </tbody>
+                                            )}
+                                        </table>
+                                    </div>
+                                    <div style={{ display: 'flex' }}>
+                                        <button onClick={handleCloserfq}>Close</button>
+                                    </div>
+                                </div>
+                            </Box>
+                        </Modal>
+                    </div>
+                    {/* ////////////////////////////tender view pop modal//////////////////////////////// */}
+                    <div>
+                        <Modal
+                            keepMounted
+                            open={opentender}
+                            onClose={handleCloseTender}
+                            aria-labelledby="keep-mounted-modal-title"
+                            aria-describedby="keep-mounted-modal-description"
+                        >
+                            <Box sx={style}>
+                                <h3 className='mb-2' style={{ marginLeft: '350px', marginTop: '-10px' }}>Tender List</h3>
+                                <div className="my-modal-content1" style={{ display: "flex-relative" }}>
+
+
+                                    <div className='row mt-5 SI-table' style={{ height: '960px', width: '760px', marginLeft: '0px' }}>
+                                        <table className="table">
+                                            <thead className='table-header'>
+                                                <tr>
+                                                    <th>T.Id</th>
+                                                    <th>Name</th>
+                                                    <th>Email Id</th>
+                                                    <th>Phone No.</th>
+                                                    {/* <th>Company Name</th>
+                                                <th>Type</th> */}
+
+                                                </tr>
+                                            </thead>
+                                            {(
+                                                <tbody>
+                                                    {Array.isArray(TenderNo) && TenderNo.map((elem, index) => (
+                                                        <tr key={index + 1} className='table-row'>
+                                                            {/* <td>{index + 1}</td> */}
+                                                            <td>{elem.id}</td>
+
+                                                            <td>{elem.purpose}</td>
+                                                            <td>{elem.email}</td>
+                                                            <td>{elem.phoneNumber}</td>
+                                                            {/* <td>{elem.company}</td>
+                                                        <td>{elem.userTypes}</td> */}
+                                                        </tr>
+                                                    ))}
+                                                </tbody>
+                                            )}
+                                        </table>
+                                    </div>
+                                    <div style={{ display: 'flex' }}>
+                                        <button onClick={handleCloseTender}>Close</button>
+                                    </div>
+                                </div>
+                            </Box>
+                        </Modal>
+                    </div>
+
+                    {/* ////////////////////////////Bids view pop modal//////////////////////////////// */}
+                    <div>
+                        <Modal
+                            keepMounted
+                            open={openBids}
+                            onClose={handleCloseBids}
+                            aria-labelledby="keep-mounted-modal-title"
+                            aria-describedby="keep-mounted-modal-description"
+                        >
+                            <Box sx={style}>
+                                <h3 className='mb-2' style={{ marginLeft: '350px', marginTop: '-10px' }}>Bids List</h3>
+                                <div className="my-modal-content1" style={{ display: "flex-relative" }}>
+
+
+                                    <div className='row mt-5 SI-table' style={{ height: '960px', width: '760px', marginLeft: '0px' }}>
+                                        <table className="table">
+                                            <thead className='table-header'>
+                                                <tr>
+                                                    <th>Sr.No</th>
+                                                    <th>Name</th>
+                                                    <th>User Id</th>
+                                                    <th>Email Id</th>
+                                                    <th>Phone No.</th>
+                                                    <th>Company Name</th>
+                                                    <th>Type</th>
+
+                                                </tr>
+                                            </thead>
+                                            {(
+                                                <tbody>
+                                                    {Array.isArray(RfqNo) && RfqNo.map((elem, index) => (
+                                                        <tr key={index + 1} className='table-row'>
+                                                            <td>{index + 1}</td>
+                                                            <td>{elem.firstName}</td>
+                                                            <td>{elem.id}</td>
+                                                            <td>{elem.email}</td>
+                                                            <td>{elem.phoneNumber}</td>
+                                                            <td>{elem.company}</td>
+                                                            <td>{elem.userTypes}</td>
+                                                        </tr>
+                                                    ))}
+                                                </tbody>
+                                            )}
+                                        </table>
+                                    </div>
+                                    <div style={{ display: 'flex' }}>
+                                        <button onClick={handleCloseBids}>Close</button>
+                                    </div>
+                                </div>
+                            </Box>
+                        </Modal>
+                    </div>
+
+                    {/* ////////////////////////////User view pop modal//////////////////////////////// */}
+                    <div>
+                        <Modal
+                            keepMounted
+                            open={openUser}
+                            onClose={handleCloseUser}
+                            aria-labelledby="keep-mounted-modal-title"
+                            aria-describedby="keep-mounted-modal-description"
+                        >
+                            <Box sx={style}>
+                                <h3 className='mb-2' style={{ marginLeft: '350px', marginTop: '-10px' }}>User List</h3>
+                                <div className="my-modal-content1" style={{ display: "flex-relative" }}>
+
+
+                                    <div className='row mt-5 SI-table' style={{ height: '960px', width: '760px', marginLeft: '0px' }}>
+                                        <table className="table">
+                                            <thead className='table-header'>
+                                                <tr>
+                                                    <th>Sr.No</th>
+                                                    <th>Name</th>
+                                                    <th>User Id</th>
+                                                    <th>Email Id</th>
+                                                    <th>Phone No.</th>
+                                                    <th>Company Name</th>
+                                                    <th>Type</th>
+
+                                                </tr>
+                                            </thead>
+                                            {(
+                                                <tbody>
+                                                    {Array.isArray(userData) && userData.map((elem, index) => (
+                                                        <tr key={index + 1} className='table-row'>
+                                                            <td>{index + 1}</td>
+                                                            <td>{elem.firstName}</td>
+                                                            <td>{elem.id}</td>
+                                                            <td>{elem.email}</td>
+                                                            <td>{elem.phoneNumber}</td>
+                                                            <td>{elem.company}</td>
+                                                            <td>{elem.userTypes}</td>
+                                                        </tr>
+                                                    ))}
+                                                </tbody>
+                                            )}
+                                        </table>
+                                    </div>
+                                    <div style={{ display: 'flex' }}>
+                                        <button onClick={handleCloseUser}>Close</button>
+                                    </div>
+                                </div>
+                            </Box>
+                        </Modal>
+                    </div>
+
+                    {/* /////////////////////view modal ends///////////// */}
 
 
                     {/* <card className='mx-10'>
@@ -372,11 +729,66 @@ const Dashboard = ({ tender, rfq, userDe }) => {
                       ))}
                   </tbody> */}
                     </table>
+
+                    {/* ///////////////purchase view modal/////////////// */}
+                    <div>
+                        <Modal
+                            keepMounted
+                            open={openPurchase}
+                            onClose={handleClosePurchase}
+                            aria-labelledby="keep-mounted-modal-title"
+                            aria-describedby="keep-mounted-modal-description"
+                        >
+                            <Box sx={style}>
+                                <h3 className='mb-2' style={{ marginLeft: '350px', marginTop: '-10px' }}>Purchase List</h3>
+                                <div className="my-modal-content1" style={{ display: "flex-relative" }}>
+
+
+                                    <div className='row mt-5 SI-table' style={{ height: '960px', width: '760px', marginLeft: '0px' }}>
+                                        <table className="table">
+                                            <thead className='table-header'>
+                                                <tr>
+                                                    <th>Sr.No</th>
+                                                    <th>Name</th>
+                                                    <th>User Id</th>
+                                                    <th>Email Id</th>
+                                                    <th>Phone No.</th>
+                                                    <th>Company Name</th>
+                                                    <th>Type</th>
+
+                                                </tr>
+                                            </thead>
+                                            {(
+                                                <tbody>
+                                                    {Array.isArray(sellers) && sellers.map((elem, index) => (
+                                                        <tr key={index + 1} className='table-row'>
+                                                            <td>{index + 1}</td>
+                                                            <td>{elem.firstName}</td>
+                                                            <td>{elem.id}</td>
+                                                            <td>{elem.email}</td>
+                                                            <td>{elem.phoneNumber}</td>
+                                                            <td>{elem.company}</td>
+                                                            <td>{elem.userTypes}</td>
+                                                        </tr>
+                                                    ))}
+                                                </tbody>
+                                            )}
+                                        </table>
+                                    </div>
+                                    <div style={{ display: 'flex' }}>
+                                        <button onClick={handleClosePurchase}>Close</button>
+                                    </div>
+                                </div>
+                            </Box>
+                        </Modal>
+                    </div>
+
+                    {/* /////////////////modal ends////////////////////// */}
                 </div>
 
                 <div className='row'>
                     <div className='col-12 text-end'>
-                        <button className='btn' style={{ backgroundColor: 'white', color: "#FF8400", height: '20px', padding: '0' }} >View All</button>
+                        <button className='btn' onClick={() => handleOpenPurchase()} style={{ backgroundColor: 'white', color: "#FF8400", height: '20px', padding: '0' }} >View All</button>
                     </div>
 
                 </div>

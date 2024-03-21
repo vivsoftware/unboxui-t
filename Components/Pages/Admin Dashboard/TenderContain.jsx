@@ -1,6 +1,5 @@
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
-import { FaEye } from "react-icons/fa";
 import spring_boot_url from "../../../Utils/springApi";
 // import Box from '@mui/material/Box';
 // import Button from '@mui/material/Button';
@@ -9,8 +8,6 @@ import spring_boot_url from "../../../Utils/springApi";
 
 import RenderDetails from './RenderDetails';
 import RenderNewComponent from './RenderNewComponent';
-import BidContain from "./BidContain";
-import TenderNextStep from "./TenderNextStep"; //changes
 
 const TenderContain = ({ Tender , rfq }) => {
   const [isDropdownVisible, setDropdownVisible] = useState(false);
@@ -223,14 +220,14 @@ const TenderContain = ({ Tender , rfq }) => {
         console.log("tender serach reslut :- ", resp.data);
         console.log(resp.data.json);
         setTenderDe(resp.data);
-        
+
         setsearchTenderdata(resp.data);
       });
   };
 
   const searchAllTender = (e) => {
     axios
-      .get(`${spring_boot_url}api/tender`) 
+      .get(`${spring_boot_url}api/tender`)
       .then((resp) => {
         console.log("All tender serach reslut :- ", resp.data);
         console.log(resp.data.json);

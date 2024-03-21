@@ -4,7 +4,6 @@ import { FaEye } from 'react-icons/fa';
 import spring_boot_url from '../../../Utils/springApi';
 
 import { toast } from 'react-toastify';
-
 import ModalComponent from './ModalComponent';
 const BSMContain = ({ Tender, Rfq }) => {
   const [isDropdownVisible, setDropdownVisible] = useState(false);
@@ -28,7 +27,7 @@ const BSMContain = ({ Tender, Rfq }) => {
   const [body3, setbody3] = useState(null);
   const [body4, setbody4] = useState(null);
   const [body5, setbody5] = useState(null);
-  const [subject, setsubject] = useState(false);
+  const [loader, setloader] = useState(false);
   const [mailId, setmailId] = useState(false);
   const [searchTenderQuery, setTenderSearchQuery] = useState(true);
   const [searchTenderdata, setsearchTenderdata] = useState(true);
@@ -183,7 +182,7 @@ const BSMContain = ({ Tender, Rfq }) => {
         console.log("tender serach reslut :- ", resp.data);
         console.log(resp.data.json);
         setTenderDe(resp.data);
-        
+
         setsearchTenderdata(resp.data);
       });
   };
@@ -244,6 +243,8 @@ const BSMContain = ({ Tender, Rfq }) => {
   const UnSelecTender = () => {
     setselectTender(false);
     setselectTenderdata(null);
+    // setmailId(null)
+
   }
   const SelecUser = (elem) => {
     setselectUser(true);
@@ -253,40 +254,16 @@ const BSMContain = ({ Tender, Rfq }) => {
   const UnSelecUser = () => {
     setselectUser(false);
     setselectUserdata(null)
+    // setmailId(null)
 
   }
-  const sendmail = async (e) => {
-    const formdata = new FormData();
-    // formdata.append("fileName", "file");
-    formdata.append('to', `${selectUserdata.email}`);
 
-    // formdata.append('files', SelectedFile);
-    // formdata.fileName('fileName' , fileName);
-    try {
-      const response = await axios.post(`${spring_boot_url}api/mails/send/${mailId}`, formdata, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-      console.log('File uploaded successfully:', response.data);
-      toast.success(`Email sende to ${selectUserdata.email}`, {
-        position: toast.POSITION.BOTTOM_CENTER,
-      });
-
-      // Assuming handleReload and toggle are functions defined in your component
-      handleReload();
-      toggle();
-    } catch (error) {
-      // setDocError(true)
-      // console.error('Error uploading file:', error);
-      // toast.error('Error uploading file. Please try again.', {
-      //   position: toast.POSITION.BOTTOM_CENTER,
-      // });
-    };
-  }
 
 
   const savaeEmail = async (e) => {
+    <loadermail />
+    setmailId(null)
+
     setbody1("Hi.... " + `${selectUserdata.firstName}`, +" a new tender has been received. Please find details and for more information check your respective dashboard.");
     setbody2(`Tender Name ${selectTenderdata.purpose}`)
     setbody3(`Tender delivery date ${selectTenderdata.deliveryDate}`)
@@ -313,12 +290,10 @@ const BSMContain = ({ Tender, Rfq }) => {
       });
       console.log('File uploaded successfully:', response.data);
       setmailId(response.data.id)
+      setloader(true)
       toast.success(`Sending...........`, {
         position: toast.POSITION.BOTTOM_CENTER,
       });
-      sendmail()
-      // Assuming handleReload and toggle are functions defined in your component
-      handleReload();
       toggle();
     } catch (error) {
       // setDocError(true)
@@ -329,11 +304,53 @@ const BSMContain = ({ Tender, Rfq }) => {
     };
   }
 
+
+
+  const sendmail = async (e) => {
+    const formdata = new FormData();
+    // formdata.append("fileName", "file");
+    formdata.append('to', `${selectUserdata.email}`);
+
+    // formdata.append('files', SelectedFile);
+    // formdata.fileName('fileName' , fileName);
+    try {
+      console.log('File uploaded successfully:', mailId);
+
+      const response = await axios.post(`${spring_boot_url}api/mails/send/${mailId}`, formdata, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      console.log('File uploaded successfully:', response.data);
+
+      toast.success(`Email sende to ${selectUserdata.email}`, {
+        position: toast.POSITION.BOTTOM_CENTER,
+      });
+
+      // Assuming handleReload and toggle are functions defined in your component
+      // handleReload();
+      toggle();
+    } catch (error) {
+      // setDocError(true)
+      // console.error('Error uploading file:', error);
+      // toast.error('Error uploading file. Please try again.', {
+      //   position: toast.POSITION.BOTTOM_CENTER,
+      // });
+    };
+  }
+
+
   console.log("tenderbms", selectTenderdata)
   console.log("userbms", selectUserdata)
+  console.log("mailid", mailId)
+
+
+
 
   return (
     <>
+
+
       <div className='d-none d-xl-block d-md-block d-sm-none'>
         <div className='fluid-container'>
           <div className='row mt-5'>
@@ -442,7 +459,7 @@ const BSMContain = ({ Tender, Rfq }) => {
                         <div className='custom-dropdown-item' onClick={() => handleFilterOptionClick('Buyer')}>
                           Buyer
                         </div>
-                      
+
                       </div>
                     )}
                   </div>
@@ -523,7 +540,7 @@ const BSMContain = ({ Tender, Rfq }) => {
           <div className='row mt-2'>
             <div className='col-10'></div>
             <div className='col-1'>
-              <button className='btn back-btn' onClick={handleBackToDetails}>
+              <button className='btn back-btn' onClick={sendmail}>
                 Back
               </button>
             </div>
@@ -538,10 +555,10 @@ const BSMContain = ({ Tender, Rfq }) => {
                 </button>
 
               ) : (
-                <button className=' unsend-btn'   onClick={() => alert('Please select your choice first !')}>
-                Send
-              </button>
-              
+                <button className=' unsend-btn' onClick={() => alert('Please select your choice first !')}>
+                  Send
+                </button>
+
               )}
 
             </div>
@@ -771,9 +788,6 @@ const BSMContain = ({ Tender, Rfq }) => {
                 </button>
               </div>
             )}
-
-
-
           </div>
         </div>
       </div>
