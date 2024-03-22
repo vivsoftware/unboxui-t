@@ -465,12 +465,6 @@ const CreateRFQModal = () => {
                         ) : (
                             <p></p>
                         )}
-                        {/* <div style={{ display: 'flex' }}>
-                            <p>DO YOU wANT TO UPLOAD ANY FILE </p>
-                            <button>YES</button>
-                            <button onClick={CreateRfq}> NO</button>
-                            <button onClick={handleClose}>Close</button>
-                        </div> */}
                     </div>
                     <div className='row'>
                         <div className='col-lg-6 col-md-12 col-sm-12'>

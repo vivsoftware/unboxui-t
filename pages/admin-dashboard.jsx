@@ -1,16 +1,16 @@
-import Layout from "../Layout/Layout";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import "react-toastify/dist/ReactToastify.css";
 import AdminDashboard from "../Components/Pages/Admin Dashboard/AdminDashboard";
-import RegisterUserModal from "../Components/Pages/Admin Dashboard/RegisterUserModal";
-import React, { Fragment, useEffect, useState } from "react";
-import spring_boot_url from "../Utils/springApi";
-import axios from "axios";
-import UpdateSIModal from "../Components/Pages/Admin Dashboard/UpdateSIModal";
 import CreateRFQModal from "../Components/Pages/Admin Dashboard/CreateRFQModal";
+import RegisterUserModal from "../Components/Pages/Admin Dashboard/RegisterUserModal";
+import UpdateSIModal from "../Components/Pages/Admin Dashboard/UpdateSIModal";
 import UserProfileModal from "../Components/Pages/Admin Dashboard/UserProfileModal";
 import DashboardFooter from "../Layout/Common/Footer/DashboardFooter";
+import Layout from "../Layout/Layout";
+import spring_boot_url from "../Utils/springApi";
 
-import { FETCH_USERS_SUCCESS, FETCH_USERS_FAILURE } from "./actionType"; //CHANGES FOR REDUX
+// import { FETCH_USERS_SUCCESS, FETCH_USERS_FAILURE } from "./actionType"; //CHANGES FOR REDUX
 
 console.log("admin-dash");
 
