@@ -119,9 +119,13 @@ const Dashboard = ({ userDe, rfq, tender }) => {
     };
 
     useEffect(() => {
+        console.log("userdata",userDe);
         setUser(userDe);  
+        console.log("tender",tender);
         setRfqNo(rfq);  
         setTenderNo(tender);
+        console.log("rfq",rfq);
+
        
   
     }, [])

@@ -133,14 +133,14 @@ const RenderNewComponent = ({}) => {
               <div className='fluid-container'>
                 <div className='row'>
                   <div className='col-12'>
-                    <h2 className='mb-2 mt-2' style={{marginLeft: '180px'}}>RFQ List</h2>
+                    <h2 className='mb-2 mt-2' style={{marginLeft: '2px'}}>RFQ List</h2>
                     <div className='row mt-2'>
                       <input
                         type="search"
                         className="form-control otp-phone"
                         placeholder="Search RFQ ..."
                         aria-label="Search"
-                        style={{ height: '40px', border: "1px solid #ddd", borderRadius: '8px', marginLeft: '190px' }}
+                        style={{ height: '40px', border: "1px solid #ddd", borderRadius: '8px', marginLeft: '4px' }}
                         onChange={handleSearchRFQChange}
                       />
                       {searchRFQdata && searchRFQdata.length === 0 && (

@@ -58,7 +58,8 @@ const TenderNextStep = ({selectedRFQ}) => {
     }
 }
 
-console.log("selectedRFQ",selectedRFQ)
+// console.log("selectedRFQ",selectedRFQ)
+
     return (
         <>
             {backtoNext ? (

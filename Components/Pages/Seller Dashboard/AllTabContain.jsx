@@ -1,4 +1,6 @@
-import React from 'react'
+import axios from 'axios';
+import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react';
 import { Col, TabContent, TabPane } from 'reactstrap'
 import BidContain from './BidContain'
 import Dashboard from './Dashboard'
@@ -6,6 +8,8 @@ import RFQContain from './RFQContain'
 import SalesContain from './SalesContain'
 import TenderContain from './TenderContain'
 import UserContain from './UserContain'
+import spring_boot_url from '../../../Utils/springApi';
+import Marketplace from './Marketplace';
 
 const AllTabContain = ({activeTab, num , rfq,tender,userDe }) => {
   return (
@@ -32,6 +36,7 @@ const AllTabContain = ({activeTab, num , rfq,tender,userDe }) => {
         </TabPane>
         <TabPane className={`${activeTab === '6' ? 'active' : ''}`}tabId={6} >
           {/* <Marketplace/> */}
+          <Marketplace activeTab={activeTab}/>
         </TabPane>
       </TabContent>
     </Col>

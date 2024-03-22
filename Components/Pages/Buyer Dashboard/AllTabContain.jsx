@@ -14,10 +14,10 @@ const AllTabContain = ({ activeTab, rfq, userDe, tender }) => {
   const [data, setData] = useState(false);
   const router = useRouter();
 
-  if (activeTab === 5) {
-           router.push("/");
+  // if (activeTab === 5) {
+  //          router.push("/");
      
-    }
+  //   }
 
 
   return (
@@ -40,6 +40,7 @@ const AllTabContain = ({ activeTab, rfq, userDe, tender }) => {
         </TabPane>
         <TabPane className={`${activeTab === '5' ? 'active' : ''}`}tabId={5} >
           {/* <Marketplace/> */}
+          <Marketplace activeTab={activeTab}/>
         </TabPane>
       </TabContent>
     </Col>

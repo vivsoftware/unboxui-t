@@ -471,7 +471,7 @@ const Dashboard = ({ userDe, activeTab, sellers, buyers }) => {
                                 aria-describedby="keep-mounted-modal-description"
                             >
                                 <Box sx={style}>
-                                    <h3 className='mb-2' style={{ marginLeft: '350px', marginTop: '-10px' }}>Seller List</h3>
+                                    <h3 className='mb-2' style={{ marginLeft: '350px', marginTop: '-10px' }}>Rfq List</h3>
                                     <div className="my-modal-content1" style={{ display: "flex-relative" }}>
 
 
@@ -555,7 +555,7 @@ const Dashboard = ({ userDe, activeTab, sellers, buyers }) => {
                         aria-describedby="keep-mounted-modal-description"
                     >
                         <Box sx={style}>
-                            <h3 className='mb-2' style={{ marginLeft: '350px', marginTop: '-10px' }}>Seller List</h3>
+                            <h3 className='mb-2' style={{ marginLeft: '350px', marginTop: '-10px' }}>Tender List</h3>
                             <div className="my-modal-content1" style={{ display: "flex-relative" }}>
                                 <div className='row mt-5 SI-table' style={{ height: '960px', width: '760px', marginLeft: '0px' }}>
                                     <table className="table">
@@ -738,7 +738,6 @@ const Dashboard = ({ userDe, activeTab, sellers, buyers }) => {
                             ))}
                         </tbody> 
                     </table>
-
                     <div>
                             <Modal
                                 keepMounted
@@ -763,7 +762,6 @@ const Dashboard = ({ userDe, activeTab, sellers, buyers }) => {
                                                         <th>Phone No.</th>
                                                         <th>Company Name</th>
                                                         <th>Type</th>
-
                                                     </tr>
                                                 </thead>
                                                 {(
