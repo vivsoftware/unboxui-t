@@ -1,4 +1,5 @@
 
+import Box from '@mui/material/Box';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
@@ -7,7 +8,6 @@ import { toast } from 'react-toastify';
 import { Input, Modal, ModalBody, ModalHeader } from 'reactstrap';
 import { auth } from '../../../Config/firebase';
 import spring_boot_url from '../../../Utils/springApi';
-
 const CreateRFQModal = () => {
     const [selectedOption, setSelectedOption] = useState('');
     const [modelNo, setModelNo] = useState('');
@@ -33,6 +33,9 @@ const CreateRFQModal = () => {
     const [fileName, setfileName] = useState("");
     const [createdBy, setcreatedBy] = useState("");
     const [projectName, setprojectName] = useState("");
+    const [open, setOpen] = React.useState(false);
+    const [Yes, setYes] = React.useState(false);
+
     const [user, setuser] = useState(null)
     const dispatch = useDispatch();
     const toggle = () => {
@@ -47,6 +50,40 @@ const CreateRFQModal = () => {
         dispatch({ type: 'CREATERFQMODAL' });
 
     };
+
+
+
+
+    const style = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: 400,
+        bgcolor: 'background.paper',
+        border: '4px solid #ff8400',
+        boxShadow: 24,
+        p: 4,
+      };
+    
+
+    const handleClose = () => {
+
+        setOpen(false);
+        // setuploadRfq(null);
+    
+    
+      }
+      const handleOpen = (elem) => {
+        setOpen(true);
+        // ssetrfqdata(elem);
+    
+    
+    
+    
+      };
+        
+
 
 
 
@@ -183,7 +220,7 @@ const CreateRFQModal = () => {
         }).then((resp) => {
             // setRfqData(resp.data);
             if (resp.ok === true) {
-                setUploadShow(true);
+                setOpen(true)
                 async function getLastEntryId(userId) {
                     try {
                         const response = await axios.get(`${spring_boot_url}api/userRfq/${userId}`);
@@ -401,18 +438,7 @@ const CreateRFQModal = () => {
                             </form>
                         </div>
                     )}
-                    <div className="form-group">
-                        {uploadShow ? (
-                            <div>
-                                <label htmlFor="document">Upload Document(optional)</label>
-                                <input type="file" id="document" name="document" className='input-field otp-phone' onChange={registerRfq} />
-                                <button onClick={Documentupload} >Upload</button>
-                            </div>
-                        ) : (
-                            <p></p>
-                        )}
-
-                    </div>
+                    
                     <div className='row'>
                         <div className='col-lg-6 col-md-12 col-sm-12'>
                             <button type="button" className="btn registerSI-btn mt-2" onClick={CreateRfq}>Save</button>
@@ -423,6 +449,48 @@ const CreateRFQModal = () => {
                     </div>
                 </ModalBody>
             </Modal>
+
+
+ {/* /////////////////////////////////////////////////////////rfq view poupmodal code////////////////////////////////////////////////////// */}
+ <div>
+        <Modal
+          keepMounted
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="keep-mounted-modal-title"
+          aria-describedby="keep-mounted-modal-description"
+        >
+          <Box sx={style}>
+            <div className="my-modal-content" style={{ display: "flex-relative" }}>
+              <h3 className='mb-2'>User Profile</h3>
+             
+              <div className="form-group">
+                        {Yes ? (
+                            <div>
+
+
+                                <label htmlFor="document">Upload Document(optional)</label>
+                                <input type="file" id="document" name="document" className='input-field otp-phone' onChange={registerRfq} />
+                                <button onClick={Documentupload} >Upload</button>
+                            </div>
+                        ) : (
+                            <p></p>
+                        )}
+
+                    </div>
+         
+              <div style={{ display: 'flex' }}>
+                <p>DO YOU wANT TO UPLOAD ANY FILE </p>
+                <button>YES</button>
+                <button>NO</button>
+                <button onClick={handleClose}>Close</button>
+              </div>
+            </div>
+          </Box>
+        </Modal>
+      </div>
+
+
         </>
     )
 }

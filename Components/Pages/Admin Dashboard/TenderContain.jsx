@@ -293,8 +293,9 @@ const TenderContain = ({ Tender , rfq }) => {
                       formatDate={formatDate}
                       handleOpen={handleOpen}
                       handleBidClick={handleBidClick}
+                      handleBackToDetails={handleBackToDetails} 
                       /> : (
-                        <RenderNewComponent handleBackToDetails={handleBackToDetails} 
+                        <RenderNewComponent handleBackToDetails={handleBackToDetails} tender={Tender}
                         />
                       )}
   </div>

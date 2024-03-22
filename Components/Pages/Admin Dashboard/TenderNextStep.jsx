@@ -1,13 +1,25 @@
 import React, { useState } from 'react';
-import { Input } from 'reactstrap';
 import { MdKeyboardBackspace } from "react-icons/md";
+import { Input } from 'reactstrap';
+import spring_boot_url from '../../../Utils/springApi';
 import TenderContain from './TenderContain';
 import TenderReview from './TenderReviews';
-
-const TenderNextStep = ({selectedRFQ}) => {
+const TenderNextStep = ({ selectRfqdata }) => {
     const [backtoNext, setBacktoNext] = useState(false);
     const [backtoTender, setBacktoTender] = useState(false);
+    const [opportunityAmount, setopportunityAmount] = useState(false);
+    const [tenderClosingDate, settenderClosingDate] = useState(false);
+    const [deliveryPeriod, setdeliveryPeriod] = useState(false);
+    const [diliveryLocation, setdiliveryLocation] = useState(false);
+    const [anaualRevenue, setanaualRevenue] = useState(false);
+    const [noOfEmployees, setnoOfEmployees] = useState(false);
+    const [yearsInBusiness, setyearsInBusiness] = useState(false);
+    const [industriesServed, setindustriesServed] = useState(false);
+    const [certification, setcertification] = useState(false);
+    const [tenderDiscription, settenderDescription] = useState(false);
+    const [tenderCheck, settenderCheck] = useState(false);
 
+    const [backtoBid, setBacktoBid] = useState(false);
     const handleBacktoTender = () => {
         setBacktoTender(true);
     }
@@ -24,10 +36,8 @@ const TenderNextStep = ({selectedRFQ}) => {
             'employeeNumber',
             'bussinessYears',
             'industriesServed',
-            'certification'
+            // 'certification'
         ];
-
-
         const isFormValid = requiredFields.every(field => {
             const value = document.querySelector(`#${field}`).value.trim();
             return value !== ''; // Check if value is not empty
@@ -36,34 +46,103 @@ const TenderNextStep = ({selectedRFQ}) => {
         if (isFormValid) {
             // Store form data
 
+            // Store form data
+            const formData = {
+                opportunityAmount: document.querySelector('#opportunityAmount').value,
+                tenderClosingDate: document.querySelector('#tenderClosingDate').value,
+                deliveryPeriod: document.querySelector('#deliveryPeriod').value,
+                deliveryLocation: document.querySelector('#deliveryLocation').value,
+                description: document.querySelector('#description').value,
+                annualRevenue: document.querySelector('#annualRevenue').value,
+                employeeNumber: document.querySelector('#employeeNumber').value,
+                bussinessYears: document.querySelector('#bussinessYears').value,
+                industriesServed: document.querySelector('#industriesServed').value,
+                certification: document.querySelector('#certification').value,
+            };
 
-        // Store form data
-        const formData = {
-            opportunityAmount: document.querySelector('#opportunityAmount').value,
-            tenderClosingDate: document.querySelector('#tenderClosingDate').value,
-            deliveryPeriod: document.querySelector('#deliveryPeriod').value,
-            deliveryLocation: document.querySelector('#deliveryLocation').value,
-            description: document.querySelector('#description').value,
-            annualRevenue: document.querySelector('#annualRevenue').value,
-            employeeNumber: document.querySelector('#employeeNumber').value,
-            bussinessYears: document.querySelector('#bussinessYears').value,
-            industriesServed: document.querySelector('#industriesServed').value,
-            certification: document.querySelector('#certification').value,
-        };
-
-        localStorage.setItem('formData', JSON.stringify(formData));
-        setBacktoNext(true);
-    } else {
-        alert('Please fill in all the required fields');
+            localStorage.setItem('formData', JSON.stringify(formData));
+            setBacktoNext(true);
+        } else {
+            alert('Please fill in all the required fields');
+        }
     }
-}
 
-// console.log("selectedRFQ",selectedRFQ)
 
+
+
+    ///////////////////////////////////////////////////////////// TENDER CREATION LOGIC ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    const CreateTender = () => {
+        const userDetails = {
+            purpose: `${selectRfqdata?.purpose}`,
+            productName: `${selectRfqdata?.productName}`,
+            email: `${selectRfqdata?.email}`,
+            modelNo: `${selectRfqdata?.modelNo}`,
+            createdBy: `${selectRfqdata?.createdBy}`,
+            rfqName: `${selectRfqdata?.projectName}`,
+            rfqId: `${selectRfqdata?.id}`,
+            phoneNumber: `${selectRfqdata?.phoneNumber}`,
+            deliveryDate: `${selectRfqdata?.deliveryDate}`,
+            purposeOfRfq: `${selectRfqdata?.purposeOfRfq}`,
+            description: `${selectRfqdata?.description}`,
+            quantity: `${selectRfqdata?.quantity}`,
+            tenderDiscription,
+            opportunityAmount,
+            tenderClosingDate,
+            deliveryPeriod,
+            diliveryLocation,
+            anaualRevenue,
+            noOfEmployees,
+            yearsInBusiness,
+            industriesServed,
+            certification: 'UR',
+            originalFilename: "FILE"
+
+        };
+        fetch(`${spring_boot_url}api/tender/${Tenderselectdata.userId}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(userDetails),
+        })
+            .then((resp) => {
+                // setRfqData(resp.data);
+                if (resp.ok === true) {
+                    toast.warning(`Tender Publishing Please Wait.....`, {
+                        position: toast.POSITION.BOTTOM_CENTER,
+                    });
+                    setTimeout(() => {
+                        toast.success(`Tender Published to Seller `, {
+                            position: toast.POSITION.BOTTOM_CENTER,
+                        });
+
+                        //    const handleBidReview =() => {
+                        //         setBacktoBid(!backtoBid);
+                        //     }  //changes
+
+                    }, 3000);
+                }
+                else {
+                    toast.error(`This Tender Allready exist `, {
+                        position: toast.POSITION.BOTTOM_CENTER,
+                    });
+                }
+            })
+            .catch(error => {
+                toast.success(`This Tender Allready exist `, {
+                    position: toast.POSITION.BOTTOM_CENTER,
+                });
+            });
+    };
+
+
+
+
+
+
+    console.log("selectedRFQ", selectRfqdata)
     return (
         <>
             {backtoNext ? (
-                <TenderReview />
+                <TenderReview  selectRfqdata={selectRfqdata}/>
             ) : backtoTender ? (
                 <TenderContain />
             ) : (
@@ -181,7 +260,7 @@ export default TenderNextStep;
 
 
 
-                  
+
 
 
 
@@ -190,7 +269,7 @@ export default TenderNextStep;
 
 
 // setBacktoNext(!backtoNext);
-                    {/* <div className='container'>
+{/* <div className='container'>
                         <p onClick={handleBacktoTender} style={{ color: '#FF8400', fontSize: '20px' }}><MdKeyboardBackspace /> Back</p>
                         <div className='row mt-5'>
                             <div className='col-6'>
@@ -291,4 +370,4 @@ export default TenderNextStep;
                             <button className='btn back-btn' onClick={() => handleBidReview()} style={{ float: 'right' }}>Next</button>
                         </div>
                     </div> */}
-            
+
