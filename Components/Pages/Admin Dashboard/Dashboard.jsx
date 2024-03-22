@@ -26,6 +26,8 @@ const Dashboard = ({ userDe, activeTab, sellers, buyers }) => {
     const [opentender, setopentender] = useState(null);
     const [openseller, setopenseller] = useState(null);
     const [openrfq, setopenrfq] = useState(null);
+    const [openPurchase, setopenPurchase] = useState(null);
+    
     const [isDropdownVisible, setDropdownVisible] = useState(false);
     const [showDetails, setShowDetails] = useState(true);
     const [userData, setUserData] = useState(null);
@@ -60,7 +62,13 @@ const Dashboard = ({ userDe, activeTab, sellers, buyers }) => {
             });
     }
 
+    const handleOpenPurchase = () => {
+        setopenPurchase(true);
+    };
 
+    const handleClosePurchase = () => {
+        setopenPurchase(false);
+    }
     const openModal = (userData) => {
         setSelectedUserData(userData);
         setModalOpen(true);
@@ -731,7 +739,7 @@ const Dashboard = ({ userDe, activeTab, sellers, buyers }) => {
                         </tbody> 
                     </table>
 
-                    <div>
+                    {/* <div>
                             <Modal
                                 keepMounted
                                 open={openPurchase}
@@ -781,7 +789,7 @@ const Dashboard = ({ userDe, activeTab, sellers, buyers }) => {
                                     </div>
                                 </Box>
                             </Modal>
-                        </div>
+                        </div> */}
                 </div>
                 <div className='row'>
                 <div className='col-12 text-end'>

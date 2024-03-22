@@ -9,7 +9,7 @@ import spring_boot_url from '../../../Utils/springApi';
 import TenderNextStep from './TenderNextStep';
 
 
-const RenderNewComponent = ({ }) => {
+const RenderNewComponent = ({tender}) => {
 
   const [nextButton, setNextButton] = useState(false);
   const [searchRFQdata, setsearchRFQdata] = useState(true);
@@ -25,7 +25,9 @@ const RenderNewComponent = ({ }) => {
   const [showDetails, setShowDetails] = useState(true);
   const [selectRfq, setselectRfq] = useState(false);
   const [selectRfqdata, setselectRfqdata] = useState(false);
-
+  const [tenderBack, setTenderBack] = useState(false);
+  const [backtoTender, setbacktoTender] = useState(false);
+  
 
   const handleClickOutside = (e) => {
     if (searchRef.current && !searchRef.current.contains(e.target)) {
