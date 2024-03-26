@@ -39,15 +39,12 @@ const AllTabContain = ({ activeTab, userDe, sellers, buyers }) => {
   }, []);
 
 
-  /////        console.log("tender in All tab contain",resp.data.json);
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   return (
-
-
     <Col>
       <TabContent activeTab={activeTab}>
-
         <TabPane className={`${activeTab === '0' ? 'active' : ''}`} tabId={0} >
           <Dashboard activeTab={activeTab} userDe={userDe} sellers={sellers} buyers={buyers} />
         </TabPane>
@@ -90,18 +87,7 @@ const AllTabContain = ({ activeTab, userDe, sellers, buyers }) => {
         <TabPane className={`${activeTab === '5' ? 'active' : ''}`} tabId={5} >
           <Marketplace activeTab={activeTab} />
           {/* <MarketplacePop/> */}
-
     </Col>
-
-
-
-
-
-
-
-
-
-
   )
 }
 

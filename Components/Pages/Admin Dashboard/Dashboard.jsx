@@ -24,8 +24,7 @@ const Dashboard = ({ userDe, activeTab, sellers, buyers }) => {
     const [opentender, setopentender] = useState(null);
     const [openseller, setopenseller] = useState(null);
     const [openrfq, setopenrfq] = useState(null);
-    const [openPurchase , setopenPurchase ] = useState(null);
-
+    const [openPurchase, setopenPurchase] = useState(null);
     const [isDropdownVisible, setDropdownVisible] = useState(false);
     const [showDetails, setShowDetails] = useState(true);
     const [userData, setUserData] = useState(null);
@@ -88,6 +87,14 @@ const Dashboard = ({ userDe, activeTab, sellers, buyers }) => {
     const handleCloserfq = () => {
         setopenrfq(false);
     };
+    const handleOpenPurchase = () => {
+        setopenrfq(true);
+    };
+
+    const handleClosePurchase = () => {
+        setopenrfq(false);
+    };
+
     const handleViewDetailsClick = (userData) => {
         openModal(userData);
         setIsOpen(false);
@@ -440,7 +447,7 @@ const Dashboard = ({ userDe, activeTab, sellers, buyers }) => {
                                 aria-describedby="keep-mounted-modal-description"
                             >
                                 <Box sx={style}>
-                                    <h3 className='mb-2' style={{ marginLeft: '350px', marginTop: '-10px' }}>Seller List</h3>
+                                    <h3 className='mb-2' style={{ marginLeft: '350px', marginTop: '-10px' }}>Rfq List</h3>
                                     <div className="my-modal-content1" style={{ display: "flex-relative" }}>
 
 
@@ -524,7 +531,7 @@ const Dashboard = ({ userDe, activeTab, sellers, buyers }) => {
                         aria-describedby="keep-mounted-modal-description"
                     >
                         <Box sx={style}>
-                            <h3 className='mb-2' style={{ marginLeft: '350px', marginTop: '-10px' }}>Seller List</h3>
+                            <h3 className='mb-2' style={{ marginLeft: '350px', marginTop: '-10px' }}>Tender List</h3>
                             <div className="my-modal-content1" style={{ display: "flex-relative" }}>
                                 <div className='row mt-5 SI-table' style={{ height: '960px', width: '760px', marginLeft: '0px' }}>
                                     <table className="table">
@@ -707,8 +714,7 @@ const Dashboard = ({ userDe, activeTab, sellers, buyers }) => {
                             ))}
                         </tbody> 
                     </table>
-
-                    {/* <div>
+                    <div>
                             <Modal
                                 keepMounted
                                 open={openPurchase}
@@ -732,7 +738,6 @@ const Dashboard = ({ userDe, activeTab, sellers, buyers }) => {
                                                         <th>Phone No.</th>
                                                         <th>Company Name</th>
                                                         <th>Type</th>
-
                                                     </tr>
                                                 </thead>
                                                 {(

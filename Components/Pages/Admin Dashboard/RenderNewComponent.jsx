@@ -82,6 +82,15 @@ const RenderNewComponent = ({ }) => {
       });
   }, []);
 
+      useEffect(() => {
+        
+          setTenderBack(tender);
+          console.log("tender Back Set Tender: ", tenderBack);
+      });
+      
+      if(tenderBack == null){
+        setTenderBack(tender);
+      }
 
   const searchRFQ = (e) => {
     axios.get(`${spring_boot_url}api/userRfq/search?query=${searchQuery}`)

@@ -20,10 +20,8 @@ const Dashboard = ({ tender, rfq, userDe,sellers }) => {
     const [userData, setUserData] = useState(null);
    
 
-
-
     //////////////////changes//////////////////
-
+    console.log("tender in Sellers", tender);
     const allUsers = () => {
         axios.get(`${spring_boot_url}api/adminuser/allusers`)
             .then(resp => {
@@ -133,13 +131,18 @@ const Dashboard = ({ tender, rfq, userDe,sellers }) => {
 
 
     useEffect(() => {
+        console.log("tender",tender);
+
         allUsers();
         allseller();
         setRfqNo(rfq);
         setTenderNo(tender);
         setopenseller(sellers);
         setUserData(userDe);
-
+        console.log("tender",tender);
+        console.log("rfq",rfq);
+    
+        //setopenPurchase(tender);
 
     }, [])
     //////////////////////changes end///////////////////////
@@ -402,6 +405,7 @@ const Dashboard = ({ tender, rfq, userDe,sellers }) => {
                                                             <td>{elem.userTypes}</td>
                                                         </tr>
                                                     ))}
+                                                             {console.log("tender-modal:-", RfqNo)}
                                                 </tbody>
                                             )}
                                         </table>
@@ -453,6 +457,7 @@ const Dashboard = ({ tender, rfq, userDe,sellers }) => {
                                                         <td>{elem.userTypes}</td> */}
                                                         </tr>
                                                     ))}
+                                                    {console.log("tender-modal tenderno :-", TenderNo)}
                                                 </tbody>
                                             )}
                                         </table>
@@ -506,7 +511,9 @@ const Dashboard = ({ tender, rfq, userDe,sellers }) => {
                                                             <td>{elem.userTypes}</td>
                                                         </tr>
                                                     ))}
+                                                    {console.log("tender-modal bids:-", RfqNo)}
                                                 </tbody>
+                                                
                                             )}
                                         </table>
                                     </div>
@@ -559,7 +566,9 @@ const Dashboard = ({ tender, rfq, userDe,sellers }) => {
                                                             <td>{elem.userTypes}</td>
                                                         </tr>
                                                     ))}
+                                                    {console.log("tender-modal user:-", userData)}
                                                 </tbody>
+                                                
                                             )}
                                         </table>
                                     </div>
@@ -717,15 +726,15 @@ const Dashboard = ({ tender, rfq, userDe,sellers }) => {
                             <th>PId</th>
                             <th>Project Name</th>
                         </tr>
-                        {/* <tbody>
-                      {TenderNo?.slice(0, 5).map((tender, index) => (
-                          <tr key={index + 1}>
-                              <td>{index + 1}</td>
-                              <td>{tender.id}</td>
-                              <td>{tender?.purposeOfRfq}</td>
-                          </tr>
-                      ))}
-                  </tbody> */}
+                        <tbody>
+                            {TenderNo?.slice(0, 5).map((tender, index) => (
+                                <tr key={index + 1}>
+                                    <td>{index + 1}</td>
+                                    <td>{tender.id}</td>
+                                    <td>{tender?.projectName}</td>
+                                </tr>
+                            ))}
+                        </tbody> 
                     </table>
 
                     {/* ///////////////purchase view modal/////////////// */}
@@ -753,23 +762,22 @@ const Dashboard = ({ tender, rfq, userDe,sellers }) => {
                                                     <th>Phone No.</th>
                                                     <th>Company Name</th>
                                                     <th>Type</th>
-
                                                 </tr>
                                             </thead>
                                             {(
-                                                <tbody>
-                                                    {Array.isArray(sellers) && sellers.map((elem, index) => (
-                                                        <tr key={index + 1} className='table-row'>
-                                                            <td>{index + 1}</td>
-                                                            <td>{elem.firstName}</td>
-                                                            <td>{elem.id}</td>
-                                                            <td>{elem.email}</td>
-                                                            <td>{elem.phoneNumber}</td>
-                                                            <td>{elem.company}</td>
-                                                            <td>{elem.userTypes}</td>
-                                                        </tr>
-                                                    ))}
-                                                </tbody>
+                                               <tbody>
+                                               {Array.isArray(sellers) && sellers.map((elem, index) => (
+                                                   <tr key={index + 1} className='table-row'>
+                                                       <td>{index + 1}</td>
+                                                       <td>{elem.firstName}</td>
+                                                       <td>{elem.id}</td>
+                                                       <td>{elem.email}</td>
+                                                       <td>{elem.phoneNumber}</td>
+                                                       <td>{elem.company}</td>
+                                                       <td>{elem.userTypes}</td>
+                                                   </tr>
+                                               ))}
+                                           </tbody>
                                             )}
                                         </table>
                                     </div>
@@ -878,10 +886,6 @@ const Dashboard = ({ tender, rfq, userDe,sellers }) => {
                     />
                 </div>
             </div>
-
-
-
-
         </>
     )
 }
