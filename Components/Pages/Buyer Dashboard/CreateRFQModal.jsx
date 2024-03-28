@@ -1,5 +1,4 @@
 
-import Box from '@mui/material/Box';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
@@ -35,7 +34,6 @@ const CreateRFQModal = () => {
     const [projectName, setprojectName] = useState("");
     const [open, setOpen] = React.useState(false);
     const [Yes, setYes] = React.useState(false);
-
     const [user, setuser] = useState(null)
     const dispatch = useDispatch();
     const toggle = () => {
@@ -50,10 +48,6 @@ const CreateRFQModal = () => {
         dispatch({ type: 'CREATERFQMODAL' });
 
     };
-
-
-
-
     const style = {
         position: 'absolute',
         top: '50%',
@@ -65,28 +59,16 @@ const CreateRFQModal = () => {
         boxShadow: 24,
         p: 4,
       };
-    
-
     const handleClose = () => {
-
         setOpen(false);
         // setuploadRfq(null);
-    
-    
       }
       const handleOpen = (elem) => {
         setOpen(true);
+        setYes(true)
+
         // ssetrfqdata(elem);
-    
-    
-    
-    
       };
-        
-
-
-
-
     const handleOptionChange = (value) => {
         setSelectedOption(value);
         // Clear form fields when an option other than 'product' is selected
@@ -99,7 +81,6 @@ const CreateRFQModal = () => {
         }
         else {
             setpurposeofRfq(value)
-
         }
     };
     const handleSearchChange = (e) => {
@@ -130,14 +111,9 @@ const CreateRFQModal = () => {
                 setsearchdata(resp.data);
             });
     };
-
-
     // const [user, setUser] = useState(null);
     const [DocError, setDocError] = useState(false);
-
-
     //     /////////////////////////////////user login logic.///////////////////////////////////////////////////////
-
     useEffect(() => {
         auth.onAuthStateChanged(async (user) => {
             setuser(user)
@@ -157,7 +133,6 @@ const CreateRFQModal = () => {
             }
         })
     }, [])
-
     const [uploadShow, setUploadShow] = useState(false);
     const registerRfq = (e) => {
         setSelectedFile(e.target.files[0]);
@@ -220,7 +195,7 @@ const CreateRFQModal = () => {
         }).then((resp) => {
             // setRfqData(resp.data);
             if (resp.ok === true) {
-                setOpen(true)
+                setUploadShow(true)
                 async function getLastEntryId(userId) {
                     try {
                         const response = await axios.get(`${spring_boot_url}api/userRfq/${userId}`);
@@ -438,6 +413,30 @@ const CreateRFQModal = () => {
                             </form>
                         </div>
                     )}
+                      <div className="form-group">
+                        {Yes ? (
+                            <div>
+                                <label htmlFor="document">Upload Document(optional)</label>
+                                <input type="file" id="document" name="document" className='input-field otp-phone' onChange={registerRfq} />
+                                <button onClick={Documentupload} >Upload</button>
+                            </div>
+                        ) : (
+                            <p></p>
+                        )}
+                        {uploadShow ? (
+                            <div className="form-group">
+
+                                <div style={{ display: 'flex' }}>
+                                    <p>DO YOU wANT TO UPLOAD ANY FILE </p>
+                                    <button onClick={handleOpen}>YES</button>
+                                    <button onClick={handleReload}> NO</button>
+                                    {/* <button onClick={handleClose}>Close</button> */}
+                                </div>
+                            </div>
+                        ) : (
+                            <p></p>
+                        )}
+                    </div>
                     
                     <div className='row'>
                         <div className='col-lg-6 col-md-12 col-sm-12'>
@@ -449,48 +448,6 @@ const CreateRFQModal = () => {
                     </div>
                 </ModalBody>
             </Modal>
-
-
- {/* /////////////////////////////////////////////////////////rfq view poupmodal code////////////////////////////////////////////////////// */}
- <div>
-        <Modal
-          keepMounted
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="keep-mounted-modal-title"
-          aria-describedby="keep-mounted-modal-description"
-        >
-          <Box sx={style}>
-            <div className="my-modal-content" style={{ display: "flex-relative" }}>
-              <h3 className='mb-2'>User Profile</h3>
-             
-              <div className="form-group">
-                        {Yes ? (
-                            <div>
-
-
-                                <label htmlFor="document">Upload Document(optional)</label>
-                                <input type="file" id="document" name="document" className='input-field otp-phone' onChange={registerRfq} />
-                                <button onClick={Documentupload} >Upload</button>
-                            </div>
-                        ) : (
-                            <p></p>
-                        )}
-
-                    </div>
-         
-              <div style={{ display: 'flex' }}>
-                <p>DO YOU wANT TO UPLOAD ANY FILE </p>
-                <button>YES</button>
-                <button>NO</button>
-                <button onClick={handleClose}>Close</button>
-              </div>
-            </div>
-          </Box>
-        </Modal>
-      </div>
-
-
         </>
     )
 }

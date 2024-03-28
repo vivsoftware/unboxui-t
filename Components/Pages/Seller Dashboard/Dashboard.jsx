@@ -1,10 +1,10 @@
 // import React from 'react'
-import React, { useEffect, useRef, useState } from 'react';
-import { Chart } from "react-google-charts";
-import axios from 'axios';
-import spring_boot_url from '../../../Utils/springApi';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { Chart } from "react-google-charts";
+import spring_boot_url from '../../../Utils/springApi';
 
 const Dashboard = ({ tender, rfq, userDe,sellers }) => {
 
@@ -394,7 +394,6 @@ const Dashboard = ({ tender, rfq, userDe,sellers }) => {
                                             </thead>
                                             {(
                                                 <tbody>
-                                                    {/* {Array.isArray(RfqNo) && RfqNo.map((elem, index) => ( */}
                                                     {Array.isArray(rfq) && rfq.map((elem, index) => (
                                                         <tr key={index + 1} className='table-row'>
                                                             <td>{index + 1}</td>
@@ -447,12 +446,10 @@ const Dashboard = ({ tender, rfq, userDe,sellers }) => {
                                             </thead>
                                             {(
                                                 <tbody>
-                                                    {/* {Array.isArray(TenderNo) && TenderNo.map((elem, index) => ( */}
                                                     {Array.isArray(tender) && tender.map((elem, index) => (
                                                         <tr key={index + 1} className='table-row'>
                                                             {/* <td>{index + 1}</td> */}
                                                             <td>{elem.id}</td>
-
                                                             <td>{elem.purpose}</td>
                                                             <td>{elem.email}</td>
                                                             <td>{elem.phoneNumber}</td>
