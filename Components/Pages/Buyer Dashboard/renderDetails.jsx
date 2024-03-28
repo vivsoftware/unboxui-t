@@ -1,9 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { FaEye } from 'react-icons/fa';
-
 import BidContain from './BidContain';
 import TenderNextStep from './TenderNextStep';
-
 import axios from 'axios';
 import RenderNewComponent from './renderNewComponent';
 import spring_boot_url from '../../../Utils/springApi';

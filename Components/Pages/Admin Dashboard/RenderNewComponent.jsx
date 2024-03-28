@@ -26,6 +26,24 @@ const RenderNewComponent = ({ }) => {
   const [selectRfq, setselectRfq] = useState(false);
   const [selectRfqdata, setselectRfqdata] = useState(false);
 
+  ///////////changes for checkbox///////////
+  const [selectedRFQ, setSelectedRFQ] = useState(null);
+  const [nextButtonDisabled, setNextButtonDisabled] = useState(true);
+
+  // Function to handle RFQ selection
+  const handleRFQSelection = (elem) => {
+    if (selectedRFQ === elem) {
+      // If same checkbox clicked again, deselect it
+      setSelectedRFQ(null);
+      setNextButtonDisabled(true); // Disable the next button
+    } else {
+      setSelectedRFQ(elem);
+      setNextButtonDisabled(false); // Enable the next button
+    }
+  };
+
+  ////////////end///////////
+
 
   const handleClickOutside = (e) => {
     if (searchRef.current && !searchRef.current.contains(e.target)) {
@@ -82,15 +100,15 @@ const RenderNewComponent = ({ }) => {
       });
   }, []);
 
-      useEffect(() => {
-        
-          setTenderBack(tender);
-          console.log("tender Back Set Tender: ", tenderBack);
-      });
-      
-      if(tenderBack == null){
-        setTenderBack(tender);
-      }
+  useEffect(() => {
+
+    setTenderBack(tender);
+    console.log("tender Back Set Tender: ", tenderBack);
+  });
+
+  if (tenderBack == null) {
+    setTenderBack(tender);
+  }
 
   const searchRFQ = (e) => {
     axios.get(`${spring_boot_url}api/userRfq/search?query=${searchQuery}`)
@@ -185,14 +203,26 @@ const RenderNewComponent = ({ }) => {
                               <div className='container'>
                                 <div className='row'>
                                   <div className='col-10'>
-                                    <input type='checkbox' />
+                                    <input type='checkbox'
+                                      //changes
+                                      checked={selectedRFQ === elem} //  RFQ is selected
+                                      onChange={() => handleRFQSelection(elem)} // Update the selected RFQ
+                                    //end
+
+
+                                    />
                                     <h5>Project Name : {elem.productName}</h5>
                                     <p>RFQ Create Date : {formatDate(elem.createdAt)}</p>
                                     <p>Created By : {elem.createdBy}</p>
                                     <h5>Status : {elem.status}</h5>
                                   </div>
                                   <div className='col-2'>
-                                    <button className="option-button" onClick={() => handleViewRFQDetailsClick(elem)}>
+                                    <button className="option-button"
+                                      onClick={() => handleOpen(elem)}
+
+                                    //onClick={() => handleViewRFQDetailsClick(elem)}
+
+                                    >
                                       <FaEye />
                                     </button>
                                   </div>
@@ -212,7 +242,13 @@ const RenderNewComponent = ({ }) => {
                                   <div className='col-10'>
                                     <input
                                       type='checkbox'
-                                      onChange={() => selectRfqc(elem)}
+
+                                      //changes
+                                      checked={selectedRFQ === elem} // Check if the RFQ is selected
+                                      onChange={() => handleRFQSelection(elem)} // Update the selected RFQ
+                                    //end
+
+                                    //onChange={() => selectRfqc(elem)}
                                     />
 
 
@@ -222,7 +258,12 @@ const RenderNewComponent = ({ }) => {
                                     <h5>Status : {elem.status}</h5>
                                   </div>
                                   <div className='col-2'>
-                                    <button className="option-button" onClick={() => handleViewRFQDetailsClick(elem)}>
+                                    <button className="option-button" 
+                                    onClick={() => handleOpen(elem)}
+
+
+                                    //onClick={() => handleViewRFQDetailsClick(elem)}
+                                    >
                                       <FaEye />
                                     </button>
                                   </div>
@@ -245,9 +286,12 @@ const RenderNewComponent = ({ }) => {
                   </button>
                 </div>
                 <div className='col-1'>
-                  <button className='btn back-btn' onClick={handleNextButton}>
+                  {/* <button className='btn back-btn' onClick={handleNextButton}>
                     Next
-                  </button>
+                  </button> */}
+                     <button className="btn back-btn" onClick={handleNextButton} disabled={nextButtonDisabled}>
+                     Next
+                    </button>
                 </div>
               </div>
             </div>

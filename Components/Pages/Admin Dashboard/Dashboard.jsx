@@ -371,8 +371,6 @@ const Dashboard = ({ userDe, activeTab, sellers, buyers }) => {
 
 
 
-
-
                         {/* //////////////////////////////////////////////seller-view pop modal////////////// */}
                         <div>
                             <Modal
@@ -596,6 +594,7 @@ const Dashboard = ({ userDe, activeTab, sellers, buyers }) => {
                     </Modal>
                 </div>
                 {/* /////////////////////view modal ends///////////////// */}
+
                 {/* mobile view 2nd block */}
                 <div className='secondblock' id="grid2_mobile">
                     <div className='detailsmobile' id="grid2_mobile">
@@ -619,14 +618,64 @@ const Dashboard = ({ userDe, activeTab, sellers, buyers }) => {
                                 </tbody>
                             </table>
 
+                            {/* //////////////////////mobile buyer view modal //////////////// */}
+                            <div>
+                            <Modal
+                                keepMounted
+                                open={open}
+                                onClose={handleClose}
+                                aria-labelledby="keep-mounted-modal-title"
+                                aria-describedby="keep-mounted-modal-description"
+                            >
+                                <Box sx={style}>
+                                    <h3 className='mb-2' style={{ marginLeft: '350px', marginTop: '-10px' }}>Buyer List</h3>
+                                    <div className="my-modal-content1" style={{ display: "flex-relative" }}>
+
+                                        <div className='row mt-5 SI-table' style={{ height: '960px', width: '760px', marginLeft: '0px' }}>
+                                            <table className="table">
+                                                <thead className='table-header'>
+                                                    <tr>
+                                                        <th>Sr.No</th>
+                                                        <th>Name</th>
+                                                        <th>User Id</th>
+                                                        <th>Email Id</th>
+                                                        <th>Phone No.</th>
+                                                        <th>Company Name</th>
+                                                        <th>Type</th>
+                                                    </tr>
+                                                </thead>
+                                                {(
+                                                    <tbody>
+                                                        {buyers?.map((buyer, index) => (
+                                                            <tr key={index + 1}>
+                                                                {/* <td>{index + 1}</td> */}
+                                                                <td>{buyer.id}</td>
+                                                                <td>{buyer?.firstName}</td>
+                                                                <td>{buyer?.phoneNumber}</td>
+                                                            </tr>
+                                                        ))}
+                                                    </tbody>
+                                                )}
+                                            </table>
+                                        </div>
+                                        <div style={{ display: 'flex' }}>
+                                            <button onClick={handleClose}>Close</button>
+                                        </div>
+                                    </div>
+                                </Box>
+                            </Modal>
+                        </div>
+                        {/* //////////////////ends////////////////////////////// */}
+
 
                         </div>
                         <div className='row'>
                             <div className='col-12 text-end'>
-                                <button className='btn' style={{ backgroundColor: 'white', color: "#FF8400", height: '20px', padding: '0' }} >View All</button>
+                                <button className='btn' onClick={() => handleOpen()} style={{ backgroundColor: 'white', color: "#FF8400", height: '20px', padding: '0' }} >View All</button>
                             </div>
                         </div>
                     </div>
+
                     <div className='detailsmobile' id="grid2_mobile">
                         <h3 className='text-center mb-1'>Seller Details</h3>
                         <div className='row ms-1'>
@@ -784,7 +833,7 @@ const Dashboard = ({ userDe, activeTab, sellers, buyers }) => {
                                         <div style={{ display: 'flex' }}>
                                     <button onClick={handleClosePurchase}>Close</button>
                                 </div>
-                                    </div>
+                                </div>
                                 </Box>
                             </Modal>
                         </div>
