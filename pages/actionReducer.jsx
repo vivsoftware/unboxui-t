@@ -1,6 +1,8 @@
-import { FETCH_USERS_SUCCESS, FETCH_USERS_FAILURE } from "./actionType";
+// import { FETCH_USERS_FAILURE, FETCH_USERS_SUCCESS } from "./actionType";
 
 
+export const FETCH_USERS_FAILURE = 'FETCH_USERS_FAILURE';
+export const FETCH_USERS_SUCCESS = 'FETCH_USERS_SUCCESS';
 const initialState = {
     userDe: [],
     error: null,

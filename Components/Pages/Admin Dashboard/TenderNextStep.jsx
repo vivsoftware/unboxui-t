@@ -4,7 +4,9 @@ import { Input } from 'reactstrap';
 import spring_boot_url from '../../../Utils/springApi';
 import TenderContain from './TenderContain';
 import TenderReview from './TenderReviews';
-const TenderNextStep = ({ selectRfqdata }) => {
+
+
+const TenderNextStep = ({ Tenderselectdata }) => {
     const [backtoNext, setBacktoNext] = useState(false);
     const [backtoTender, setBacktoTender] = useState(false);
     const [opportunityAmount, setopportunityAmount] = useState(false);
@@ -73,18 +75,18 @@ const TenderNextStep = ({ selectRfqdata }) => {
     ///////////////////////////////////////////////////////////// TENDER CREATION LOGIC ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     const CreateTender = () => {
         const userDetails = {
-            purpose: `${selectRfqdata?.purpose}`,
-            productName: `${selectRfqdata?.productName}`,
-            email: `${selectRfqdata?.email}`,
-            modelNo: `${selectRfqdata?.modelNo}`,
-            createdBy: `${selectRfqdata?.createdBy}`,
-            rfqName: `${selectRfqdata?.projectName}`,
-            rfqId: `${selectRfqdata?.id}`,
-            phoneNumber: `${selectRfqdata?.phoneNumber}`,
-            deliveryDate: `${selectRfqdata?.deliveryDate}`,
-            purposeOfRfq: `${selectRfqdata?.purposeOfRfq}`,
-            description: `${selectRfqdata?.description}`,
-            quantity: `${selectRfqdata?.quantity}`,
+            purpose: `${Tenderselectdata?.purpose}`,
+            productName: `${Tenderselectdata?.productName}`,
+            email: `${Tenderselectdata?.email}`,
+            modelNo: `${Tenderselectdata?.modelNo}`,
+            createdBy: `${Tenderselectdata?.createdBy}`,
+            rfqName: `${Tenderselectdata?.projectName}`,
+            rfqId: `${Tenderselectdata?.id}`,
+            phoneNumber: `${Tenderselectdata?.phoneNumber}`,
+            deliveryDate: `${Tenderselectdata?.deliveryDate}`,
+            purposeOfRfq: `${Tenderselectdata?.purposeOfRfq}`,
+            description: `${Tenderselectdata?.description}`,
+            quantity: `${Tenderselectdata?.quantity}`,
             tenderDiscription,
             opportunityAmount,
             tenderClosingDate,
@@ -113,11 +115,7 @@ const TenderNextStep = ({ selectRfqdata }) => {
                         toast.success(`Tender Published to Seller `, {
                             position: toast.POSITION.BOTTOM_CENTER,
                         });
-
-                        //    const handleBidReview =() => {
-                        //         setBacktoBid(!backtoBid);
-                        //     }  //changes
-
+                        handleReload();
                     }, 3000);
                 }
                 else {
@@ -131,18 +129,78 @@ const TenderNextStep = ({ selectRfqdata }) => {
                     position: toast.POSITION.BOTTOM_CENTER,
                 });
             });
-    };
+    }
+    ///////////////end///////////////////
+    
+    // const CreateTender = () => {
+    //     const userDetails = {
+    //         purpose: `${selectRfqdata?.purpose}`,
+    //         productName: `${selectRfqdata?.productName}`,
+    //         email: `${selectRfqdata?.email}`,
+    //         modelNo: `${selectRfqdata?.modelNo}`,
+    //         createdBy: `${selectRfqdata?.createdBy}`,
+    //         rfqName: `${selectRfqdata?.projectName}`,
+    //         rfqId: `${selectRfqdata?.id}`,
+    //         phoneNumber: `${selectRfqdata?.phoneNumber}`,
+    //         deliveryDate: `${selectRfqdata?.deliveryDate}`,
+    //         purposeOfRfq: `${selectRfqdata?.purposeOfRfq}`,
+    //         description: `${selectRfqdata?.description}`,
+    //         quantity: `${selectRfqdata?.quantity}`,
+    //         tenderDiscription,
+    //         opportunityAmount,
+    //         tenderClosingDate,
+    //         deliveryPeriod,
+    //         diliveryLocation,
+    //         anaualRevenue,
+    //         noOfEmployees,
+    //         yearsInBusiness,
+    //         industriesServed,
+    //         certification: 'UR',
+    //         originalFilename: "FILE"
+
+    //     };
+    //     fetch(`${spring_boot_url}api/tender/${Tenderselectdata.userId}`, {
+    //         method: 'POST',
+    //         headers: { 'Content-Type': 'application/json' },
+    //         body: JSON.stringify(userDetails),
+    //     })
+    //         .then((resp) => {
+    //             // setRfqData(resp.data);
+    //             if (resp.ok === true) {
+    //                 toast.warning(`Tender Publishing Please Wait.....`, {
+    //                     position: toast.POSITION.BOTTOM_CENTER,
+    //                 });
+    //                 setTimeout(() => {
+    //                     toast.success(`Tender Published to Seller `, {
+    //                         position: toast.POSITION.BOTTOM_CENTER,
+    //                     });
+
+    //                     //    const handleBidReview =() => {
+    //                     //         setBacktoBid(!backtoBid);
+    //                     //     }  //changes
+
+    //                 }, 3000);
+    //             }
+    //             else {
+    //                 toast.error(`This Tender Allready exist `, {
+    //                     position: toast.POSITION.BOTTOM_CENTER,
+    //                 });
+    //             }
+    //         })
+    //         .catch(error => {
+    //             toast.success(`This Tender Allready exist `, {
+    //                 position: toast.POSITION.BOTTOM_CENTER,
+    //             });
+    //         });
+    // };
 
 
 
-
-
-
-    console.log("selectedRFQ", selectRfqdata)
+    // console.log("selectedRFQ", selectRfqdata)
     return (
         <>
             {backtoNext ? (
-                <TenderReview  selectRfqdata={selectRfqdata}/>
+                <TenderReview  Tenderselectdata={Tenderselectdata}/>
             ) : backtoTender ? (
                 <TenderContain />
             ) : (

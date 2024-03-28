@@ -9,7 +9,6 @@ const SellerDashboard = ({rfq, tender, userDe}) => {
     const [num, setNum] = useState(1);
     const [showMenu, setShowMenu] = useState();
     const router = useRouter();
-
     const handleClick = (index) => {
         // setActiveTab(index === activeTab ? null : index);  //double click error bcz of this
         setActiveTab(index);
@@ -29,7 +28,6 @@ const SellerDashboard = ({rfq, tender, userDe}) => {
                     <Col lg='2' md='2' >
                         {/* <div className='admin-sidebar'> */}
                         <div className='seller-sidebar'>
-
                         {SellerDashboardData.map((elem, i) => (
                                 <div className={`${activeTab === i ? 'thick-border' : ''}`} onClick={() => handleClick(i)} key={i}>
                                     <img className="admin-icon" src={elem.image} />
@@ -49,9 +47,7 @@ const SellerDashboard = ({rfq, tender, userDe}) => {
             </Container>
             {/* <BidContain/> */}
             </div>
-           
         </>
     )
 }
-
 export default SellerDashboard

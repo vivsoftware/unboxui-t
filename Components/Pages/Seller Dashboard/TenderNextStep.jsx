@@ -30,7 +30,52 @@ const TenderNextStep = ({ Tenderselectdata }) => {
         setBacktoTender(true);
     }
     const handleBidReview = () => {
-        setBacktoNext(!backtoNext);
+        ///////////changes/////////////
+
+        const requiredFields = [
+            'opportunityAmount',
+            'tenderClosingDate',
+            'deliveryPeriod',
+            'deliveryLocation',
+            'description',
+            'annualRevenue',
+            'employeeNumber',
+            'bussinessYears',
+            'industriesServed',
+            'certification'
+        ];
+
+
+        const isFormValid = requiredFields.every(field => {
+            const value = document.querySelector(`#${field}`).value.trim();
+            return value !== ''; // Check if value is not empty
+        });
+
+        if (isFormValid) {
+            // Store form data
+
+
+        // Store form data
+        const formData = {
+            opportunityAmount: document.querySelector('#opportunityAmount').value,
+            tenderClosingDate: document.querySelector('#tenderClosingDate').value,
+            deliveryPeriod: document.querySelector('#deliveryPeriod').value,
+            deliveryLocation: document.querySelector('#deliveryLocation').value,
+            description: document.querySelector('#description').value,
+            annualRevenue: document.querySelector('#annualRevenue').value,
+            employeeNumber: document.querySelector('#employeeNumber').value,
+            bussinessYears: document.querySelector('#bussinessYears').value,
+            industriesServed: document.querySelector('#industriesServed').value,
+            certification: document.querySelector('#certification').value,
+        };
+
+        localStorage.setItem('formData', JSON.stringify(formData));
+        setBacktoNext(true);
+    } else {
+        alert('Please fill in all the required fields');
+    }
+        //////////////////end///////////////
+        // setBacktoNext(!backtoNext);
     }
     const handleReload = () => {
         setTimeout(() => {
@@ -97,19 +142,20 @@ const TenderNextStep = ({ Tenderselectdata }) => {
                     position: toast.POSITION.BOTTOM_CENTER,
                 });
             });
-    };
+    }
 
     return (
         <>
         { backtoNext ? (
-            <TenderReview/>
+            <TenderReview Tenderselectdata={Tenderselectdata}/>
          ) : backtoTender ? (
             <TenderContain/>
          ) : ( 
 
             // {/* {backtoTender && <TenderContain />}
             // {!backtoTender && ( */}
-                <>
+
+            <>
                     <div className='container'>
                         <p onClick={handleBacktoTender} style={{ color: '#FF8400', fontSize: '20px' }}><MdKeyboardBackspace /> Back</p>
                         <div className='row mt-5'>
@@ -121,15 +167,7 @@ const TenderNextStep = ({ Tenderselectdata }) => {
                                             <label>Opportunity Amount : </label>
                                         </div>
                                         <div className='col-7'>
-                                            {/* <Input type='number' placeholder='Price' /> */}
-                                            <Input
-                                                type="number"
-                                                className='otp-phone'
-                                                placeholder='Price'
-                                                value={opportunityAmount}
-                                                onChange={(e) => setopportunityAmount(e.target.value)}
-                                                required
-                                            />
+                                            <Input type='number' placeholder='Price' id='opportunityAmount' />
                                         </div>
                                     </div>
                                     <div className='row mt-2'>
@@ -137,9 +175,7 @@ const TenderNextStep = ({ Tenderselectdata }) => {
                                             <label>Tender Closing Date : </label>
                                         </div>
                                         <div className='col-7'>
-                                            <Input type='date' placeholder='02-02-2020' value={tenderClosingDate}
-                                                onChange={(e) => settenderClosingDate(e.target.value)}
-                                                required />
+                                            <Input type='date' id='tenderClosingDate' />
                                         </div>
                                     </div>
                                     <div className='row mt-2'>
@@ -147,9 +183,7 @@ const TenderNextStep = ({ Tenderselectdata }) => {
                                             <label>Delivery Period :</label>
                                         </div>
                                         <div className='col-7'>
-                                            <Input type='text' placeholder='3 months' value={deliveryPeriod}
-                                                onChange={(e) => setdeliveryPeriod(e.target.value)}
-                                                required />
+                                            <Input type='text' placeholder='3 months' id='deliveryPeriod' />
                                         </div>
                                     </div>
                                     <div className='row mt-2'>
@@ -157,9 +191,7 @@ const TenderNextStep = ({ Tenderselectdata }) => {
                                             <label>Delivery Location : </label>
                                         </div>
                                         <div className='col-7'>
-                                            <Input type='text' placeholder='Delhi' value={diliveryLocation}
-                                                onChange={(e) => setdiliveryLocation(e.target.value)}
-                                                required />
+                                            <Input type='text' placeholder='Delhi' id='deliveryLocation' />
                                         </div>
                                     </div>
                                     <div className='row mt-2'>
@@ -167,9 +199,7 @@ const TenderNextStep = ({ Tenderselectdata }) => {
                                             <label>Description : </label>
                                         </div>
                                         <div className='col-7'>
-                                            <textarea type='text' placeholder='About Tender' value={tenderDiscription}
-                                                onChange={(e) => settenderDescription(e.target.value)}
-                                                required />
+                                            <textarea type='text' placeholder='About Tender' id='description' />
                                         </div>
                                     </div>
                                 </div>
@@ -182,9 +212,7 @@ const TenderNextStep = ({ Tenderselectdata }) => {
                                             <label>Annual Revenue : </label>
                                         </div>
                                         <div className='col-7'>
-                                            <Input type='number' placeholder='Price' value={anaualRevenue}
-                                                onChange={(e) => setanaualRevenue(e.target.value)}
-                                                required />
+                                            <Input type='number' placeholder='Price' id='annualRevenue' />
                                         </div>
                                     </div>
                                     <div className='row mt-2'>
@@ -192,9 +220,7 @@ const TenderNextStep = ({ Tenderselectdata }) => {
                                             <label>No. of Employees : </label>
                                         </div>
                                         <div className='col-7'>
-                                            <Input type='number' placeholder='200' value={noOfEmployees}
-                                                onChange={(e) => setnoOfEmployees(e.target.value)}
-                                                required />
+                                            <Input type='number' placeholder='200' id='employeeNumber' />
                                         </div>
                                     </div>
                                     <div className='row mt-2'>
@@ -202,9 +228,7 @@ const TenderNextStep = ({ Tenderselectdata }) => {
                                             <label>Years in Business :</label>
                                         </div>
                                         <div className='col-7'>
-                                            <Input type='number' placeholder='20' value={yearsInBusiness}
-                                                onChange={(e) => setyearsInBusiness(e.target.value)}
-                                                required />
+                                            <Input type='number' placeholder='20' id='bussinessYears' />
                                         </div>
                                     </div>
                                     <div className='row mt-2'>
@@ -212,9 +236,7 @@ const TenderNextStep = ({ Tenderselectdata }) => {
                                             <label>Industries Served : </label>
                                         </div>
                                         <div className='col-7'>
-                                            <Input type='number' placeholder='0' value={industriesServed}
-                                                onChange={(e) => setindustriesServed(e.target.value)}
-                                                required />
+                                            <Input type='number' placeholder='0' id='industriesServed' />
                                         </div>
                                     </div>
                                     <div className='row mt-2'>
@@ -222,19 +244,16 @@ const TenderNextStep = ({ Tenderselectdata }) => {
                                             <label>Certifications : </label>
                                         </div>
                                         <div className='col-7' style={{ display: 'flex', flexDirection: 'column' }}>
-                                            <Input type='checkbox' />UR
-                                            <Input type='checkbox' />ISO
-                                            <Input type='checkbox' />GST
-                                            <Input type='checkbox' />Other
+                                            <Input type='checkbox' id='certification' />UR
+                                            <Input type='checkbox' id='certification' />ISO
+                                            <Input type='checkbox' id='certification' />GST
+                                            <Input type='checkbox' id='certification' />Other
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        {/* <div className='row mt-2' style={{ display: 'flex', justifyContent: 'end' }}>
-                            <button className=' btn compare-btn' onClick={CreateTender}>Publish</button>
-                        </div> */}
-                           <div className='row mt-2' style={{ display: 'flex', justifyContent: 'end' }}>
+                        <div className='row mt-2' style={{ display: 'flex', justifyContent: 'end' }}>
                             <button className='btn back-btn' onClick={() => handleBidReview()} style={{ float: 'right' }}>Next</button>
                         </div>
                     </div>

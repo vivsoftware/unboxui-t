@@ -1,5 +1,4 @@
 
-import Box from '@mui/material/Box';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
@@ -35,7 +34,6 @@ const CreateRFQModal = () => {
     const [projectName, setprojectName] = useState("");
     const [open, setOpen] = React.useState(false);
     const [Yes, setYes] = React.useState(false);
-
     const [user, setuser] = useState(null)
     const dispatch = useDispatch();
 
@@ -52,10 +50,6 @@ const CreateRFQModal = () => {
         dispatch({ type: 'CREATERFQMODAL' });
 
     };
-
-
-
-
     const style = {
         position: 'absolute',
         top: '50%',
@@ -67,29 +61,20 @@ const CreateRFQModal = () => {
         boxShadow: 24,
         p: 4,
       };
-    
-
     const handleClose = () => {
-
         setOpen(false);
         // setuploadRfq(null);
-    
-    
       }
       const handleOpen = (elem) => {
         setOpen(true);
+<<<<<<< HEAD
         setYes(true);
+=======
+        setYes(true)
+
+>>>>>>> c2f4022304d98cde3f790579027b7a1586f7c7d8
         // ssetrfqdata(elem);
-    
-    
-    
-    
       };
-        
-
-
-
-
     const handleOptionChange = (value) => {
         setSelectedOption(value);
         // Clear form fields when an option other than 'product' is selected
@@ -102,7 +87,6 @@ const CreateRFQModal = () => {
         }
         else {
             setpurposeofRfq(value)
-
         }
     };
     const handleSearchChange = (e) => {
@@ -133,14 +117,9 @@ const CreateRFQModal = () => {
                 setsearchdata(resp.data);
             });
     };
-
-
     // const [user, setUser] = useState(null);
     const [DocError, setDocError] = useState(false);
-
-
     //     /////////////////////////////////user login logic.///////////////////////////////////////////////////////
-
     useEffect(() => {
         auth.onAuthStateChanged(async (user) => {
             setuser(user)
@@ -160,7 +139,6 @@ const CreateRFQModal = () => {
             }
         })
     }, [])
-
     const [uploadShow, setUploadShow] = useState(false);
     const registerRfq = (e) => {
         setSelectedFile(e.target.files[0]);
@@ -223,8 +201,12 @@ const CreateRFQModal = () => {
         }).then((resp) => {
             // setRfqData(resp.data);
             if (resp.ok === true) {
+<<<<<<< HEAD
                 // setOpen(true)
                 setUploadShow(true);
+=======
+                setUploadShow(true)
+>>>>>>> c2f4022304d98cde3f790579027b7a1586f7c7d8
                 async function getLastEntryId(userId) {
                     try {
                         const response = await axios.get(`${spring_boot_url}api/userRfq/${userId}`);
@@ -442,6 +424,7 @@ const CreateRFQModal = () => {
                             </form>
                         </div>
                     )}
+<<<<<<< HEAD
                     <div className='form-group'>
 
                         {
@@ -471,6 +454,31 @@ const CreateRFQModal = () => {
                             )
                         }
 
+=======
+                      <div className="form-group">
+                        {Yes ? (
+                            <div>
+                                <label htmlFor="document">Upload Document(optional)</label>
+                                <input type="file" id="document" name="document" className='input-field otp-phone' onChange={registerRfq} />
+                                <button onClick={Documentupload} >Upload</button>
+                            </div>
+                        ) : (
+                            <p></p>
+                        )}
+                        {uploadShow ? (
+                            <div className="form-group">
+
+                                <div style={{ display: 'flex' }}>
+                                    <p>DO YOU wANT TO UPLOAD ANY FILE </p>
+                                    <button onClick={handleOpen}>YES</button>
+                                    <button onClick={handleReload}> NO</button>
+                                    {/* <button onClick={handleClose}>Close</button> */}
+                                </div>
+                            </div>
+                        ) : (
+                            <p></p>
+                        )}
+>>>>>>> c2f4022304d98cde3f790579027b7a1586f7c7d8
                     </div>
                     
                     <div className='row'>
@@ -483,6 +491,7 @@ const CreateRFQModal = () => {
                     </div>
                 </ModalBody>
             </Modal>
+<<<<<<< HEAD
 
 
  {/* /////////////////////////////////////////////////////////rfq view poupmodal code////////////////////////////////////////////////////// */}
@@ -525,6 +534,8 @@ const CreateRFQModal = () => {
       </div>
 
 
+=======
+>>>>>>> c2f4022304d98cde3f790579027b7a1586f7c7d8
         </>
     )
 }

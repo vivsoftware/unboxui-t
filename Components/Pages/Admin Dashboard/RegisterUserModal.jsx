@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import { Form, Input, Modal, ModalBody, ModalHeader } from 'reactstrap';
 import { auth } from '../../../Config/firebase';
 import spring_boot_url from '../../../Utils/springApi';
+
 const RegisterSIModal = () => {
   const { registerSIModal } = useSelector((state) => state.ModalReducer);
   const dispatch = useDispatch();
@@ -33,6 +34,7 @@ const RegisterSIModal = () => {
   const handleReload = () => {
     router.reload();
   };
+  
   useEffect(() => {
     auth.onAuthStateChanged(async (user) => {
       setuser(user)
@@ -161,6 +163,7 @@ const RegisterSIModal = () => {
       isValid = false;
       errors.type = 'Type is required.';
     }
+
     if (!phoneNumber) {
       isValid = false;
       errors.phoneNumber = 'Phone Number is required.';

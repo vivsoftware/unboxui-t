@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useEffect, useRef, useState } from "react";
 import { FaEye } from "react-icons/fa";
 
@@ -7,6 +8,15 @@ import TenderNextStep from "./TenderNextStep";
 import axios from "axios";
 import RenderNewComponent from "./renderNewComponent";
 import spring_boot_url from "../../../Utils/springApi";
+=======
+import React, { useEffect, useRef, useState } from 'react';
+import { FaEye } from 'react-icons/fa';
+import BidContain from './BidContain';
+import TenderNextStep from './TenderNextStep';
+import axios from 'axios';
+import RenderNewComponent from './renderNewComponent';
+import spring_boot_url from '../../../Utils/springApi';
+>>>>>>> c2f4022304d98cde3f790579027b7a1586f7c7d8
 
 const RenderDetails = ({ tender, tenderBids, formatDate, handleBidClick,  tenderBack ,userDe}) => {
   const [showBid, setShowBid] = useState(false);
