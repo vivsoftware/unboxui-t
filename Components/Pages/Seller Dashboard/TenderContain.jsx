@@ -51,7 +51,6 @@ const TenderContain = ({ rfq, tender, userDe }) => {
       setNextButtonDisabled(false); // Enable the next button
     }
   };
-
   ////////////end///////////
 
   const handleClickOutside = (e) => {
