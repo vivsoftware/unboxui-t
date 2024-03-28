@@ -9,7 +9,7 @@ import RenderNewComponent from './renderNewComponent';
 const TenderContain = ({ tender, rfq }) => {
   const [isDropdownVisible, setDropdownVisible] = useState(false);
   const [showDetails, setShowDetails] = useState(true);
-  const [userDe, setUserDe] = useState(true);
+  const [userDe, setUserDe] = useState(true); ///change hook or userDe
   const [RFQDe, setRFQDe] = useState(true);
   const [searchdata, setsearchdata] = useState(true);
   const [searchRFQdata, setsearchRFQdata] = useState(true);
@@ -260,8 +260,9 @@ const TenderContain = ({ tender, rfq }) => {
           formatDate={formatDate}
           handleOpen={handleOpen}
           handleBidClick={handleBidClick}
+          userDe={userDe} 
         /> : (
-          <RenderNewComponent handleBackToDetails={handleBackToDetails} tender={tender}
+          <RenderNewComponent handleBackToDetails={handleBackToDetails} tender={tender} 
           />
         )}
     </div>

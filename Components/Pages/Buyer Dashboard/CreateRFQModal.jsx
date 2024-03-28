@@ -38,6 +38,8 @@ const CreateRFQModal = () => {
 
     const [user, setuser] = useState(null)
     const dispatch = useDispatch();
+
+    
     const toggle = () => {
         // Clear form fields and reset radio button selection when modal is closed
         setSelectedOption('');
@@ -76,6 +78,7 @@ const CreateRFQModal = () => {
       }
       const handleOpen = (elem) => {
         setOpen(true);
+        setYes(true);
         // ssetrfqdata(elem);
     
     
@@ -220,7 +223,8 @@ const CreateRFQModal = () => {
         }).then((resp) => {
             // setRfqData(resp.data);
             if (resp.ok === true) {
-                setOpen(true)
+                // setOpen(true)
+                setUploadShow(true);
                 async function getLastEntryId(userId) {
                     try {
                         const response = await axios.get(`${spring_boot_url}api/userRfq/${userId}`);
@@ -438,6 +442,36 @@ const CreateRFQModal = () => {
                             </form>
                         </div>
                     )}
+                    <div className='form-group'>
+
+                        {
+                            Yes ? (<div>
+
+                                    <label htmlFor='document' >Upload Document(optional)</label>
+                                    <input type="file" id='document' name='document' className='input-field otp-phone' onChange={registerRfq} />
+                                    <button onClick={Documentupload}>Upload</button>
+ 
+                                </div>) : (
+                                    <p></p>
+                                )
+                        }
+                        {
+                            uploadShow ? (
+                                <div className='form-group'>
+
+                                <div style={{ display: 'flex'}}>
+                                <p>DO YOU WANT TO UPLOAD ANY FILE </p>
+                                <button onClick={handleOpen}>Yes</button>
+                                <button onClick={handleReload}>No</button>
+
+                                </div>
+                                </div>
+                            ) : (
+                                <p></p>
+                            )
+                        }
+
+                    </div>
                     
                     <div className='row'>
                         <div className='col-lg-6 col-md-12 col-sm-12'>
@@ -479,8 +513,8 @@ const CreateRFQModal = () => {
 
                     </div>
          
-              <div style={{ display: 'flex' }}>
-                <p>DO YOU wANT TO UPLOAD ANY FILE </p>
+              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <p>DO YOU WANT TO UPLOAD ANY FILE </p>
                 <button>YES</button>
                 <button>NO</button>
                 <button onClick={handleClose}>Close</button>

@@ -33,7 +33,7 @@ const TenderContain = ({ rfq, tender, userDe }) => {
   const [nextBtn, setnextBtn] = React.useState(false);
   const [Tenderselectdata, setTenderselectdata] = useState(true);
   const [searchData, setSearchData] = useState(true);
-
+  const userId = userDe?.id;
   const handleClickOutside = (e) => {
     if (searchRef.current && !searchRef.current.contains(e.target)) {
       // Clicked outside the search card, close it
@@ -117,18 +117,31 @@ const TenderContain = ({ rfq, tender, userDe }) => {
       setsearchdata(null);
     } else {
       setSearchQuery(e.target.value);
+      console.log("search Liist:-",e.target.value);
       serachTender();
     }
   };
 
-  const serachTender = (e) => {
-    axios
-      .get(`${spring_boot_url}api/tender/find?query=${searchQuery}`)
-      .then((resp) => {
-        setsearchdata(resp.data);
-      });
-    console.log(searchQuery);
-  };
+  // useEffect(() => {
+  //   axios.get(`${spring_boot_url}api/userRfq/${userId}`)
+  //     .then(resp => {
+  //       setRFQ(resp.data);
+  //     })
+  //     .catch(error => {
+  //       console.error('Error fetching user RFQ data:', error);
+  //     });
+  // }, [userId]);
+
+
+  
+  // const serachTender = (e) => {
+  //   axios.get(`${spring_boot_url}api/userRfq/${userId}`)
+  //     .then((resp) => {
+  //       setsearchdata(resp.data);
+  //       console.log("search Liist:-",resp.data);
+  //     });
+  //     console.log("search Liist:-",searchQuery);
+  // };
 
   useEffect(() => {
     const filterTenderData = tender?.filter((item) => {
@@ -714,3 +727,9 @@ const TenderContain = ({ rfq, tender, userDe }) => {
 };
 
 export default TenderContain;
+
+
+// need to fix fecthing or back button.
+
+
+

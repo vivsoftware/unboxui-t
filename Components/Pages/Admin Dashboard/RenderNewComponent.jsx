@@ -7,6 +7,7 @@ import Modal from '@mui/material/Modal';
 import axios from 'axios';
 import spring_boot_url from '../../../Utils/springApi';
 import TenderNextStep from './TenderNextStep';
+import RenderDetails from './RenderDetails';
 
 
 const RenderNewComponent = ({tender}) => {
@@ -25,7 +26,7 @@ const RenderNewComponent = ({tender}) => {
   const [showDetails, setShowDetails] = useState(true);
   const [selectRfq, setselectRfq] = useState(false);
   const [selectRfqdata, setselectRfqdata] = useState(false);
-  const [tenderBack, setTenderBack] = useState(false);
+  const [tenderBack, setTenderBack] = useState(null);
   const [backtoTender, setbacktoTender] = useState(false);
   
 
@@ -47,7 +48,8 @@ const RenderNewComponent = ({tender}) => {
     p: 4,
   };
   const handleNextButton = () => {
-    setNextButton(!nextButton);
+    setShowDetails(false);
+    setNextButton(true);
     console.log("clicked next");
   }
   const handleSearchRFQChange = (e) => {
@@ -86,13 +88,14 @@ const RenderNewComponent = ({tender}) => {
 
       useEffect(() => {
         
+        if(tenderBack == null){
           setTenderBack(tender);
+        }
+          
           console.log("tender Back Set Tender: ", tenderBack);
-      });
+      },[tender]);
       
-      if(tenderBack == null){
-        setTenderBack(tender);
-      }
+      
 
   const searchRFQ = (e) => {
     axios.get(`${spring_boot_url}api/userRfq/search?query=${searchQuery}`)
@@ -138,7 +141,7 @@ const RenderNewComponent = ({tender}) => {
   };
 
   const handleBackToDetails = () => {
-    setbacktoTender(true)
+    //setbacktoTender(true)
     setShowDetails(true);
     setNextButton(false)
     console.log("Back Details");
@@ -241,11 +244,11 @@ const RenderNewComponent = ({tender}) => {
               </div>
               <div className='row mt-2'>
                 <div className='col-10'></div>
-                <div className='col-1'>
+                {/* <div className='col-1'>
                   <button className='btn back-btn' onClick={handleBackToDetails}>
                     Back
                   </button>
-                </div>
+                </div> */}
                 <div className='col-1'>
                   <button className='btn back-btn' onClick={handleNextButton}>
                     Next

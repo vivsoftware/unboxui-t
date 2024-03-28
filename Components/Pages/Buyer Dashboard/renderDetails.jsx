@@ -8,7 +8,7 @@ import axios from "axios";
 import RenderNewComponent from "./renderNewComponent";
 import spring_boot_url from "../../../Utils/springApi";
 
-const RenderDetails = ({ tender, tenderBids, formatDate, handleBidClick,  tenderBack }) => {
+const RenderDetails = ({ tender, tenderBids, formatDate, handleBidClick,  tenderBack ,userDe}) => {
   const [showBid, setShowBid] = useState(false);
   const [showDetails, setShowDetails] = useState(true);
   const [isDropdownVisible, setDropdownVisible] = useState(false);
@@ -20,7 +20,8 @@ const RenderDetails = ({ tender, tenderBids, formatDate, handleBidClick,  tender
   const [searchResults, setSearchResults] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchQuery, setSearchQuery] = useState(true);
-
+  const [searchdata, setsearchdata] = useState(true);
+  const userId = userDe?.id;
   //Fixing Back Button Start\\
   useEffect(() => {
 
@@ -44,19 +45,53 @@ const RenderDetails = ({ tender, tenderBids, formatDate, handleBidClick,  tender
     console.log("show deatils state: ", showDetails);
   };
 
-  //Fixig Back Button End\\
+  //Fixig Back Button End not done yet\\
 
 
   //tender search start\\
 
+  
+
   const handleTenderSearchChange = (e) => {
-    const query = e.target.value.trim();
-    setSearchTerm(query);
-    if (query === "") {
-      setSearchData(null);
+    if (e.target.value.trim() === "") {
+      setsearchdata(null);
     } else {
-      searchTender(query);
+      setSearchQuery(e.target.value);
+      serachTender();
     }
+  };
+  // useEffect(() => {
+  //     axios.get(`${spring_boot_url}api/userRfq/${userId}`)
+  //       .then(resp => {
+  //         setRFQ(resp.data);
+  //       })
+  //       .catch(error => {
+  //         console.error('Error fetching user RFQ data:', error);
+  //       });
+  //   }, [userId]);
+  
+  
+    
+    // const serachTender = (e) => {
+    //   axios.get(`${spring_boot_url}api/userRfq/${userId}`)
+    //     .then((resp) => {
+    //       setsearchdata(resp.data);
+    //       console.log("search Liist:-",resp.data);
+    //     });
+    //     console.log("search Liist:-",searchQuery);
+    // };
+
+
+    
+    // fetching all data from db fix it to fetch only data of logged in user  \\
+  const serachTender = (e) => {
+    axios
+      .get(`${spring_boot_url}api/tender/find?query=${searchQuery}`)
+      .then((resp) => {
+        setsearchdata(resp.data);
+        console.log("search Liist:-",resp.data);
+      });
+    console.log("search Liist:-",searchQuery);
   };
 
   const searchTender = async (query) => {
@@ -69,7 +104,6 @@ const RenderDetails = ({ tender, tenderBids, formatDate, handleBidClick,  tender
       console.error("Error searching tender:", error);
     }
   };
-
   useEffect(() => {
     const filterTenderData = tender?.filter((item) => {
       return (
@@ -171,28 +205,29 @@ const RenderDetails = ({ tender, tenderBids, formatDate, handleBidClick,  tender
                       }}
                     />
                   </div>
-                  {/* Mapping Data */}
-                  {searchData && searchData.length === 0 && (
+                  {/*Search Mapping Data */}
+                  {searchdata && searchdata.length === 0 && (
                     <p style={{ color: "red" }}>No Tenders Found</p>
                   )}
 
-                  {searchData && searchData.length > 0 && (
+                  {searchdata && searchdata.length > 0 && (
                     <div className="user-searchCard">
-                      {searchData.map((item, index) => (
+                      {searchdata.map((item, index) => (
                         <div className="user-search" key={index}>
                           {/* <p onClick={() => handleOpen(elem)}>{elem.productName}</p> */}
                           <p onClick={() => handleOpen(item)}>
-                            Product Name :- {item?.ProductName}
+                            Rfq Name :- {item?.rfqName}
                             {<br></br>}
-                            Email :- {item?.email} -{<br></br>} Phone Number :-{" "}
-                            {item?.phoneNumber}
+                            Email :-{""} {item?.email} -
+                            {<br></br>} 
+                            Phone Number :-{" "}{item?.phoneNumber}
                           </p>
                           <hr></hr>
                         </div>
                       ))}
                     </div>
                   )}
-                {/* mapping end */}
+                {/* Search mapping end */}
                 </div>
                 <div className="row mt-5 SI-table">
                   <h2 className="mb-2">Tender List</h2>
@@ -200,29 +235,27 @@ const RenderDetails = ({ tender, tenderBids, formatDate, handleBidClick,  tender
                     <thead className="table-header">
                       <tr>
                         <th>Sr.No</th>
-                        <th>RFQ Name</th>
+                        <th>Rfq Name</th>
                         <th>Tender Create Date</th>
-                        <th>Status</th>
-                        <th>No. of Bids</th>
+                        <th>Tender Closing Date</th>
+                        {/* <th>Status</th> */}
+                        <th>Purpose</th>
+                        <th>{"View"}</th>
                         <th>Options</th>
                       </tr>
                     </thead>
                     <tbody>
-                    {(Array.isArray(tenderBack?.tender) ? tenderBack.tender : Array.isArray(tender) ? tender : []).map((elem, index) => (
+                    {Array.isArray(tender) && tender.map((elem, index) => (
                         
                         <tr key={index + 1} className="table-row">
-                          <td>{elem && elem.id}</td> {/* Added a null check */}
-                          <td>{elem && elem.rfqName}</td>{" "}
-                          {/* Added a null check */}
-                          <td>{elem && formatDate(elem.createdAt)}</td>{" "}
-                          {/* Added a null check */}
-                          <td>{elem && elem.tenderClosingDate}</td>{" "}
-                          {/* Added a null check */}
-                          <td>{elem && elem.createdBy}</td>{" "}
-                          {/* Added a null check */}
-                          <td>{tenderBids && tenderBids[elem?.id]}</td>{" "}
-                          {/* Changed to safe access */}
-                          <td>Pubished</td>
+                          <td>{elem.id}</td>
+                          <td>{elem.rfqName}</td>
+                          <td>{formatDate(elem.createdAt)}</td>
+                          <td>{elem.tenderClosingDate}</td>
+                          <td>{elem.purpose}</td>
+                          {/* <td>Pubished</td> */}
+                          
+                          
                           <td>
                             <button
                               className="option-button"

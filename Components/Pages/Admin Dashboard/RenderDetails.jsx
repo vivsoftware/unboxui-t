@@ -68,7 +68,7 @@ const RenderDetails = ({
   };
 
 
-  console.log("tender in RenderDetails tenderBack", tenderBack);
+  // console.log("tender in RenderDetails tenderBack", tenderBack);
   console.log("tender in RenderDetails tender", tender);
   return (
     <>
