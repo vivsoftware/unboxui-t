@@ -7,9 +7,10 @@ import Modal from '@mui/material/Modal';
 import axios from 'axios';
 import spring_boot_url from '../../../Utils/springApi';
 import TenderNextStep from './TenderNextStep';
+import RenderDetails from './RenderDetails';
 
 
-const RenderNewComponent = ({ }) => {
+const RenderNewComponent = ({tender}) => {
 
   const [nextButton, setNextButton] = useState(false);
   const [searchRFQdata, setsearchRFQdata] = useState(true);
@@ -25,6 +26,11 @@ const RenderNewComponent = ({ }) => {
   const [showDetails, setShowDetails] = useState(true);
   const [selectRfq, setselectRfq] = useState(false);
   const [selectRfqdata, setselectRfqdata] = useState(false);
+<<<<<<< HEAD
+  const [tenderBack, setTenderBack] = useState(null);
+  const [backtoTender, setbacktoTender] = useState(false);
+  
+=======
 
   ///////////changes for checkbox///////////
   const [selectedRFQ, setSelectedRFQ] = useState(null);
@@ -44,6 +50,7 @@ const RenderNewComponent = ({ }) => {
 
   ////////////end///////////
 
+>>>>>>> c2f4022304d98cde3f790579027b7a1586f7c7d8
 
   const handleClickOutside = (e) => {
     if (searchRef.current && !searchRef.current.contains(e.target)) {
@@ -63,7 +70,8 @@ const RenderNewComponent = ({ }) => {
     p: 4,
   };
   const handleNextButton = () => {
-    setNextButton(!nextButton);
+    setShowDetails(false);
+    setNextButton(true);
     console.log("clicked next");
   }
   const handleSearchRFQChange = (e) => {
@@ -100,6 +108,18 @@ const RenderNewComponent = ({ }) => {
       });
   }, []);
 
+<<<<<<< HEAD
+      useEffect(() => {
+        
+        if(tenderBack == null){
+          setTenderBack(tender);
+        }
+          
+          console.log("tender Back Set Tender: ", tenderBack);
+      },[tender]);
+      
+      
+=======
   useEffect(() => {
 
     setTenderBack(tender);
@@ -109,6 +129,7 @@ const RenderNewComponent = ({ }) => {
   if (tenderBack == null) {
     setTenderBack(tender);
   }
+>>>>>>> c2f4022304d98cde3f790579027b7a1586f7c7d8
 
   const searchRFQ = (e) => {
     axios.get(`${spring_boot_url}api/userRfq/search?query=${searchQuery}`)
@@ -154,7 +175,7 @@ const RenderNewComponent = ({ }) => {
   };
 
   const handleBackToDetails = () => {
-    setbacktoTender(true)
+    //setbacktoTender(true)
     setShowDetails(true);
     setNextButton(false)
     console.log("Back Details");
@@ -280,11 +301,11 @@ const RenderNewComponent = ({ }) => {
               </div>
               <div className='row mt-2'>
                 <div className='col-10'></div>
-                <div className='col-1'>
+                {/* <div className='col-1'>
                   <button className='btn back-btn' onClick={handleBackToDetails}>
                     Back
                   </button>
-                </div>
+                </div> */}
                 <div className='col-1'>
                   {/* <button className='btn back-btn' onClick={handleNextButton}>
                     Next
