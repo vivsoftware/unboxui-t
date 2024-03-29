@@ -102,16 +102,6 @@ const RenderNewComponent = ({tender}) => {
       });
   }, []);
 
-      useEffect(() => {
-        
-        if(tenderBack == null){
-          setTenderBack(tender);
-        }
-          
-          console.log("tender Back Set Tender: ", tenderBack);
-      },[tender]);
-      
-      
   useEffect(() => {
 
     setTenderBack(tender);
@@ -425,7 +415,7 @@ const RenderNewComponent = ({tender}) => {
               <p>Status: {rfqdata.status}</p>
               <p>Customer Email Id: {rfqdata.email}</p>
               <p>Customer Phone No.: {rfqdata.phoneNumber}</p>
-              <div>
+              <div> 
                 {uploadRfq ? (
                   <div style={{ display: 'flex', alignItems: 'center' }}>
                     {/* <p style={{ marginRight: '10px' }}>document: Yes</p> */}

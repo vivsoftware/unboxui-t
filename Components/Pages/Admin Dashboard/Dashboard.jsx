@@ -763,8 +763,7 @@ const Dashboard = ({ userDe, activeTab, sellers, buyers }) => {
                             ))}
                         </tbody> 
                     </table>
-
-                    {/* <div>
+                    <div>
                             <Modal
                                 keepMounted
                                 open={openPurchase}
@@ -813,7 +812,7 @@ const Dashboard = ({ userDe, activeTab, sellers, buyers }) => {
                                 </div>
                                 </Box>
                             </Modal>
-                        </div> */}
+                        </div> 
                 </div>
                 <div className='row'>
                 <div className='col-12 text-end'>

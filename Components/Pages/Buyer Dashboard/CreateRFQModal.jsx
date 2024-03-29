@@ -68,7 +68,8 @@ const CreateRFQModal = () => {
       }
       const handleOpen = (elem) => {
         setOpen(true);
-        setYes(true);
+        setYes(true)
+
         // ssetrfqdata(elem);
       };
     const handleOptionChange = (value) => {
@@ -197,8 +198,7 @@ const CreateRFQModal = () => {
         }).then((resp) => {
             // setRfqData(resp.data);
             if (resp.ok === true) {
-                // setOpen(true)
-                setUploadShow(true);
+                setUploadShow(true)
                 async function getLastEntryId(userId) {
                     try {
                         const response = await axios.get(`${spring_boot_url}api/userRfq/${userId}`);
@@ -416,35 +416,29 @@ const CreateRFQModal = () => {
                             </form>
                         </div>
                     )}
-                    <div className='form-group'>
+                      <div className="form-group">
+                        {Yes ? (
+                            <div>
+                                <label htmlFor="document">Upload Document(optional)</label>
+                                <input type="file" id="document" name="document" className='input-field otp-phone' onChange={registerRfq} />
+                                <button onClick={Documentupload} >Upload</button>
+                            </div>
+                        ) : (
+                            <p></p>
+                        )}
+                        {uploadShow ? (
+                            <div className="form-group">
 
-                        {
-                            Yes ? (<div>
-
-                                    <label htmlFor='document' >Upload Document(optional)</label>
-                                    <input type="file" id='document' name='document' className='input-field otp-phone' onChange={registerRfq} />
-                                    <button onClick={Documentupload}>Upload</button>
- 
-                                </div>) : (
-                                    <p></p>
-                                )
-                        }
-                        {
-                            uploadShow ? (
-                                <div className='form-group'>
-
-                                <div style={{ display: 'flex'}}>
-                                <p>DO YOU WANT TO UPLOAD ANY FILE </p>
-                                <button onClick={handleOpen}>Yes</button>
-                                <button onClick={handleReload}>No</button>
-
+                                <div style={{ display: 'flex' }}>
+                                    <p>DO YOU wANT TO UPLOAD ANY FILE </p>
+                                    <button onClick={handleOpen}>YES</button>
+                                    <button onClick={handleReload}> NO</button>
+                                    {/* <button onClick={handleClose}>Close</button> */}
                                 </div>
-                                </div>
-                            ) : (
-                                <p></p>
-                            )
-                        }
-
+                            </div>
+                        ) : (
+                            <p></p>
+                        )}
                     </div>
                     
                     <div className='row'>
@@ -457,48 +451,6 @@ const CreateRFQModal = () => {
                     </div>
                 </ModalBody>
             </Modal>
-
-
- {/* /////////////////////////////////////////////////////////rfq view poupmodal code////////////////////////////////////////////////////// */}
- <div>
-        <Modal
-          keepMounted
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="keep-mounted-modal-title"
-          aria-describedby="keep-mounted-modal-description"
-        >
-          <Box sx={style}>
-            <div className="my-modal-content" style={{ display: "flex-relative" }}>
-              <h3 className='mb-2'>User Profile</h3>
-             
-              <div className="form-group">
-                        {Yes ? (
-                            <div>
-
-
-                                <label htmlFor="document">Upload Document(optional)</label>
-                                <input type="file" id="document" name="document" className='input-field otp-phone' onChange={registerRfq} />
-                                <button onClick={Documentupload} >Upload</button>
-                            </div>
-                        ) : (
-                            <p></p>
-                        )}
-
-                    </div>
-         
-              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <p>DO YOU WANT TO UPLOAD ANY FILE </p>
-                <button>YES</button>
-                <button>NO</button>
-                <button onClick={handleClose}>Close</button>
-              </div>
-            </div>
-          </Box>
-        </Modal>
-      </div>
-
-
         </>
     )
 }

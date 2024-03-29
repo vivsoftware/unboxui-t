@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react';
 import { Chart } from "react-google-charts";
 import spring_boot_url from '../../../Utils/springApi';
 
-const Dashboard = ({ tender, rfq, userDe,sellers }) => {
+const Dashboard = ({ tender, rfq, userDe, sellers }) => {
 
     const [user, setUser] = useState(null);
     const [RfqNo, setRfqNo] = useState(null);
@@ -18,7 +18,7 @@ const Dashboard = ({ tender, rfq, userDe,sellers }) => {
     const [openUser, setopenUser] = useState(null);
     const [openseller, setopenseller] = useState(null);
     const [userData, setUserData] = useState(null);
-   
+
 
     //////////////////changes//////////////////
     console.log("tender in Sellers", tender);
@@ -131,7 +131,7 @@ const Dashboard = ({ tender, rfq, userDe,sellers }) => {
 
 
     useEffect(() => {
-        console.log("tender",tender);
+        console.log("tender", tender);
 
         allUsers();
         allseller();
@@ -139,9 +139,9 @@ const Dashboard = ({ tender, rfq, userDe,sellers }) => {
         setTenderNo(tender);
         setopenseller(sellers);
         setUserData(userDe);
-        console.log("tender",tender);
-        console.log("rfq",rfq);
-    
+        console.log("tender", tender);
+        console.log("rfq", rfq);
+
         //setopenPurchase(tender);
 
     }, [])
@@ -355,9 +355,9 @@ const Dashboard = ({ tender, rfq, userDe,sellers }) => {
                             </table>
                         </div>
                         <div className='row'>
-                        <div className='col-12 text-end'>
-                            <button className='btn' onClick={() => handleOpenUser()} style={{ backgroundColor: 'white', color: "#FF8400", height: '20px', padding: '0' }} >View All</button>
-                        </div>
+                            <div className='col-12 text-end'>
+                                <button className='btn' onClick={() => handleOpenUser()} style={{ backgroundColor: 'white', color: "#FF8400", height: '20px', padding: '0' }} >View All</button>
+                            </div>
                         </div>
                     </div>
 
@@ -405,7 +405,7 @@ const Dashboard = ({ tender, rfq, userDe,sellers }) => {
                                                             <td>{elem.userTypes}</td>
                                                         </tr>
                                                     ))}
-                                                             {console.log("tender-modal:-", rfq)}
+                                                    {console.log("tender-modal:-", rfq)}
                                                 </tbody>
                                             )}
                                         </table>
@@ -514,7 +514,7 @@ const Dashboard = ({ tender, rfq, userDe,sellers }) => {
                                                     ))}
                                                     {console.log("tender-modal bids:-", RfqNo)}
                                                 </tbody>
-                                                
+
                                             )}
                                         </table>
                                     </div>
@@ -569,7 +569,7 @@ const Dashboard = ({ tender, rfq, userDe,sellers }) => {
                                                     ))}
                                                     {console.log("tender-modal user:-", userData)}
                                                 </tbody>
-                                                
+
                                             )}
                                         </table>
                                     </div>
@@ -735,7 +735,7 @@ const Dashboard = ({ tender, rfq, userDe,sellers }) => {
                                     <td>{tender?.projectName}</td>
                                 </tr>
                             ))}
-                        </tbody> 
+                        </tbody>
                     </table>
 
                     {/* ///////////////purchase view modal/////////////// */}
@@ -766,19 +766,19 @@ const Dashboard = ({ tender, rfq, userDe,sellers }) => {
                                                 </tr>
                                             </thead>
                                             {(
-                                               <tbody>
-                                               {Array.isArray(sellers) && sellers.map((elem, index) => (
-                                                   <tr key={index + 1} className='table-row'>
-                                                       <td>{index + 1}</td>
-                                                       <td>{elem.firstName}</td>
-                                                       <td>{elem.id}</td>
-                                                       <td>{elem.email}</td>
-                                                       <td>{elem.phoneNumber}</td>
-                                                       <td>{elem.company}</td>
-                                                       <td>{elem.userTypes}</td>
-                                                   </tr>
-                                               ))}
-                                           </tbody>
+                                                <tbody>
+                                                    {Array.isArray(sellers) && sellers.map((elem, index) => (
+                                                        <tr key={index + 1} className='table-row'>
+                                                            <td>{index + 1}</td>
+                                                            <td>{elem.firstName}</td>
+                                                            <td>{elem.id}</td>
+                                                            <td>{elem.email}</td>
+                                                            <td>{elem.phoneNumber}</td>
+                                                            <td>{elem.company}</td>
+                                                            <td>{elem.userTypes}</td>
+                                                        </tr>
+                                                    ))}
+                                                </tbody>
                                             )}
                                         </table>
                                     </div>
