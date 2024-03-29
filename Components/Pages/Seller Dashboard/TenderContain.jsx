@@ -5,11 +5,15 @@ import { FaEye } from "react-icons/fa";
 import TenderNextStep from "./TenderNextStep";
 import spring_boot_url from "../../../Utils/springApi";
 import axios from "axios";
-<<<<<<< HEAD
-=======
+
+////////changes/////////
+import IconButton from '@mui/material/IconButton';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+//////end///////////////
 
 
->>>>>>> c2f4022304d98cde3f790579027b7a1586f7c7d8
 const TenderContain = ({ rfq, tender, userDe }) => {
   const [isDropdownVisible, setDropdownVisible] = useState(false);
   const [showDetails, setShowDetails] = useState(true);
@@ -38,13 +42,59 @@ const TenderContain = ({ rfq, tender, userDe }) => {
   const [nextBtn, setnextBtn] = React.useState(false);
   const [Tenderselectdata, setTenderselectdata] = useState(true);
   const [searchData, setSearchData] = useState(true);
-<<<<<<< HEAD
-  const userId = userDe?.id;
-=======
 
   ///////////changes for checkbox///////////
   const [selectedRFQ, setSelectedRFQ] = useState(null);
   const [nextButtonDisabled, setNextButtonDisabled] = useState(true);
+
+
+   ////////////////////changes///////////////
+
+   const [anchorEl, setAnchorEl] = React.useState(null);
+   // const open = Boolean(anchorEl);
+ 
+   const options = [
+     'View Bid',
+     'Delete',
+   ];
+ 
+   const ITEM_HEIGHT = 48;
+ 
+   const handleClick = (event) => {
+     setAnchorEl(event.currentTarget);
+     setOpen(true);  //changes
+   };
+   const handleClose = () => {
+     setAnchorEl(null);
+     setOpen(false); //changes
+       setuploadRfq(null);
+    setsearchdata(null);
+    setsearchRFQdata(null);
+   };
+ 
+ 
+   const handleOptionClick = (option, tenderId) => {
+     handleClose();
+ 
+     if (option === 'View Bid') {
+       // Handle view bid functionality
+       console.log("View Bid clicked for tender ID:", tenderId);
+     }
+     else if (option === 'Delete') {
+       // Handle delete functionality
+       const isConfirmed = window.confirm("Are you sure you want to delete this tender?");
+       if (isConfirmed) {
+         axios.delete(`${spring_boot_url}/tender/${tenderId}`)
+           .then(response => {
+             console.log("Tender deleted successfully:", response.data);
+           })
+           .catch(error => {
+             console.error("Error deleting tender:", error);
+           });
+       }
+     }
+   };
+   //////////////end////////////
 
   // Function to handle RFQ selection
   const handleRFQSelection = (elem) => {
@@ -59,7 +109,6 @@ const TenderContain = ({ rfq, tender, userDe }) => {
   };
   ////////////end///////////
 
->>>>>>> c2f4022304d98cde3f790579027b7a1586f7c7d8
   const handleClickOutside = (e) => {
     if (searchRef.current && !searchRef.current.contains(e.target)) {
       // Clicked outside the search card, close it
@@ -80,12 +129,12 @@ const TenderContain = ({ rfq, tender, userDe }) => {
     boxShadow: 24,
     p: 4,
   };
-  const handleClose = () => {
-    setOpen(false);
-    setuploadRfq(null);
-    setsearchdata(null);
-    setsearchRFQdata(null); 
-  };
+  // const handleClose = () => {
+  //   setOpen(false);
+  //   setuploadRfq(null);
+  //   setsearchdata(null);
+  //   setsearchRFQdata(null); 
+  // };
   const handleOpen = (elem) => {
     setOpen(true);
     ssetrfqdata(elem);
@@ -116,10 +165,10 @@ const TenderContain = ({ rfq, tender, userDe }) => {
   const toggleDropdown = () => {
     setDropdownVisible(!isDropdownVisible);
   };
-  const handleOptionClick = (option) => {
-    console.log(`Option clicked: ${option}`);
-    setDropdownVisible(false);
-  };
+  // const handleOptionClick = (option) => {
+  //   console.log(`Option clicked: ${option}`);
+  //   setDropdownVisible(false);
+  // };
   const handleBackToDetails = () => {
     setShowDetails(true);
   };
@@ -148,43 +197,6 @@ const TenderContain = ({ rfq, tender, userDe }) => {
     }
   };
 
-<<<<<<< HEAD
-  // useEffect(() => {
-  //   axios.get(`${spring_boot_url}api/userRfq/${userId}`)
-  //     .then(resp => {
-  //       setRFQ(resp.data);
-  //     })
-  //     .catch(error => {
-  //       console.error('Error fetching user RFQ data:', error);
-  //     });
-  // }, [userId]);
-
-
-  
-  // const serachTender = (e) => {
-  //   axios.get(`${spring_boot_url}api/userRfq/${userId}`)
-  //     .then((resp) => {
-  //       setsearchdata(resp.data);
-  //       console.log("search Liist:-",resp.data);
-  //     });
-  //     console.log("search Liist:-",searchQuery);
-  // };
-
-  useEffect(() => {
-    const filterTenderData = tender?.filter((item) => {
-      return (
-        (item.RfqName &&
-          item.ProductName.toLowerCase().includes(searchTerm.toLowerCase())) ||
-        (item.email &&
-          item.email.toLowerCase().includes(searchTerm.toLowerCase())) ||
-        (item.phoneNumber &&
-          item.phoneNumber.toLowerCase().includes(searchTerm.toLowerCase()))
-      );
-    });
-    setSearchData(filterTenderData);
-  }, [tender, searchTerm]);
-
-=======
   const serachTender = (e) => {
     axios
       .get(`${spring_boot_url}api/tender/find?query=${searchQuery}`)
@@ -208,7 +220,6 @@ const TenderContain = ({ rfq, tender, userDe }) => {
     setSearchData(filterTenderData);
   }, [tender, searchTerm]);
 
->>>>>>> c2f4022304d98cde3f790579027b7a1586f7c7d8
   // tender search end
   const handleSearchRFQChange = (e) => {
     // Clear searchdata if the input is empty
@@ -356,13 +367,33 @@ const TenderContain = ({ rfq, tender, userDe }) => {
                           <td>
                             <button
                               className="option-button"
-                              onClick={() => handleOpen(elem)}
+                             // onClick={() => handleOpen(elem)}
                             >
                               <FaEye />
                             </button>
                           </td>
                           <td style={{ position: "relative" }}>
-                            <button
+                          <IconButton
+                              aria-label="more"
+                              aria-controls="long-menu"
+                              aria-haspopup="true"
+                              onClick={handleClick}
+                            >
+                              <MoreVertIcon />
+                            </IconButton>
+                            <Menu
+                              id="long-menu"
+                              anchorEl={anchorEl}
+                              open={open}
+                              onClose={handleClose}
+                            >
+                              {options.map((option) => (
+                                <MenuItem key={option} onClick={() => handleOptionClick(option, tender.id)}>
+                                  {option}
+                                </MenuItem>
+                              ))}
+                            </Menu>
+                            {/* <button
                               className="option-button"
                               onClick={toggleDropdown}
                             >
@@ -385,10 +416,9 @@ const TenderContain = ({ rfq, tender, userDe }) => {
                                 }}
                               >
                                 <p onClick={handleBidClick}>View Bid</p>
-                                {/* <p onClick={handleOpen}>View Tender</p> */}
                                 <p>Delete</p>
                               </div>
-                            )}
+                            )} */}
                           </td>
                           <td></td>
                         </tr>
@@ -511,9 +541,6 @@ const TenderContain = ({ rfq, tender, userDe }) => {
                                     <div className="col-10">
                                       <input
                                         type="checkbox"
-<<<<<<< HEAD
-                                        onChange={() => tendernext(elem)}
-=======
 
                                         //changes
                                         checked={selectedRFQ === elem} //  RFQ is selected
@@ -521,7 +548,6 @@ const TenderContain = ({ rfq, tender, userDe }) => {
                                         //end
 
                                         //onChange={() => tendernext(elem)}
->>>>>>> c2f4022304d98cde3f790579027b7a1586f7c7d8
                                       />
                                       <h5>Project Name : {elem.productName}</h5>
                                       <p>
@@ -535,10 +561,7 @@ const TenderContain = ({ rfq, tender, userDe }) => {
                                       <button
                                         className="option-button"
                                         onClick={() => handleOpen(elem)}
-<<<<<<< HEAD
-=======
                                         //onClick={() => handleViewRFQDetailsClick(elem)}
->>>>>>> c2f4022304d98cde3f790579027b7a1586f7c7d8
                                       >
                                         <FaEye />
                                       </button>
@@ -559,9 +582,6 @@ const TenderContain = ({ rfq, tender, userDe }) => {
                                     <div className="col-10">
                                       <input
                                         type="checkbox"
-<<<<<<< HEAD
-                                        onChange={() => tendernext(elem)}
-=======
 
                                         //changes
                                         checked={selectedRFQ === elem} // Check if the RFQ is selected
@@ -569,7 +589,6 @@ const TenderContain = ({ rfq, tender, userDe }) => {
                                         //end
 
                                         //onChange={() => tendernext(elem)}
->>>>>>> c2f4022304d98cde3f790579027b7a1586f7c7d8
                                       />
                                       <h5>Project Name : {elem.productName}</h5>
                                       <p>
@@ -607,11 +626,7 @@ const TenderContain = ({ rfq, tender, userDe }) => {
                     </button>
                   </div>
                   <div className="col-1">
-<<<<<<< HEAD
-                    <button className="btn back-btn" onClick={handleNextButton}>
-=======
                     {/* <button className="btn back-btn" onClick={handleNextButton}>
->>>>>>> c2f4022304d98cde3f790579027b7a1586f7c7d8
                       Next
                     </button> */}
 
@@ -815,12 +830,6 @@ const TenderContain = ({ rfq, tender, userDe }) => {
 export default TenderContain;
 
 
-<<<<<<< HEAD
-// need to fix fecthing or back button.
-
-
-
-=======
 
 
 
@@ -1385,4 +1394,3 @@ export default TenderContain;
 // }
 
 // export default TenderContain;
->>>>>>> c2f4022304d98cde3f790579027b7a1586f7c7d8

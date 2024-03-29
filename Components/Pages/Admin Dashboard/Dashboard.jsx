@@ -25,10 +25,6 @@ const Dashboard = ({ userDe, activeTab, sellers, buyers }) => {
     const [openseller, setopenseller] = useState(null);
     const [openrfq, setopenrfq] = useState(null);
     const [openPurchase, setopenPurchase] = useState(null);
-<<<<<<< HEAD
-    
-=======
->>>>>>> c2f4022304d98cde3f790579027b7a1586f7c7d8
     const [isDropdownVisible, setDropdownVisible] = useState(false);
     const [showDetails, setShowDetails] = useState(true);
     const [userData, setUserData] = useState(null);
@@ -56,17 +52,6 @@ const Dashboard = ({ userDe, activeTab, sellers, buyers }) => {
                 setUserData(resp.data);
             });
     }
-<<<<<<< HEAD
-
-    const handleOpenPurchase = () => {
-        setopenPurchase(true);
-    };
-
-    const handleClosePurchase = () => {
-        setopenPurchase(false);
-    }
-=======
->>>>>>> c2f4022304d98cde3f790579027b7a1586f7c7d8
     const openModal = (userData) => {
         setSelectedUserData(userData);
         setModalOpen(true);
@@ -778,12 +763,7 @@ const Dashboard = ({ userDe, activeTab, sellers, buyers }) => {
                             ))}
                         </tbody> 
                     </table>
-<<<<<<< HEAD
-
-                    {/* <div>
-=======
                     <div>
->>>>>>> c2f4022304d98cde3f790579027b7a1586f7c7d8
                             <Modal
                                 keepMounted
                                 open={openPurchase}

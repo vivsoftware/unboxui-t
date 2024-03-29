@@ -1,14 +1,3 @@
-<<<<<<< HEAD
-import React, { useEffect, useRef, useState } from "react";
-import { FaEye } from "react-icons/fa";
-
-import BidContain from "./BidContain";
-import TenderNextStep from "./TenderNextStep";
-
-import axios from "axios";
-import RenderNewComponent from "./renderNewComponent";
-import spring_boot_url from "../../../Utils/springApi";
-=======
 import React, { useEffect, useRef, useState } from 'react';
 import { FaEye } from 'react-icons/fa';
 import BidContain from './BidContain';
@@ -16,9 +5,18 @@ import TenderNextStep from './TenderNextStep';
 import axios from 'axios';
 import RenderNewComponent from './renderNewComponent';
 import spring_boot_url from '../../../Utils/springApi';
->>>>>>> c2f4022304d98cde3f790579027b7a1586f7c7d8
 
-const RenderDetails = ({ tender, tenderBids, formatDate, handleBidClick,  tenderBack ,userDe}) => {
+
+////////changes/////////
+import IconButton from '@mui/material/IconButton';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+//////end///////////////
+
+
+
+const RenderDetails = ({ tender, tenderBids, formatDate, handleBidClick, tenderBack, userDe }) => {
   const [showBid, setShowBid] = useState(false);
   const [showDetails, setShowDetails] = useState(true);
   const [isDropdownVisible, setDropdownVisible] = useState(false);
@@ -32,6 +30,52 @@ const RenderDetails = ({ tender, tenderBids, formatDate, handleBidClick,  tender
   const [searchQuery, setSearchQuery] = useState(true);
   const [searchdata, setsearchdata] = useState(true);
   const userId = userDe?.id;
+
+  ////////////////////changes///////////////
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  // const open = Boolean(anchorEl);
+
+  const options = [
+    'View Bid',
+    'Delete',
+  ];
+
+  const ITEM_HEIGHT = 48;
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+    setOpen(true);  //changes
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+    setOpen(false); //changes
+  };
+
+
+  const handleOptionClick = (option, tenderId) => {
+    handleClose();
+
+    if (option === 'View Bid') {
+      // Handle view bid functionality
+      console.log("View Bid clicked for tender ID:", tenderId);
+    }
+    else if (option === 'Delete') {
+      // Handle delete functionality
+      const isConfirmed = window.confirm("Are you sure you want to delete this tender?");
+      if (isConfirmed) {
+        axios.delete(`${spring_boot_url}/tender/${tenderId}`)
+          .then(response => {
+            console.log("Tender deleted successfully:", response.data);
+          })
+          .catch(error => {
+            console.error("Error deleting tender:", error);
+          });
+      }
+    }
+  };
+  //////////////end////////////
+
   //Fixing Back Button Start\\
   useEffect(() => {
 
@@ -60,7 +104,7 @@ const RenderDetails = ({ tender, tenderBids, formatDate, handleBidClick,  tender
 
   //tender search start\\
 
-  
+
 
   const handleTenderSearchChange = (e) => {
     if (e.target.value.trim() === "") {
@@ -79,29 +123,29 @@ const RenderDetails = ({ tender, tenderBids, formatDate, handleBidClick,  tender
   //         console.error('Error fetching user RFQ data:', error);
   //       });
   //   }, [userId]);
-  
-  
-    
-    // const serachTender = (e) => {
-    //   axios.get(`${spring_boot_url}api/userRfq/${userId}`)
-    //     .then((resp) => {
-    //       setsearchdata(resp.data);
-    //       console.log("search Liist:-",resp.data);
-    //     });
-    //     console.log("search Liist:-",searchQuery);
-    // };
 
 
-    
-    // fetching all data from db fix it to fetch only data of logged in user  \\
+
+  // const serachTender = (e) => {
+  //   axios.get(`${spring_boot_url}api/userRfq/${userId}`)
+  //     .then((resp) => {
+  //       setsearchdata(resp.data);
+  //       console.log("search Liist:-",resp.data);
+  //     });
+  //     console.log("search Liist:-",searchQuery);
+  // };
+
+
+
+  // fetching all data from db fix it to fetch only data of logged in user  \\
   const serachTender = (e) => {
     axios
       .get(`${spring_boot_url}api/tender/find?query=${searchQuery}`)
       .then((resp) => {
         setsearchdata(resp.data);
-        console.log("search Liist:-",resp.data);
+        console.log("search Liist:-", resp.data);
       });
-    console.log("search Liist:-",searchQuery);
+    console.log("search Liist:-", searchQuery);
   };
 
   const searchTender = async (query) => {
@@ -151,10 +195,10 @@ const RenderDetails = ({ tender, tenderBids, formatDate, handleBidClick,  tender
       });
   }, [tender]);
 
-  const handleClose = () => {
-    setOpen(false);
-    setuploadRfq(null);
-  };
+  // const handleClose = () => {
+  //   setOpen(false);
+  //   setuploadRfq(null);
+  // };
 
   useEffect(() => {
     axios.get(`${spring_boot_url}api/sellersbid/get-all-bids`).then((resp) => {
@@ -163,7 +207,7 @@ const RenderDetails = ({ tender, tenderBids, formatDate, handleBidClick,  tender
     });
   }, [tenderbid]);
 
-  
+
   const toggleDropdown = () => {
     setDropdownVisible(!isDropdownVisible);
   };
@@ -181,7 +225,7 @@ const RenderDetails = ({ tender, tenderBids, formatDate, handleBidClick,  tender
   return (
     <>
       {isNewComponentVisible ? (
-        <RenderNewComponent 
+        <RenderNewComponent
           tender={tender}
           handleBackToDetails={() => setNewComponentVisible(false)}
         />
@@ -229,7 +273,7 @@ const RenderDetails = ({ tender, tenderBids, formatDate, handleBidClick,  tender
                             Rfq Name :- {item?.rfqName}
                             {<br></br>}
                             Email :-{""} {item?.email} -
-                            {<br></br>} 
+                            {<br></br>}
                             Phone Number :-{" "}{item?.phoneNumber}
                           </p>
                           <hr></hr>
@@ -237,7 +281,7 @@ const RenderDetails = ({ tender, tenderBids, formatDate, handleBidClick,  tender
                       ))}
                     </div>
                   )}
-                {/* Search mapping end */}
+                  {/* Search mapping end */}
                 </div>
                 <div className="row mt-5 SI-table">
                   <h2 className="mb-2">Tender List</h2>
@@ -255,8 +299,8 @@ const RenderDetails = ({ tender, tenderBids, formatDate, handleBidClick,  tender
                       </tr>
                     </thead>
                     <tbody>
-                    {Array.isArray(tender) && tender.map((elem, index) => (
-                        
+                      {Array.isArray(tender) && tender.map((elem, index) => (
+
                         <tr key={index + 1} className="table-row">
                           <td>{elem.id}</td>
                           <td>{elem.rfqName}</td>
@@ -264,18 +308,40 @@ const RenderDetails = ({ tender, tenderBids, formatDate, handleBidClick,  tender
                           <td>{elem.tenderClosingDate}</td>
                           <td>{elem.purpose}</td>
                           {/* <td>Pubished</td> */}
-                          
-                          
+
+
                           <td>
                             <button
                               className="option-button"
-                              onClick={() => handleOpen(elem)}
+                              //onClick={() => handleOpen(elem)}
                             >
                               <FaEye />
                             </button>
                           </td>
                           <td style={{ position: "relative" }}>
-                            <button
+                          <IconButton
+                              aria-label="more"
+                              aria-controls="long-menu"
+                              aria-haspopup="true"
+                              onClick={handleClick}
+                            >
+                              <MoreVertIcon />
+                            </IconButton>
+                            <Menu
+                              id="long-menu"
+                              anchorEl={anchorEl}
+                              open={open}
+                              onClose={handleClose}
+                            >
+                              {options.map((option) => (
+                                <MenuItem key={option} onClick={() => handleOptionClick(option, tender.id)}>
+                                  {option}
+                                </MenuItem>
+                              ))}
+                            </Menu>
+
+
+                            {/* <button
                               className="option-button"
                               onClick={toggleDropdown}
                             >
@@ -301,7 +367,7 @@ const RenderDetails = ({ tender, tenderBids, formatDate, handleBidClick,  tender
                                 <p onClick={handleOpen}>View Tender</p>
                                 <p>Delete</p>
                               </div>
-                            )}
+                            )} */}
                           </td>
                           <td></td>
                         </tr>

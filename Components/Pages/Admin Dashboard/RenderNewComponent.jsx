@@ -26,11 +26,6 @@ const RenderNewComponent = ({tender}) => {
   const [showDetails, setShowDetails] = useState(true);
   const [selectRfq, setselectRfq] = useState(false);
   const [selectRfqdata, setselectRfqdata] = useState(false);
-<<<<<<< HEAD
-  const [tenderBack, setTenderBack] = useState(null);
-  const [backtoTender, setbacktoTender] = useState(false);
-  
-=======
 
   ///////////changes for checkbox///////////
   const [selectedRFQ, setSelectedRFQ] = useState(null);
@@ -50,7 +45,6 @@ const RenderNewComponent = ({tender}) => {
 
   ////////////end///////////
 
->>>>>>> c2f4022304d98cde3f790579027b7a1586f7c7d8
 
   const handleClickOutside = (e) => {
     if (searchRef.current && !searchRef.current.contains(e.target)) {
@@ -108,18 +102,6 @@ const RenderNewComponent = ({tender}) => {
       });
   }, []);
 
-<<<<<<< HEAD
-      useEffect(() => {
-        
-        if(tenderBack == null){
-          setTenderBack(tender);
-        }
-          
-          console.log("tender Back Set Tender: ", tenderBack);
-      },[tender]);
-      
-      
-=======
   useEffect(() => {
 
     setTenderBack(tender);
@@ -129,7 +111,6 @@ const RenderNewComponent = ({tender}) => {
   if (tenderBack == null) {
     setTenderBack(tender);
   }
->>>>>>> c2f4022304d98cde3f790579027b7a1586f7c7d8
 
   const searchRFQ = (e) => {
     axios.get(`${spring_boot_url}api/userRfq/search?query=${searchQuery}`)
@@ -434,7 +415,7 @@ const RenderNewComponent = ({tender}) => {
               <p>Status: {rfqdata.status}</p>
               <p>Customer Email Id: {rfqdata.email}</p>
               <p>Customer Phone No.: {rfqdata.phoneNumber}</p>
-              <div>
+              <div> 
                 {uploadRfq ? (
                   <div style={{ display: 'flex', alignItems: 'center' }}>
                     {/* <p style={{ marginRight: '10px' }}>document: Yes</p> */}
