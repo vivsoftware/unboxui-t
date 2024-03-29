@@ -35,7 +35,7 @@ const UserContain = ({userId} , registeredUser, userDe)=> {
       setSelectedOption(savedOption);
     }
     allUsers();
-    getRegisteredUsers();
+    //getRegisteredUsers();
   }, []);
 
   const toggleFilterDropdown = () => {
@@ -97,15 +97,15 @@ const UserContain = ({userId} , registeredUser, userDe)=> {
     dispatch({ type: "REGISTERSIMODAL" });
   };
 
- console.log("registered user in usercontain",registeredUser);
- console.log("registered user in usercontain",userDe);
-  const getRegisteredUsers = () => {
-    axios.get(`${spring_boot_url}api/registerId/?registerId=${registeredUser.id}`)
-      .then(resp => {
-        console.log("registered user",resp.data.json);
+//  console.log("registered user in usercontain",registeredUser);
+//  console.log("registered user in usercontain",userDe);
+//   const getRegisteredUsers = () => {
+//     axios.get(`${spring_boot_url}api/registerId/?registerId=${registeredUser.id}`)
+//       .then(resp => {
+//         console.log("registered user",resp.data.json);
         
-      });
-  };
+//       });
+//   };
 
   const allUsers = () =>{
     axios.get(`${spring_boot_url}api/adminuser/allusers`)
