@@ -1,13 +1,12 @@
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { FaEye } from "react-icons/fa";
 import { useDispatch } from 'react-redux';
 import spring_boot_url from '../../../Utils/springApi';
-import React, { Fragment, useEffect, useState } from 'react';
-import axios from 'axios';
-import Link from 'next/link';
-import { FaEye } from "react-icons/fa";
+import DashboardLoader from '../../Element/DashboardLoader';
 import ModalComponent from '../Admin Dashboard/ModalComponent';
-import DashboardLoader  from '../../Element/DashboardLoader';
 
-const UserContain = ({userId} , registeredUser, userDe)=> {
+const UserContain = ( {registeredUser})=> {
   const [isDropdownVisible, setDropdownVisible] = useState(false);
   const [showDetails, setShowDetails] = useState(true);
   const [searchdata, setsearchdata] = useState(true);
@@ -98,9 +97,9 @@ const UserContain = ({userId} , registeredUser, userDe)=> {
   };
 
  console.log("registered user in usercontain",registeredUser);
- console.log("registered user in usercontain",userDe);
+//  console.log("registered user in usercontain",userDe);
   const getRegisteredUsers = () => {
-    axios.get(`${spring_boot_url}api/registerId/?registerId=${registeredUser.id}`)
+    axios.get(`${spring_boot_url}api/registerId/?registerId=${registeredUser?.id}`)
       .then(resp => {
         console.log("registered user",resp.data.json);
         
@@ -162,6 +161,10 @@ const UserContain = ({userId} , registeredUser, userDe)=> {
     openModal(userData);
     setsearchdata(null);
   };
+
+
+console.log("rajapagal", registeredUser)
+
   if(!userDet){
     return(
       <>

@@ -70,13 +70,7 @@ const sellerDashboard = () => {
 
   console.log("Registerd user ID In pages/sellersDashbord 3", registeredUser);
   console.log("userDe in s-d", userDe);
-  if (userDe != null) {
-    console.log("userDe in s-d if condition", userDe);
-    setRegisteredUsers(userDe.id);
-    console.log("Registerd user ID In pages/sellersDashbord inside if", registeredUser);
-  }else{
-    console.log("inside else", userDe);
-  }
+  
   
   return (
     <>
