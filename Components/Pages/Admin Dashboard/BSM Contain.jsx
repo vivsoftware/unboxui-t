@@ -28,7 +28,8 @@ const BSMContain = ({ Tender, Rfq }) => {
   const [body4, setbody4] = useState(null);
   const [body5, setbody5] = useState(null);
   const [loader, setloader] = useState(false);
-  const [mailId, setmailId] = useState(false);
+  const [mailId, setmailId] = useState(null);
+  //var mailId = 1;
   const [searchTenderQuery, setTenderSearchQuery] = useState(true);
   const [searchTenderdata, setsearchTenderdata] = useState(true);
   const [selectTender, setselectTender] = useState(false);
@@ -235,21 +236,24 @@ const BSMContain = ({ Tender, Rfq }) => {
 
   //////////////////////////////////////////////////////////////send email to user//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  const SelecTender = (elem) => {
+  const SelecTender = (elem,mailId) => {
+   console.log("select tender id", elem._id); 
     setselectTender(true);
     setselectTenderdata(elem);
+    setmailId(mailId);
+    console.log("select tender mailId", mailId);
 
   }
   const UnSelecTender = () => {
     setselectTender(false);
     setselectTenderdata(null);
-    // setmailId(null)
+    //setmailId(null)
 
   }
   const SelecUser = (elem) => {
     setselectUser(true);
     setselectUserdata(elem);
-
+   // setmailId(elem._id);
   }
   const UnSelecUser = () => {
     setselectUser(false);
@@ -262,7 +266,8 @@ const BSMContain = ({ Tender, Rfq }) => {
 
   const savaeEmail = async (e) => {
     <loadermail />
-    setmailId(null)
+    setmailId(mailId);
+    console.log("mailId at savaeEmail", mailId);
 
     setbody1("Hi.... " + `${selectUserdata.firstName}`, +" a new tender has been received. Please find details and for more information check your respective dashboard.");
     setbody2(`Tender Name ${selectTenderdata.purpose}`)
@@ -289,11 +294,14 @@ const BSMContain = ({ Tender, Rfq }) => {
         },
       });
       console.log('File uploaded successfully:', response.data);
-      setmailId(response.data.id)
+      setmailId(response.data.id);
+      
+      //mailId++;
       setloader(true)
       toast.success(`Sending...........`, {
         position: toast.POSITION.BOTTOM_CENTER,
       });
+      sendmail();
       toggle();
     } catch (error) {
       // setDocError(true)
@@ -315,18 +323,24 @@ const BSMContain = ({ Tender, Rfq }) => {
     // formdata.fileName('fileName' , fileName);
     try {
       console.log('File uploaded successfully:', mailId);
-
+      //temp fix
       const response = await axios.post(`${spring_boot_url}api/mails/send/${mailId}`, formdata, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
       console.log('File uploaded successfully:', response.data);
-
-      toast.success(`Email sende to ${selectUserdata.email}`, {
-        position: toast.POSITION.BOTTOM_CENTER,
-      });
-
+      console.log("checking response status", response.status);
+      if(response.status === 201){
+        console.log("mail send successfully");
+        toast.success(`Email sende to ${selectUserdata.email}`, {
+          position: toast.POSITION.BOTTOM_CENTER,
+        });
+        console.log("implementing auto delete(checking)");  // implementing
+        deleteMail(mailId); //temp fix :- to delete current mail after sending 
+        //mailId++;
+      }
+      
       // Assuming handleReload and toggle are functions defined in your component
       // handleReload();
       toggle();
@@ -339,11 +353,24 @@ const BSMContain = ({ Tender, Rfq }) => {
     };
   }
 
+  const deleteMail = async (mailId) => {
+    console.log("Id of mail to be deleted", mailId);
+    try{
+
+      const response = await axios.delete(`${spring_boot_url}api/mails/delete/${mailId}`);
+      console.log("delete mail status", response.status);
+      console.log("mail will be deleted successfully in five seconds");
+    }
+    catch(err){
+      console.log(err);
+    }
+  }
 
   console.log("tenderbms", selectTenderdata)
   console.log("userbms", selectUserdata)
   console.log("mailid", mailId)
-
+  // mailId = mailId + 1;
+  // console.log("mailid checking", mailId);
 
 
 
@@ -389,7 +416,8 @@ const BSMContain = ({ Tender, Rfq }) => {
                           <div className='col-10'>
                             <input type='checkbox' onChange={(event) => {
                               if (event.target.checked) {
-                                SelecTender(elem);
+                                SelecTender(elem, mailId);
+                                console.log("mailId in checkbox", mailId);
                               } else {
                                 UnSelecTender();
                               }

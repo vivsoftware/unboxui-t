@@ -26,11 +26,6 @@ const RenderNewComponent = ({tender}) => {
   const [showDetails, setShowDetails] = useState(true);
   const [selectRfq, setselectRfq] = useState(false);
   const [selectRfqdata, setselectRfqdata] = useState(false);
-<<<<<<< HEAD
-  const [tenderBack, setTenderBack] = useState(null);
-  const [backtoTender, setbacktoTender] = useState(false);
-  
-=======
 
   ///////////changes for checkbox///////////
   const [selectedRFQ, setSelectedRFQ] = useState(null);
@@ -50,7 +45,6 @@ const RenderNewComponent = ({tender}) => {
 
   ////////////end///////////
 
->>>>>>> c2f4022304d98cde3f790579027b7a1586f7c7d8
 
   const handleClickOutside = (e) => {
     if (searchRef.current && !searchRef.current.contains(e.target)) {
@@ -108,7 +102,6 @@ const RenderNewComponent = ({tender}) => {
       });
   }, []);
 
-<<<<<<< HEAD
       useEffect(() => {
         
         if(tenderBack == null){
@@ -119,7 +112,6 @@ const RenderNewComponent = ({tender}) => {
       },[tender]);
       
       
-=======
   useEffect(() => {
 
     setTenderBack(tender);
@@ -129,7 +121,6 @@ const RenderNewComponent = ({tender}) => {
   if (tenderBack == null) {
     setTenderBack(tender);
   }
->>>>>>> c2f4022304d98cde3f790579027b7a1586f7c7d8
 
   const searchRFQ = (e) => {
     axios.get(`${spring_boot_url}api/userRfq/search?query=${searchQuery}`)

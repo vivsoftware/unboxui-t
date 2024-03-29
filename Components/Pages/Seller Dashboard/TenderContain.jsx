@@ -5,11 +5,8 @@ import { FaEye } from "react-icons/fa";
 import TenderNextStep from "./TenderNextStep";
 import spring_boot_url from "../../../Utils/springApi";
 import axios from "axios";
-<<<<<<< HEAD
-=======
 
 
->>>>>>> c2f4022304d98cde3f790579027b7a1586f7c7d8
 const TenderContain = ({ rfq, tender, userDe }) => {
   const [isDropdownVisible, setDropdownVisible] = useState(false);
   const [showDetails, setShowDetails] = useState(true);
@@ -38,9 +35,7 @@ const TenderContain = ({ rfq, tender, userDe }) => {
   const [nextBtn, setnextBtn] = React.useState(false);
   const [Tenderselectdata, setTenderselectdata] = useState(true);
   const [searchData, setSearchData] = useState(true);
-<<<<<<< HEAD
   const userId = userDe?.id;
-=======
 
   ///////////changes for checkbox///////////
   const [selectedRFQ, setSelectedRFQ] = useState(null);
@@ -60,7 +55,6 @@ const TenderContain = ({ rfq, tender, userDe }) => {
 
   ////////////end///////////
 
->>>>>>> c2f4022304d98cde3f790579027b7a1586f7c7d8
   const handleClickOutside = (e) => {
     if (searchRef.current && !searchRef.current.contains(e.target)) {
       // Clicked outside the search card, close it
@@ -149,7 +143,6 @@ const TenderContain = ({ rfq, tender, userDe }) => {
     }
   };
 
-<<<<<<< HEAD
   // useEffect(() => {
   //   axios.get(`${spring_boot_url}api/userRfq/${userId}`)
   //     .then(resp => {
@@ -185,31 +178,6 @@ const TenderContain = ({ rfq, tender, userDe }) => {
     setSearchData(filterTenderData);
   }, [tender, searchTerm]);
 
-=======
-  const serachTender = (e) => {
-    axios
-      .get(`${spring_boot_url}api/tender/find?query=${searchQuery}`)
-      .then((resp) => {
-        setsearchdata(resp.data);
-      });
-    console.log(searchQuery);
-  };
-
-  useEffect(() => {
-    const filterTenderData = tender?.filter((item) => {
-      return (
-        (item.RfqName &&
-          item.ProductName.toLowerCase().includes(searchTerm.toLowerCase())) ||
-        (item.email &&
-          item.email.toLowerCase().includes(searchTerm.toLowerCase())) ||
-        (item.phoneNumber &&
-          item.phoneNumber.toLowerCase().includes(searchTerm.toLowerCase()))
-      );
-    });
-    setSearchData(filterTenderData);
-  }, [tender, searchTerm]);
-
->>>>>>> c2f4022304d98cde3f790579027b7a1586f7c7d8
   // tender search end
   const handleSearchRFQChange = (e) => {
     // Clear searchdata if the input is empty
@@ -512,9 +480,6 @@ const TenderContain = ({ rfq, tender, userDe }) => {
                                     <div className="col-10">
                                       <input
                                         type="checkbox"
-<<<<<<< HEAD
-                                        onChange={() => tendernext(elem)}
-=======
 
                                         //changes
                                         checked={selectedRFQ === elem} //  RFQ is selected
@@ -522,7 +487,6 @@ const TenderContain = ({ rfq, tender, userDe }) => {
                                         //end
 
                                         //onChange={() => tendernext(elem)}
->>>>>>> c2f4022304d98cde3f790579027b7a1586f7c7d8
                                       />
                                       <h5>Project Name : {elem.productName}</h5>
                                       <p>
@@ -536,10 +500,6 @@ const TenderContain = ({ rfq, tender, userDe }) => {
                                       <button
                                         className="option-button"
                                         onClick={() => handleOpen(elem)}
-<<<<<<< HEAD
-=======
-                                        //onClick={() => handleViewRFQDetailsClick(elem)}
->>>>>>> c2f4022304d98cde3f790579027b7a1586f7c7d8
                                       >
                                         <FaEye />
                                       </button>
@@ -560,9 +520,6 @@ const TenderContain = ({ rfq, tender, userDe }) => {
                                     <div className="col-10">
                                       <input
                                         type="checkbox"
-<<<<<<< HEAD
-                                        onChange={() => tendernext(elem)}
-=======
 
                                         //changes
                                         checked={selectedRFQ === elem} // Check if the RFQ is selected
@@ -570,7 +527,6 @@ const TenderContain = ({ rfq, tender, userDe }) => {
                                         //end
 
                                         //onChange={() => tendernext(elem)}
->>>>>>> c2f4022304d98cde3f790579027b7a1586f7c7d8
                                       />
                                       <h5>Project Name : {elem.productName}</h5>
                                       <p>
@@ -608,11 +564,7 @@ const TenderContain = ({ rfq, tender, userDe }) => {
                     </button>
                   </div>
                   <div className="col-1">
-<<<<<<< HEAD
-                    <button className="btn back-btn" onClick={handleNextButton}>
-=======
                     {/* <button className="btn back-btn" onClick={handleNextButton}>
->>>>>>> c2f4022304d98cde3f790579027b7a1586f7c7d8
                       Next
                     </button> */}
 
@@ -816,12 +768,6 @@ const TenderContain = ({ rfq, tender, userDe }) => {
 export default TenderContain;
 
 
-<<<<<<< HEAD
-// need to fix fecthing or back button.
-
-
-
-=======
 
 
 
@@ -1386,4 +1332,3 @@ export default TenderContain;
 // }
 
 // export default TenderContain;
->>>>>>> c2f4022304d98cde3f790579027b7a1586f7c7d8
