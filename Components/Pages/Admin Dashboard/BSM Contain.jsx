@@ -28,7 +28,7 @@ const BSMContain = ({ Tender, Rfq }) => {
   const [body4, setbody4] = useState(null);
   const [body5, setbody5] = useState(null);
   const [loader, setloader] = useState(false);
-  const [mailId, setmailId] = useState(false);
+  const [mailId, setmailId] = useState(null);
   const [searchTenderQuery, setTenderSearchQuery] = useState(true);
   const [searchTenderdata, setsearchTenderdata] = useState(true);
   const [selectTender, setselectTender] = useState(false);
@@ -36,6 +36,36 @@ const BSMContain = ({ Tender, Rfq }) => {
   const [selectUser, setselectUser] = useState(false);
   const [selectUserdata, setselectUserdata] = useState(false);
   const [tenderDe, setTenderDe] = useState(true);
+
+
+  //     ///////////changes for checkbox///////////
+  const [selectedTender, setSelectedTender] = useState(null);
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [nextButtonDisabled, setNextButtonDisabled] = useState(true);
+
+  // Function to handle Tender & User selection
+  const handleTenderSelection = (elem) => {
+    if (selectedTender === elem) {
+      // If same checkbox clicked again, deselect it
+      setSelectedTender(null);
+     // setNextButtonDisabled(true); // Disable the next button
+    } else {
+      setSelectedTender(elem);
+      //setNextButtonDisabled(false); // Enable the next button
+    }
+  };
+  const handleUserSelection = (elem) => {
+    if (selectedUser === elem) {
+      // If same checkbox clicked again, deselect it
+      setSelectedUser(null);
+      //setNextButtonDisabled(true); // Disable the next button
+    } else {
+      setSelectedUser(elem);
+      //setNextButtonDisabled(false); // Enable the next button
+    }
+  };
+
+//   ////////////end///////////
 
   const handleClickOutside = (e) => {
     if (searchRef.current && !searchRef.current.contains(e.target)) {
@@ -234,21 +264,24 @@ const BSMContain = ({ Tender, Rfq }) => {
 
   //////////////////////////////////////////////////////////////send email to user//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  const SelecTender = (elem) => {
+  const SelecTender = (elem,mailId) => {
+   console.log("select tender id", elem._id); 
     setselectTender(true);
     setselectTenderdata(elem);
+    setmailId(mailId);
+    console.log("select tender mailId", mailId);
 
   }
   const UnSelecTender = () => {
     setselectTender(false);
     setselectTenderdata(null);
-    // setmailId(null)
+    //setmailId(null)
 
   }
   const SelecUser = (elem) => {
     setselectUser(true);
     setselectUserdata(elem);
-
+   // setmailId(elem._id);
   }
   const UnSelecUser = () => {
     setselectUser(false);
@@ -261,7 +294,10 @@ const BSMContain = ({ Tender, Rfq }) => {
 
   const savaeEmail = async (e) => {
     <loadermail />
-    setmailId(null)
+    setmailId(mailId);
+    console.log("mailId at savaeEmail", mailId);
+    setmailId(mailId);
+    console.log("mailId at savaeEmail", mailId);
 
     setbody1("Hi.... " + `${selectUserdata.firstName}`, +" a new tender has been received. Please find details and for more information check your respective dashboard.");
     setbody2(`Tender Name ${selectTenderdata.purpose}`)
@@ -288,7 +324,9 @@ const BSMContain = ({ Tender, Rfq }) => {
         },
       });
       console.log('File uploaded successfully:', response.data);
-      setmailId(response.data.id)
+      setmailId(response.data.id);
+      
+      //mailId++;
       setloader(true)
       toast.success(`Sending...........`, {
         position: toast.POSITION.BOTTOM_CENTER,
@@ -339,18 +377,27 @@ const BSMContain = ({ Tender, Rfq }) => {
     };
   }
 
+  const deleteMail = async (mailId) => {
+    console.log("Id of mail to be deleted", mailId);
+    try{
+
+      const response = await axios.delete(`${spring_boot_url}api/mails/delete/${mailId}`);
+      console.log("delete mail status", response.status);
+      console.log("mail will be deleted successfully in five seconds");
+    }
+    catch(err){
+      console.log(err);
+    }
+  }
 
   console.log("tenderbms", selectTenderdata)
   console.log("userbms", selectUserdata)
   console.log("mailid", mailId)
-
-
-
+  // mailId = mailId + 1;
+  // console.log("mailid checking", mailId);
 
   return (
     <>
-
-
       <div className='d-none d-xl-block d-md-block d-sm-none'>
         <div className='fluid-container'>
           <div className='row mt-5'>
@@ -387,20 +434,30 @@ const BSMContain = ({ Tender, Rfq }) => {
                       <div className='container'>
                         <div className='row'>
                           <div className='col-10'>
-                            <input type='checkbox' onChange={(event) => {
-                              if (event.target.checked) {
-                                SelecTender(elem);
-                              } else {
-                                UnSelecTender();
-                              }
-                            }} />
+                            <input type='checkbox' 
+                             //changes
+                              checked={selectedTender === elem} //  RFQ is selected
+                              onChange={() => handleTenderSelection(elem)} // Update the selected RFQ
+                            //end
+                            
+                            // onChange={(event) => {
+                            //   if (event.target.checked) {
+                            //     SelecTender(elem);
+                            //   } else {
+                            //     UnSelecTender();
+                            //   }
+                            // }} 
+                            />
                             <h5>TName : {elem.purpose}</h5>
                             <h5>Email Id : {elem.email}</h5>
                             <h5>Phone No. : {elem.phoneNumber}</h5>
                             <h5>Tender Id. : {elem.id}</h5>
                           </div>
                           <div className='col-2'>
-                            <button className="option-button" onClick={() => handleViewDetailsClick(elem)}>
+                            <button className="option-button" 
+                            //onClick={() => handleOpen(elem)}
+                            onClick={() => handleViewDetailsClick(elem)}
+                            >
                               <FaEye />
                             </button>
                           </div>
@@ -474,7 +531,9 @@ const BSMContain = ({ Tender, Rfq }) => {
                           <div className='container'>
                             <div className='row'>
                               <div className='col-10'>
-                                <input type='checkbox' onChange={() => SelecUser(elem)} />
+                                <input type='checkbox'
+                                
+                                onChange={() => SelecUser(elem)} />
 
                                 <h5>Name : {elem.firstName}</h5>
                                 <p>Email Id : {elem.email}</p>
@@ -483,7 +542,9 @@ const BSMContain = ({ Tender, Rfq }) => {
                                 <p>User Type : {elem.userTypes}</p>
                               </div>
                               <div className='col-2'>
-                                <button className="option-button" onClick={() => handleViewDetailsClick(elem)}>
+                                <button className="option-button" 
+
+                                onClick={() => handleViewDetailsClick(elem)}>
                                   <FaEye />
                                 </button>
                               </div>
@@ -501,13 +562,20 @@ const BSMContain = ({ Tender, Rfq }) => {
                           <div className='container'>
                             <div className='row'>
                               <div className='col-10'>
-                                <input type='checkbox' onChange={(event) => {
-                                  if (event.target.checked) {
-                                    SelecUser(elem);
-                                  } else {
-                                    UnSelecUser();
-                                  }
-                                }} />
+                                <input type='checkbox' 
+                                  //changes
+                                  checked={selectedUser === elem} // Check if the RFQ is selected
+                                  onChange={() => handleUserSelection(elem)} // Update the selected RFQ
+                                 //end
+                                
+                                // onChange={(event) => {
+                                //   if (event.target.checked) {
+                                //     SelecUser(elem);
+                                //   } else {
+                                //     UnSelecUser();
+                                //   }
+                                // }} 
+                                />
                                 {/* <p key={index + 1}>{index + 1} </p> */}
                                 <h5>Name : {elem.firstName}</h5>
                                 <p>Email Id : {elem.email}</p>
@@ -516,7 +584,12 @@ const BSMContain = ({ Tender, Rfq }) => {
                                 <p>User Type : {elem.userTypes}</p>
                               </div>
                               <div className='col-2'>
-                                <button className="option-button" onClick={() => handleViewDetailsClick(elem)}>
+                                <button className="option-button" 
+                                 //onClick={() => handleOpen(elem)}
+
+                                
+                              onClick={() => handleViewDetailsClick(elem)}
+                                >
                                   <FaEye />
                                 </button>
                               </div>
@@ -545,7 +618,10 @@ const BSMContain = ({ Tender, Rfq }) => {
               </button> */}
             </div>
             <div className='col-1'>
-              {selectTender && selectUser ? (
+
+              {/* {selectTender && selectUser ? ( */}
+              {selectedTender && selectedUser ? (
+
                 <button className='btn back-btn' onClick={savaeEmail}>
                   Send
                 </button>
@@ -623,14 +699,17 @@ const BSMContain = ({ Tender, Rfq }) => {
                           <div className='container'>
                             <div className='row'>
                               <div className='col-10'>
-                                <input type='checkbox' />
+                                <input type='checkbox' 
+                                />
                                 <h5>Project Name : {elem.productName}</h5>
                                 <p>RFQ Create Date : {formatDate(elem.createdAt)}</p>
                                 <p>Created By : {elem.createdBy}</p>
                                 <h5>Status : {elem.status}</h5>
                               </div>
                               <div className='col-2'>
-                                <button className="option-button" onClick={() => handleViewRFQDetailsClick(elem)}>
+                                <button className="option-button" 
+                                
+                                onClick={() => handleViewRFQDetailsClick(elem)}>
                                   <FaEye />
                                 </button>
                               </div>
@@ -709,7 +788,13 @@ const BSMContain = ({ Tender, Rfq }) => {
                           <div className='container'>
                             <div className='row'>
                               <div className='col-10'>
-                                <input type='checkbox' />
+                                <input type='checkbox' 
+                                
+                                  //changes
+                                  checked={selectedUser === elem} // Check if the RFQ is selected
+                                  onChange={() => handleUserSelection(elem)} // Update the selected RFQ
+                                 //end
+                                />
                                 {/* <p key={index + 1}>{index + 1} </p> */}
                                 <h5>Name : {elem.firstName}</h5>
                                 <p>Email Id : {elem.email}</p>
@@ -718,7 +803,11 @@ const BSMContain = ({ Tender, Rfq }) => {
                                 <p>User Type : {elem.userTypes}</p>
                               </div>
                               <div className='col-2'>
-                                <button className="option-button" onClick={() => handleViewDetailsClick(elem)}>
+                                <button className="option-button" 
+                                //onClick={() => handleOpen(elem)}
+                                  
+                                  onClick={() => handleViewDetailsClick(elem)}
+                                  >
                                   <FaEye />
                                 </button>
                               </div>
@@ -736,7 +825,13 @@ const BSMContain = ({ Tender, Rfq }) => {
                           <div className='container'>
                             <div className='row'>
                               <div className='col-10'>
-                                <input type='checkbox' />
+                                <input type='checkbox' 
+                                  //changes
+                                  checked={selectedUser === elem} // Check if the RFQ is selected
+                                  onChange={() => handleUserSelection(elem)} // Update the selected RFQ
+                                 //end
+                                
+                                />
                                 {/* <p key={index + 1}>{index + 1} </p> */}
                                 <h5>Name : {elem.firstName}</h5>
                                 <p>Email Id : {elem.email}</p>
@@ -745,7 +840,11 @@ const BSMContain = ({ Tender, Rfq }) => {
                                 <p>User Type : {elem.userTypes}</p>
                               </div>
                               <div className='col-2'>
-                                <button className="option-button" onClick={() => handleViewDetailsClick(elem)}>
+                                <button className="option-button" 
+                               // onClick={() => handleOpen(elem)}
+                                
+                                onClick={() => handleViewDetailsClick(elem)}
+                                >
                                   <FaEye />
                                 </button>
                               </div>
@@ -787,3 +886,6 @@ const BSMContain = ({ Tender, Rfq }) => {
 }
 
 export default BSMContain
+
+
+

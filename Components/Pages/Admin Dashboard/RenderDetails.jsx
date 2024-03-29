@@ -1,12 +1,18 @@
 import React, { useEffect, useRef, useState } from "react";
 import { FaEye } from "react-icons/fa";
-
 import BidContain from "./BidContain";
 import TenderNextStep from "./TenderNextStep";
-
 import axios from "axios";
 import RenderNewComponent from "./RenderNewComponent";
 import spring_boot_url from "../../../Utils/springApi";
+
+////////changes/////////
+import IconButton from '@mui/material/IconButton';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+
+//////end///////////////
 
 //check component how many renders ouccring and check stats and data in each render.
 // to fix the issue of re-rendering.
@@ -18,6 +24,7 @@ const RenderDetails = ({
   handleBackToDetails,
   tenderBack,
   formatDate,
+  //handleBidDelete,  
 }) => {
   const [showBid, setShowBid] = useState(false);
   const [showDetails, setShowDetails] = useState(true);
@@ -27,6 +34,53 @@ const RenderDetails = ({
   const [open, setOpen] = React.useState(false);
   const [rfqdata, setrfqdata] = useState(true);
 
+
+  ////////////////////changes///////////////
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  // const open = Boolean(anchorEl);
+
+  const options = [
+    'View Bid',
+    'Delete',
+  ];
+
+  const ITEM_HEIGHT = 48;
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+    setOpen(true);  //changes
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+    setOpen(false); //changes
+  };
+
+
+  const handleOptionClick = (option, tenderId) => {
+    handleClose();
+
+    if (option === 'View Bid') {
+      // Handle view bid functionality
+      console.log("View Bid clicked for tender ID:", tenderId);
+    } 
+    else if (option === 'Delete') {
+      // Handle delete functionality
+      const isConfirmed = window.confirm("Are you sure you want to delete this tender?");
+      if (isConfirmed) {
+        axios.delete(`${spring_boot_url}/tender/${tenderId}`)
+          .then(response => {
+            console.log("Tender deleted successfully:", response.data);
+          })
+          .catch(error => {
+            console.error("Error deleting tender:", error);
+          });
+      }
+    }
+  };
+  //////////////end////////////
+
+
   useEffect(() => {
     // const handleIsComponentVisible = () => {
     //     setNewComponentVisible(false);
@@ -35,9 +89,7 @@ const RenderDetails = ({
     // console.log("tender in all tab contain",tender);
     // handleIsComponentVisible();
 
-
     /// changes
-
     setShowBid(false);
     setShowDetails(true);
     setDropdownVisible(false);
@@ -45,8 +97,8 @@ const RenderDetails = ({
     // settenderbid(null);
     setOpen(false);
     setrfqdata(true);
-
     /// end
+
     settenderbid(tender);
   }, [tender, tenderBids, tenderBack]);
 
@@ -67,8 +119,24 @@ const RenderDetails = ({
     console.log("clicked open");
   };
 
+  //////////////////changes//////////////////
+  // const handleDelete = (tender) => {
+  //   const isConfirmed = window.confirm("Are you sure you want to delete this tender?");
 
-  console.log("tender in RenderDetails tenderBack", tenderBack);
+  //   if (isConfirmed) {
+  //     axios.delete(`${spring_boot_url}/tender/${tender.id}`)
+  //       .then(response => {
+  //         console.log("Tender deleted successfully:", response.data);
+  //       })
+  //       .catch(error => {
+  //         console.error("Error deleting tender:", error);
+  //       });
+  //   }
+  // }
+  //////////////////end////////////////////
+
+
+  // console.log("tender in RenderDetails tenderBack", tenderBack);
   console.log("tender in RenderDetails tender", tender);
   return (
     <>
@@ -118,9 +186,9 @@ const RenderDetails = ({
                       </tr>
                     </thead>
                     <tbody>
-                    <p>Checking</p>
-                    {(Array.isArray(tenderBack?.tender) ? tenderBack.tender : Array.isArray(tender) ? tender : []).map((elem, index) => (
-                        
+                      <p>Checking</p>
+                      {(Array.isArray(tenderBack?.tender) ? tenderBack.tender : Array.isArray(tender) ? tender : []).map((elem, index) => (
+
                         <tr key={index + 1} className="table-row">
                           <td>{elem && elem.id}</td> {/* Added a null check */}
                           <td>{elem && elem.rfqName}</td>{" "}
@@ -137,13 +205,36 @@ const RenderDetails = ({
                           <td>
                             <button
                               className="option-button"
-                              onClick={() => handleOpen(elem)}
+                            // onClick={() => handleOpen(elem)}
                             >
                               <FaEye />
                             </button>
                           </td>
                           <td style={{ position: "relative" }}>
-                            <button
+
+                            <IconButton
+                              aria-label="more"
+                              aria-controls="long-menu"
+                              aria-haspopup="true"
+                              onClick={handleClick}
+                            >
+                              <MoreVertIcon />
+                            </IconButton>
+                            <Menu
+                              id="long-menu"
+                              anchorEl={anchorEl}
+                              open={open}
+                              onClose={handleClose}
+                            >
+                              {options.map((option) => (
+                                <MenuItem key={option} onClick={() => handleOptionClick(option, tender.id)}>
+                                  {option}
+                                </MenuItem>
+                              ))}
+                            </Menu>
+
+
+                            {/* <button
                               className="option-button"
                               onClick={toggleDropdown}
                             >
@@ -164,12 +255,12 @@ const RenderDetails = ({
                                   transform: "translateY(-100%)",
                                   zIndex: "1",
                                 }}
-                              >
-                                <p onClick={handleBidClick}>View Bid</p>
-                                <p onClick={handleOpen}>View Tender</p>
-                                <p>Delete</p>
-                              </div>
-                            )}
+                              > */}
+                            {/* <p onClick={handleBidClick}>View Bid</p>
+                            <p onClick={() => handleDelete(elem)}>Delete</p>
+                            <p onClick={handleOpen}>View Tender</p> */}
+                            {/* </div> */}
+                            {/* )} */}
                           </td>
                           <td></td>
                         </tr>

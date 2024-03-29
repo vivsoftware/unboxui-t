@@ -7,16 +7,17 @@ import { FaEye } from "react-icons/fa";
 import ModalComponent from '../Admin Dashboard/ModalComponent';
 import DashboardLoader  from '../../Element/DashboardLoader';
 
-const UserContain = () => {
+const UserContain = ({userId} , registeredUser, userDe)=> {
   const [isDropdownVisible, setDropdownVisible] = useState(false);
   const [showDetails, setShowDetails] = useState(true);
   const [searchdata, setsearchdata] = useState(true);
-  const [userDe, setUserDe] = useState(null);
+  const [userDet, setUserDet] = useState(null);
   const [searchQuery, setSearchQuery] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState('All');
   const [isModalOpen, setModalOpen] = useState(false);
   const [selectedUserData, setSelectedUserData] = useState(null);
+  // const [registeredUsers, setRegisteredUsers] = useState(null); 
 
   const openModal = (userData) => {
     setSelectedUserData(userData);
@@ -34,6 +35,7 @@ const UserContain = () => {
       setSelectedOption(savedOption);
     }
     allUsers();
+    getRegisteredUsers();
   }, []);
 
   const toggleFilterDropdown = () => {
@@ -62,7 +64,7 @@ const UserContain = () => {
     setIsOpen(false);
   };
   {
-    Array.isArray(userDe) && userDe.map((elem, index) => (
+    Array.isArray(userDet) && userDet.map((elem, index) => (
       <tr key={index + 1}>
         <td>{index + 1}</td>
         <td>{elem.name}</td>
@@ -95,33 +97,43 @@ const UserContain = () => {
     dispatch({ type: "REGISTERSIMODAL" });
   };
 
+ console.log("registered user in usercontain",registeredUser);
+ console.log("registered user in usercontain",userDe);
+  const getRegisteredUsers = () => {
+    axios.get(`${spring_boot_url}api/registerId/?registerId=${registeredUser.id}`)
+      .then(resp => {
+        console.log("registered user",resp.data.json);
+        
+      });
+  };
+
   const allUsers = () =>{
     axios.get(`${spring_boot_url}api/adminuser/allusers`)
     .then(resp => {
       console.log(resp.data.json);
       localStorage.setItem("data", JSON.stringify(resp.data));
-      setUserDe(resp.data);
+      setUserDet(resp.data);
     });
   }
   const seller = () => {
     axios.get(`${spring_boot_url}api/adminuser/search?query=seller`)
       .then(resp => {
         console.log(resp.data.json);
-        setUserDe(resp.data);
+        setUserDet(resp.data);
       });
   }
   const buyer = () => {
     axios.get(`${spring_boot_url}api/adminuser/search?query=buyer`)
       .then(resp => {
         console.log(resp.data.json);
-        setUserDe(resp.data);
+        setUserDet(resp.data);
       });
   }
   const serviceProvider = () => {
     axios.get(`${spring_boot_url}api/adminuser/search?query=service provider`)
       .then(resp => {
         console.log(resp.data.json);
-        setUserDe(resp.data);
+        setUserDet(resp.data);
       });
   }
   const handleSearchChange = (e) => {
@@ -150,7 +162,7 @@ const UserContain = () => {
     openModal(userData);
     setsearchdata(null);
   };
-  if(!userDe){
+  if(!userDet){
     return(
       <>
       <div className='SI-card'>
@@ -373,7 +385,7 @@ const UserContain = () => {
               </tr>
             </thead>
             <tbody>
-              {Array.isArray(userDe) && userDe.map((elem, index) => (
+              {Array.isArray(userDet) && userDet.map((elem, index) => (
                 <tr key={index + 1} className='table-row'>
                   <td>{index + 1}</td>
                   <td>{elem.firstName}</td>
@@ -459,7 +471,7 @@ const UserContain = () => {
         <div className='row mt-5 SI-table'>
         <h2 className='mb-2'>Users List</h2>
         <div className='col-12'>
-           {Array.isArray(userDe) && userDe.map((elem, index) =>
+           {Array.isArray(userDet) && userDet.map((elem, index) =>
               <div className='RFQ-Card' key={index}>
                 <div className='container'>
                 <div className='row'>
@@ -500,4 +512,4 @@ const UserContain = () => {
 
 
 
-export default UserContain
+export default UserContain;

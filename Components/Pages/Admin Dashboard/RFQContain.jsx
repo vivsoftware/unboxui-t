@@ -24,6 +24,8 @@ const RFQContain = () => {
   const [createdBy, setcreatedBy] = useState("");
   const searchRef = useRef(null);
   const [open, setOpen] = React.useState(false);
+ 
+
   // const handleOpen = (elem) => setOpen(true);
   const handleClose = () => {
     setOpen(false);
@@ -33,6 +35,27 @@ const RFQContain = () => {
     setOpen(true);
     ssetrfqdata(elem);
   };
+
+  // function to delete rfq, deleting using api and filterig the data which has been deleted then updating state. 
+  const handleRfqDelete = () => {
+    axios.delete(`${spring_boot_url}api/userRfq/${rfqdata?.id}`)
+      .then(resp => {
+        console.log("data .id",rfqdata.id);
+        console.log("Data deleted",resp.data.json);
+        setUserDe(prevData => prevData.filter(item => item.id !== rfqdata.id));
+
+        handleClose();
+      })
+      .catch(
+        error => {
+
+          console.error("Error fetching data:", error);
+        }
+      )
+    console.log("clicked delete");
+  }
+
+
   useEffect(() => {
     if (open === true) {
       if (rfqdata && rfqdata.id) {
@@ -495,7 +518,7 @@ console.log("rfaqqgopalqq", userDe)
               </div>
               <div style={{ display: 'flex' }}>
                 <button>Edit</button>
-                <button>Delete</button>
+                <button onClick={handleRfqDelete}>Delete</button>
                 <button onClick={handleClose}>Close</button>
               </div>
             </div>

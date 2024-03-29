@@ -19,6 +19,7 @@ const TenderReview = ({ selectRfqdata }) => {
     const [certification, setcertification] = useState(false);
     const [tenderDiscription, settenderDescription] = useState(false);
     const [tenderCheck, settenderCheck] = useState(false);
+    const router = useRouter();
 
     useEffect(() => {
         // Retrieve the stored form data from local storage
@@ -33,42 +34,35 @@ const TenderReview = ({ selectRfqdata }) => {
     }
 
    
-
-
-
-
-
-
-
     ///////////////////////////////////////////////////////////// TENDER CREATION LOGIC ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     const CreateTender = () => {
         const userDetails = {
-            purpose: `${selectRfqdata?.purpose}`,
-            productName: `${selectRfqdata?.productName}`,
-            email: `${selectRfqdata?.email}`,
-            modelNo: `${selectRfqdata?.modelNo}`,
-            createdBy: `${selectRfqdata?.createdBy}`,
-            rfqName: `${selectRfqdata?.projectName}`,
-            rfqId: `${selectRfqdata?.id}`,
-            phoneNumber: `${selectRfqdata?.phoneNumber}`,
-            deliveryDate: `${selectRfqdata?.deliveryDate}`,
-            purposeOfRfq: `${selectRfqdata?.purposeOfRfq}`,
-            description: `${selectRfqdata?.description}`,
-            quantity: `${selectRfqdata?.quantity}`,
-            tenderDiscription: `${formData.description}`,
-            opportunityAmount: `${formData.opportunityAmount}`,
-            tenderClosingDate: `${formData.tenderClosingDate}`,
-            deliveryPeriod: `${formData.deliveryPeriod}`,
-            diliveryLocation: `${formData.deliveryLocation}`,
-            anaualRevenue: `${formData.annualRevenue}`,
-            noOfEmployees: `${formData.employeeNumber}`,
-            yearsInBusiness: `${formData.bussinessYears}`,
-            industriesServed: `${formData.industriesServed}`,
+            purpose: `${Tenderselectdata?.purpose}`,
+            productName: `${Tenderselectdata?.productName}`,
+            email: `${Tenderselectdata?.email}`,
+            modelNo: `${Tenderselectdata?.modelNo}`,
+            createdBy: `${Tenderselectdata?.createdBy}`,
+            rfqName: `${Tenderselectdata?.projectName}`,
+            rfqId: `${Tenderselectdata?.id}`,
+            phoneNumber: `${Tenderselectdata?.phoneNumber}`,
+            deliveryDate: `${Tenderselectdata?.deliveryDate}`,
+            purposeOfRfq: `${Tenderselectdata?.purposeOfRfq}`,
+            description: `${Tenderselectdata?.description}`,
+            quantity: `${Tenderselectdata?.quantity}`,
+            tenderDiscription,
+            opportunityAmount,
+            tenderClosingDate,
+            deliveryPeriod,
+            diliveryLocation,
+            anaualRevenue,
+            noOfEmployees,
+            yearsInBusiness,
+            industriesServed,
             certification: 'UR',
             originalFilename: "FILE"
-
+    
         };
-        fetch(`${spring_boot_url}api/tender/${selectRfqdata.userId}`, {
+        fetch(`${spring_boot_url}api/tender/${Tenderselectdata.userId}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(userDetails),
@@ -83,12 +77,8 @@ const TenderReview = ({ selectRfqdata }) => {
                         toast.success(`Tender Published to Seller `, {
                             position: toast.POSITION.BOTTOM_CENTER,
                         });
-
-                
+                        handleReload();
                     }, 3000);
-
-                    router.reload();
-
                 }
                 else {
                     toast.error(`This Tender Allready exist `, {
@@ -101,36 +91,83 @@ const TenderReview = ({ selectRfqdata }) => {
                     position: toast.POSITION.BOTTOM_CENTER,
                 });
             });
-    };
+            console.log("create tender Called");
+    }
+    
+    // const CreateTender = () => {
+    //     const userDetails = {
+    //         purpose: `${selectRfqdata?.purpose}`,
+    //         productName: `${selectRfqdata?.productName}`,
+    //         email: `${selectRfqdata?.email}`,
+    //         modelNo: `${selectRfqdata?.modelNo}`,
+    //         createdBy: `${selectRfqdata?.createdBy}`,
+    //         rfqName: `${selectRfqdata?.projectName}`,
+    //         rfqId: `${selectRfqdata?.id}`,
+    //         phoneNumber: `${selectRfqdata?.phoneNumber}`,
+    //         deliveryDate: `${selectRfqdata?.deliveryDate}`,
+    //         purposeOfRfq: `${selectRfqdata?.purposeOfRfq}`,
+    //         description: `${selectRfqdata?.description}`,
+    //         quantity: `${selectRfqdata?.quantity}`,
+    //         tenderDiscription: `${formData.description}`,
+    //         opportunityAmount: `${formData.opportunityAmount}`,
+    //         tenderClosingDate: `${formData.tenderClosingDate}`,
+    //         deliveryPeriod: `${formData.deliveryPeriod}`,
+    //         diliveryLocation: `${formData.deliveryLocation}`,
+    //         anaualRevenue: `${formData.annualRevenue}`,
+    //         noOfEmployees: `${formData.employeeNumber}`,
+    //         yearsInBusiness: `${formData.bussinessYears}`,
+    //         industriesServed: `${formData.industriesServed}`,
+    //         certification: 'UR',
+    //         originalFilename: "FILE"
 
+    //     };
+    //     fetch(`${spring_boot_url}api/tender/${selectRfqdata.userId}`, {
+    //         method: 'POST',
+    //         headers: { 'Content-Type': 'application/json' },
+    //         body: JSON.stringify(userDetails),
+    //     })
+    //         .then((resp) => {
+    //             // setRfqData(resp.data);
+    //             if (resp.ok === true) {
+    //                 toast.warning(`Tender Publishing Please Wait.....`, {
+    //                     position: toast.POSITION.BOTTOM_CENTER,
+    //                 });
+    //                 setTimeout(() => {
+    //                     toast.success(`Tender Published to Seller `, {
+    //                         position: toast.POSITION.BOTTOM_CENTER,
+    //                     });
 
+                
+    //                 }, 3000);
 
-    const router = useRouter();
+    //                 router.reload();
+
+    //             }
+    //             else {
+    //                 toast.error(`This Tender Allready exist `, {
+    //                     position: toast.POSITION.BOTTOM_CENTER,
+    //                 });
+    //             }
+    //         })
+    //         .catch(error => {
+    //             toast.success(`This Tender Allready exist `, {
+    //                 position: toast.POSITION.BOTTOM_CENTER,
+    //             });
+    //         });
+    // };
+    // const router = useRouter();
 
     const handleBidReview = () => {
-        // You can add navigation logic here if needed
-        // For now, I'm setting backtoNext to true
-
         // setBacktoNext(true);
-        CreateTender()
-
+        CreateTender();
     }
-
-
-
-
-
-
-
-
-
 
     console.log("localstoreeeee", formData)
 
     return (
         <>
             {backtoNext ? (
-                <TenderNextStep />
+                <TenderNextStep Tenderselectdata={Tenderselectdata}/>
             ) : (
                 <div className='container'>
                     <p onClick={handleBacktoTenders} style={{ color: '#FF8400', fontSize: '20px' }}><MdKeyboardBackspace /> Back</p>

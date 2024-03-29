@@ -119,15 +119,14 @@ const Dashboard = ({ userDe, rfq, tender }) => {
     };
 
     useEffect(() => {
+        // allUsers();
         console.log("userdata",userDe);
         setUser(userDe);  
         console.log("tender",tender);
-        setRfqNo(rfq);  
-        setTenderNo(tender);
+        setRfqNo(rfq);
+        // setTenderNo(TenderNo);
         console.log("rfq",rfq);
 
-       
-  
     }, [])
 
 ////////////////////////changes end///////////////////////    
@@ -368,7 +367,7 @@ const Dashboard = ({ userDe, rfq, tender }) => {
                                                 </thead>
                                                 {(
                                                     <tbody>
-                                                        {Array.isArray(RfqNo) && RfqNo.map((elem, index) => (
+                                                        {Array.isArray(rfq) && rfq.map((elem, index) => (
                                                             <tr key={index + 1} className='table-row'>
                                                                 <td>{index + 1}</td>
                                                                 <td>{elem.firstName}</td>
@@ -419,7 +418,7 @@ const Dashboard = ({ userDe, rfq, tender }) => {
                                         </thead>
                                         {(
                                             <tbody>
-                                                {Array.isArray(TenderNo) && TenderNo.map((elem, index) => (
+                                                {Array.isArray(tender) && tender.map((elem, index) => (
                                                     <tr key={index + 1} className='table-row'>
                                                         {/* <td>{index + 1}</td> */}
                                                         <td>{elem.id}</td>
