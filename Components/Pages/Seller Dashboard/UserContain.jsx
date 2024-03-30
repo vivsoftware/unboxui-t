@@ -6,7 +6,7 @@ import spring_boot_url from '../../../Utils/springApi';
 import DashboardLoader from '../../Element/DashboardLoader';
 import ModalComponent from '../Admin Dashboard/ModalComponent';
 
-const UserContain = ( {registeredUser})=> {
+const UserContain = ( {userDe})=> {
   const [isDropdownVisible, setDropdownVisible] = useState(false);
   const [showDetails, setShowDetails] = useState(true);
   const [searchdata, setsearchdata] = useState(true);
@@ -17,6 +17,7 @@ const UserContain = ( {registeredUser})=> {
   const [isModalOpen, setModalOpen] = useState(false);
   const [selectedUserData, setSelectedUserData] = useState(null);
   // const [registeredUsers, setRegisteredUsers] = useState(null); 
+  console.log("rajapagal", userDe)
 
   const openModal = (userData) => {
     setSelectedUserData(userData);
@@ -34,7 +35,7 @@ const UserContain = ( {registeredUser})=> {
       setSelectedOption(savedOption);
     }
     allUsers();
-    getRegisteredUsers();
+    // getRegisteredUsers();
   }, []);
 
   const toggleFilterDropdown = () => {
@@ -96,15 +97,15 @@ const UserContain = ( {registeredUser})=> {
     dispatch({ type: "REGISTERSIMODAL" });
   };
 
- console.log("registered user in usercontain",registeredUser);
-//  console.log("registered user in usercontain",userDe);
-  const getRegisteredUsers = () => {
-    axios.get(`${spring_boot_url}api/registerId/?registerId=${registeredUser?.id}`)
-      .then(resp => {
-        console.log("registered user",resp.data.json);
+//  console.log("registered user in usercontain",registeredUser);
+// //  console.log("registered user in usercontain",userDe);
+//   const getRegisteredUsers = () => {
+//     axios.get(`${spring_boot_url}api/registerId/?registerId=${registeredUser?.id}`)
+//       .then(resp => {
+//         console.log("registered user",resp.data.json);
         
-      });
-  };
+//       });
+//   };
 
   const allUsers = () =>{
     axios.get(`${spring_boot_url}api/adminuser/allusers`)
@@ -163,7 +164,6 @@ const UserContain = ( {registeredUser})=> {
   };
 
 
-console.log("rajapagal", registeredUser)
 
   if(!userDet){
     return(

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 // import BidContain from './BidContain'
-import axios from 'axios';
 import Link from 'next/link';
 import spring_boot_url from '../../../Utils/springApi';
 import BidSubmit from './bidSubmit';
@@ -29,24 +28,48 @@ const bidViewContain = ({ BidTender, userDe }) => {
     console.log("bidtenderdetails", BidTender)
 
 
-    ////////////////////attached file get code////////////////////////
+    ////////////////////////////////....attached...file...get...code.....//////////////////////////////////////////////////////////////////
 
     useEffect(() => {
+        const bidDetails = {
+            tenderId,
+            userId,
+            bidId,
+            description,
+            openingDate,
+            closingDate,
+            annualRevenue,
+            numberOfEmployees,
+            yearsInBusiness,
+            industriesServed,
+            certifications,
+            bidAmount,
+        };
+
+        fetch(`${spring_boot_url}api/sellersbid/add`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(bidDetails),
+        }).then((resp) => {
+            // setRfqData(resp.data);
+            if (resp.ok === true) {
 
 
-        axios.get(`${spring_boot_url}api/rfqdoc/download/${BidTender.rfqId}`)
-            .then(resp => {
-                setuploadRfq(resp.data);
-            })
-            .catch(error => {
-                // Handle errors if needed
-                console.error("Error fetching data:", error);
-            });
-        // Make sure rfqdata.id exists before making the request
-    },); // Include rfqdata.id as a dependency
+            }
+
+        });
+    }, [])
 
 
-    // console.log("uploadrftenderbid", uploadRfq)
+
+
+
+
+
+
+
+
+
 
 
 
