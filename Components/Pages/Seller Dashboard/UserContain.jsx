@@ -198,7 +198,10 @@ const UserContain = ( {registeredUser})=> {
           <div className='container'>
         <div className='row mt-5 '>
           <div className='col-2'>
-            <button className='btn register-btn' onClick={handleModal} >Register User</button>
+            <button className='btn register-btn' 
+                style={{ marginLeft: "6px", marginTop: "4px",  border: "1px solid black",
+                borderRadius: "6px", }}
+            onClick={handleModal} >Register User</button>
           </div>
           <div className='col-7'>
             <input
@@ -207,7 +210,14 @@ const UserContain = ( {registeredUser})=> {
               className="form-control"
               placeholder="Search User ..."
               aria-label="Search"
-              style={{ height: '40px', border: "1px solid #ddd", borderRadius: '8px' }}
+              style={{
+                height: "40px",
+                border: "1px solid black",
+                borderRadius: "6px",
+                marginLeft: "120px",
+                width: "364px",
+              }}
+              // style={{ height: '40px', border: "1px solid #ddd", borderRadius: '8px' }}
               onChange={handleSearchChange}
             />
             {searchdata && searchdata.length === 0 && (
@@ -273,7 +283,10 @@ const UserContain = ( {registeredUser})=> {
           <div className='container'>
         <div className='row mt-5 '>
           <div className='col-4'>
-            <button className='btn register-btn' onClick={handleModal}>Register User</button>
+            <button className='btn register-btn' 
+             style={{ marginLeft: "6px", marginTop: "4px",  border: "1px solid black",
+             borderRadius: "6px", }}
+            onClick={handleModal}>Register User</button>
           </div>
           <div className='col-6 ms-3'>
         <div className='custom-dropdown'>
@@ -306,7 +319,14 @@ const UserContain = ( {registeredUser})=> {
               className="form-control"
               placeholder="Search User ..."
               aria-label="Search"
-              style={{ height: '40px', border: "1px solid #ddd", borderRadius: '8px' }}
+              style={{
+                height: "40px",
+                border: "1px solid black",
+                borderRadius: "6px",
+                marginLeft: "190px",
+                width: "364px",
+              }}
+              // style={{ height: '40px', border: "1px solid #ddd", borderRadius: '8px' }}
               onChange={handleSearchChange}
             />
             {searchdata && searchdata.length === 0 && (
@@ -347,7 +367,11 @@ const UserContain = ( {registeredUser})=> {
           <div className='container'>
         <div className='row mt-5 '>
           <div className='col-2'>
-            <button className='btn register-btn' onClick={handleModal} >Register User</button>
+            <button className='btn register-btn' 
+             style={{ marginLeft: "6px", marginTop: "4px",  border: "1px solid black",
+             borderRadius: "6px", }}
+            
+            onClick={handleModal} >Register User</button>
           </div>
           <div className='col-7'>
             <input
@@ -355,7 +379,15 @@ const UserContain = ( {registeredUser})=> {
               className="form-control"
               placeholder="Search User ..."
               aria-label="Search"
-              style={{ height: '40px', border: "1px solid #ddd", borderRadius: '8px' }}
+              style={{
+                height: "40px",
+                border: "1px solid black",
+                borderRadius: "6px",
+                marginLeft: "190px",
+                width: "364px",
+              }}
+
+              // style={{ height: '40px', border: "1px solid #ddd", borderRadius: '8px' }}
               onChange={handleSearchChange}
             />
             {searchdata && searchdata.length === 0 && (
@@ -443,7 +475,11 @@ const UserContain = ( {registeredUser})=> {
           <div className='container'>
         <div className='row mt-5 '>
           <div className='col-4'>
-            <button className='btn register-btn' onClick={handleModal}>Register User</button>
+            <button className='btn register-btn'
+            style={{ marginLeft: "6px", marginTop: "4px",  border: "1px solid black",
+            borderRadius: "6px", }} 
+            
+            onClick={handleModal}>Register User</button>
           </div>
           <div className='col-6 ms-3'>
         <div className='custom-dropdown'>
@@ -476,7 +512,14 @@ const UserContain = ( {registeredUser})=> {
               className="form-control"
               placeholder="Search User ..."
               aria-label="Search"
-              style={{ height: '40px', border: "1px solid #ddd", borderRadius: '8px' }}
+              style={{
+                height: "40px",
+                border: "1px solid black",
+                borderRadius: "6px",
+                marginLeft: "120px",
+                width: "364px",
+              }}
+              // style={{ height: '40px', border: "1px solid #ddd", borderRadius: '8px' }}
               onChange={handleSearchChange}
             />
             {searchdata && searchdata.length === 0 && (

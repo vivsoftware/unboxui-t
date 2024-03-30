@@ -183,6 +183,10 @@ const RenderNewComponent = ({ }) => {
     setOpen(false);
     setuploadRfq(null);
   }
+  const tendernext = (elem) => {
+    setTenderselectdata(elem);
+    setnextBtn(true);
+  };
 
 
   const searchSi = (e) => {

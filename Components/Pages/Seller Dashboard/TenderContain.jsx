@@ -299,6 +299,8 @@ const TenderContain = ({ rfq, tender, userDe }) => {
                 <div className="col-2">
                   <button
                     className="btn register-btn"
+                    style={{ marginLeft: "6px", marginTop: "4px",  border: "1px solid black",
+                    borderRadius: "6px", }}
                     onClick={handleCreateTender}
                   >
                     Create Tender
@@ -313,9 +315,16 @@ const TenderContain = ({ rfq, tender, userDe }) => {
                     aria-label="Search"
                     style={{
                       height: "40px",
-                      border: "1px solid #ddd",
-                      borderRadius: "8px",
+                      border: "1px solid black",
+                      borderRadius: "6px",
+                      marginLeft: "190px",
+                      width: "364px",
                     }}
+                    // style={{
+                    //   height: "40px",
+                    //   border: "1px solid #ddd",
+                    //   borderRadius: "8px",
+                    // }}
                   />
                 </div>
                 {/* mapping data */}
@@ -348,12 +357,12 @@ const TenderContain = ({ rfq, tender, userDe }) => {
                   <thead className="table-header">
                     <tr>
                       <th>T.Id</th>
-                      <th>RFQ Name</th>
+                      <th>T.Name</th>
                       <th>Tender Create Date</th>
-                      <th>Closing Date</th>
+                      <th>Tender Closing Date</th>
+                      <th>Purpose</th>
+                      <th>Status</th>
                       <th>View</th>
-                      <th>Options</th>
-
                       <th>Options</th>
                     </tr>
                   </thead>
@@ -362,9 +371,11 @@ const TenderContain = ({ rfq, tender, userDe }) => {
                       tender.map((elem, index) => (
                         <tr key={index + 1} className="table-row">
                           <td>{elem.id}</td>
-                          <td>{elem.projectName}</td>
+                          <td>{elem.rfqName}</td>
+                          {/* <td>{elem.projectName}</td> */}
                           <td>{formatDate(elem.createdAt)}</td>
                           <td>{elem.tenderClosingDate}</td>
+                          <td>{elem.purpose}</td>
                           <td>Pubished</td>
                           <td>
                             <button
@@ -422,7 +433,7 @@ const TenderContain = ({ rfq, tender, userDe }) => {
                               </div>
                             )} */}
                           </td>
-                          <td></td>
+    
                         </tr>
                       ))}
                   </tbody>
@@ -450,9 +461,15 @@ const TenderContain = ({ rfq, tender, userDe }) => {
                     placeholder="Search Tender ..."
                     aria-label="Search"
                     style={{
-                      height: "40px",
-                      border: "1px solid #ddd",
-                      borderRadius: "8px",
+                      // height: "40px",
+                      // border: "1px solid #ddd",
+                      // borderRadius: "8px",
+                   
+                        height: "40px",
+                        border: "1px solid black",
+                        borderRadius: "6px",
+                        marginLeft: "400px",
+                        width: "10px"
                     }}
                   />
                 </div>

@@ -239,7 +239,9 @@ const RenderDetails = ({ tender, tenderBids, formatDate, handleBidClick, tenderB
                     <button
                       className="btn register-btn"
                       onClick={handleCreateTender}
-                      style={{ marginLeft: "6px", marginTop: "60px" }}
+                      style={{ marginLeft: "6px", marginTop: "4px",  border: "1px solid black",
+                      borderRadius: "6px", }}
+                      // style={{ marginLeft: "6px", marginTop: "60px" }}
                     >
                       Create Tender
                     </button>
@@ -253,10 +255,17 @@ const RenderDetails = ({ tender, tenderBids, formatDate, handleBidClick, tenderB
                       aria-label="Search"
                       style={{
                         height: "40px",
-                        border: "1px solid #ddd",
-                        borderRadius: "8px",
-                        marginLeft: "-230px",
+                        border: "1px solid black",
+                        borderRadius: "6px",
+                        marginLeft: "120px",
+                        width: "364px",
                       }}
+                      // style={{
+                      //   height: "40px",
+                      //   border: "1px solid #ddd",
+                      //   borderRadius: "8px",
+                      //   marginLeft: "-230px",
+                      // }}
                     />
                   </div>
                   {/*Search Mapping Data */}
@@ -288,12 +297,13 @@ const RenderDetails = ({ tender, tenderBids, formatDate, handleBidClick, tenderB
                   <table className="table">
                     <thead className="table-header">
                       <tr>
-                        <th>Sr.No</th>
-                        <th>Rfq Name</th>
+                        <th>T.Id</th>
+                        <th>T.Name</th>
                         <th>Tender Create Date</th>
                         <th>Tender Closing Date</th>
                         {/* <th>Status</th> */}
                         <th>Purpose</th>
+                        <th>Status</th>
                         <th>{"View"}</th>
                         <th>Options</th>
                       </tr>
@@ -307,19 +317,19 @@ const RenderDetails = ({ tender, tenderBids, formatDate, handleBidClick, tenderB
                           <td>{formatDate(elem.createdAt)}</td>
                           <td>{elem.tenderClosingDate}</td>
                           <td>{elem.purpose}</td>
-                          {/* <td>Pubished</td> */}
+                          <td>Pubished</td>
 
 
                           <td>
                             <button
                               className="option-button"
-                              //onClick={() => handleOpen(elem)}
+                            //onClick={() => handleOpen(elem)}
                             >
                               <FaEye />
                             </button>
                           </td>
                           <td style={{ position: "relative" }}>
-                          <IconButton
+                            <IconButton
                               aria-label="more"
                               aria-controls="long-menu"
                               aria-haspopup="true"
@@ -397,9 +407,15 @@ const RenderDetails = ({ tender, tenderBids, formatDate, handleBidClick, tenderB
                       placeholder="Search Tender ..."
                       aria-label="Search"
                       style={{
+                        // height: "40px",
+                        // border: "1px solid #ddd",
+                        // borderRadius: "8px",
+
                         height: "40px",
-                        border: "1px solid #ddd",
-                        borderRadius: "8px",
+                        border: "1px solid black",
+                        borderRadius: "6px",
+                        marginLeft: "120px",
+                        width: "364px",
                       }}
                     />
                   </div>
