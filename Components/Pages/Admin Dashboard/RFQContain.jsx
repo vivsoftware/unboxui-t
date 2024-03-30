@@ -230,7 +230,15 @@ console.log("rfaqqgopalqq", userDe)
                   className="form-control"
                   placeholder="Search RFQ ..."
                   aria-label="Search"
-                  style={{ height: '40px', border: "1px solid #ddd", borderRadius: '8px' }}
+                  style={{ 
+                    // height: '40px', border: "1px solid #ddd", borderRadius: '8px' 
+                    height: "40px",
+                    border: "1px solid black",
+                    borderRadius: "6px",    
+                    marginLeft: "120px",
+                    width: "364px"
+
+                }}
                   onChange={handleSearchChange}
                 />
                 {searchdata && searchdata.length === 0 && (
@@ -332,7 +340,10 @@ console.log("rfaqqgopalqq", userDe)
         <div className='container RFQ-card'>
           <div className='row mt-5'>
             <div className='col-2 '>
-              <button className='btn register-btn' onClick={handleCreateRFQModal}>Create RFQ</button>
+              <button className='btn register-btn'
+              style={{ marginLeft: "6px", marginTop: "4px",  border: "1px solid black",
+              borderRadius: "6px", }}
+               onClick={handleCreateRFQModal}>Create RFQ</button>
             </div>
             <div className='col-10 '>
               <input
@@ -340,7 +351,13 @@ console.log("rfaqqgopalqq", userDe)
                 className="form-control"
                 placeholder="Search RFQ ..."
                 aria-label="Search"
-                style={{ height: '40px', border: "1px solid #ddd", borderRadius: '8px' }}
+                style={{
+                  height: "40px",
+                  border: "1px solid black",
+                  borderRadius: "6px",
+                  marginLeft: "120px",
+                  width: "364px",
+                }}
                 onChange={handleSearchChange}
               />
               {searchdata && searchdata.length === 0 && (

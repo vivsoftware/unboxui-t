@@ -264,24 +264,21 @@ const BSMContain = ({ Tender, Rfq }) => {
 
   //////////////////////////////////////////////////////////////send email to user//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  const SelecTender = (elem,mailId) => {
-   console.log("select tender id", elem._id); 
+  const SelecTender = (elem) => {
     setselectTender(true);
     setselectTenderdata(elem);
-    setmailId(mailId);
-    console.log("select tender mailId", mailId);
 
   }
   const UnSelecTender = () => {
     setselectTender(false);
     setselectTenderdata(null);
-    //setmailId(null)
+    // setmailId(null)
 
   }
   const SelecUser = (elem) => {
     setselectUser(true);
     setselectUserdata(elem);
-   // setmailId(elem._id);
+
   }
   const UnSelecUser = () => {
     setselectUser(false);
@@ -294,8 +291,6 @@ const BSMContain = ({ Tender, Rfq }) => {
 
   const savaeEmail = async (e) => {
     <loadermail />
-    setmailId(mailId);
-    console.log("mailId at savaeEmail", mailId);
     setmailId(mailId);
     console.log("mailId at savaeEmail", mailId);
 
@@ -324,9 +319,7 @@ const BSMContain = ({ Tender, Rfq }) => {
         },
       });
       console.log('File uploaded successfully:', response.data);
-      setmailId(response.data.id);
-      
-      //mailId++;
+      setmailId(response.data.id)
       setloader(true)
       toast.success(`Sending...........`, {
         position: toast.POSITION.BOTTOM_CENTER,
@@ -353,18 +346,24 @@ const BSMContain = ({ Tender, Rfq }) => {
     // formdata.fileName('fileName' , fileName);
     try {
       console.log('File uploaded successfully:', mailId);
-
-      const response = await axios.post(`${spring_boot_url}api/mails/send/${mailId}`, formdata, {
+      //temp fix
+      const response = await axios.post(`${spring_boot_url}api/mails/send/${mailId+1}`, formdata, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
       console.log('File uploaded successfully:', response.data);
+      console.log("checking response status", response.status);
+      if(response.status === 201){
+        console.log("mail send successfully");
+        toast.success(`Email sende to ${selectUserdata.email}`, {
+          position: toast.POSITION.BOTTOM_CENTER,
+        });
+        console.log("implementing auto delete(checking)");  // implementing
+        deleteMail(mailId+1); //temp fix :- to delete current mail after sending 
 
-      toast.success(`Email sende to ${selectUserdata.email}`, {
-        position: toast.POSITION.BOTTOM_CENTER,
-      });
-
+      }
+      
       // Assuming handleReload and toggle are functions defined in your component
       // handleReload();
       toggle();
@@ -393,8 +392,7 @@ const BSMContain = ({ Tender, Rfq }) => {
   console.log("tenderbms", selectTenderdata)
   console.log("userbms", selectUserdata)
   console.log("mailid", mailId)
-  // mailId = mailId + 1;
-  // console.log("mailid checking", mailId);
+
 
   return (
     <>

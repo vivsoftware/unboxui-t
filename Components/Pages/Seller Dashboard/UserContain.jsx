@@ -16,8 +16,8 @@ const UserContain = ( {userDe})=> {
   const [selectedOption, setSelectedOption] = useState('All');
   const [isModalOpen, setModalOpen] = useState(false);
   const [selectedUserData, setSelectedUserData] = useState(null);
-  // const [registeredUsers, setRegisteredUsers] = useState(null); 
-  console.log("rajapagal", userDe)
+//const [rId, setRid] = useState(null);
+//  const [registeredUsers, setRegisteredUsers] = useState(null); 
 
   const openModal = (userData) => {
     setSelectedUserData(userData);
@@ -35,9 +35,38 @@ const UserContain = ( {userDe})=> {
       setSelectedOption(savedOption);
     }
     allUsers();
-    // getRegisteredUsers();
-  }, []);
+    if(registeredUser){
+      console.log("registered user in usercontain",registeredUser);
+      // setRid(registeredUser);
+      // console.log("rId", rId);
+      getRegisteredUsers(registeredUser);
+    }
+    
+  }, [registeredUser]);
 
+  const getRegisteredUsers = async (registeredUser) => { 
+    //console.log("rId in getRegisteredUsers", rId);
+    try {
+      const resp = await axios.get(`${spring_boot_url}api/users/registerId/${registeredUser}`);
+      
+      setUserDet(resp.data);
+      resp.data.forEach(user => {
+        console.log("users-registered", user);
+      });
+    } catch (error) {
+      console.error('Error fetching registered users:', error);
+    }
+  
+  };
+
+  // useEffect(() => {
+  //   if (registeredUser) {
+  //     console.log("rajapagal", registeredUser);
+  //     console.log("registered user in usercontain",registeredUser);
+  //     setRegisteredUsers(registeredUser);
+  //   }
+  // })
+  //   console.log("registered user in usercontain test",registeredUsers);
   const toggleFilterDropdown = () => {
     setIsOpen(!isOpen);
   };
@@ -97,43 +126,37 @@ const UserContain = ( {userDe})=> {
     dispatch({ type: "REGISTERSIMODAL" });
   };
 
-//  console.log("registered user in usercontain",registeredUser);
-// //  console.log("registered user in usercontain",userDe);
-//   const getRegisteredUsers = () => {
-//     axios.get(`${spring_boot_url}api/registerId/?registerId=${registeredUser?.id}`)
-//       .then(resp => {
-//         console.log("registered user",resp.data.json);
-        
-//       });
-//   };
+
+//  console.log("registered user in usercontain",userDe);
+ 
 
   const allUsers = () =>{
     axios.get(`${spring_boot_url}api/adminuser/allusers`)
     .then(resp => {
       console.log(resp.data.json);
       localStorage.setItem("data", JSON.stringify(resp.data));
-      setUserDet(resp.data);
+      //setUserDet(resp.data);
     });
   }
   const seller = () => {
     axios.get(`${spring_boot_url}api/adminuser/search?query=seller`)
       .then(resp => {
         console.log(resp.data.json);
-        setUserDet(resp.data);
+        //setUserDet(resp.data);
       });
   }
   const buyer = () => {
     axios.get(`${spring_boot_url}api/adminuser/search?query=buyer`)
       .then(resp => {
         console.log(resp.data.json);
-        setUserDet(resp.data);
+        //setUserDet(resp.data);
       });
   }
   const serviceProvider = () => {
     axios.get(`${spring_boot_url}api/adminuser/search?query=service provider`)
       .then(resp => {
         console.log(resp.data.json);
-        setUserDet(resp.data);
+        //setUserDet(resp.data);
       });
   }
   const handleSearchChange = (e) => {
@@ -163,6 +186,8 @@ const UserContain = ( {userDe})=> {
     setsearchdata(null);
   };
 
+ 
+// console.log("registered user in usercontain out",registeredUser);
 
 
   if(!userDet){
@@ -173,7 +198,10 @@ const UserContain = ( {userDe})=> {
           <div className='container'>
         <div className='row mt-5 '>
           <div className='col-2'>
-            <button className='btn register-btn' onClick={handleModal} >Register User</button>
+            <button className='btn register-btn' 
+                style={{ marginLeft: "6px", marginTop: "4px",  border: "1px solid black",
+                borderRadius: "6px", }}
+            onClick={handleModal} >Register User</button>
           </div>
           <div className='col-7'>
             <input
@@ -182,7 +210,14 @@ const UserContain = ( {userDe})=> {
               className="form-control"
               placeholder="Search User ..."
               aria-label="Search"
-              style={{ height: '40px', border: "1px solid #ddd", borderRadius: '8px' }}
+              style={{
+                height: "40px",
+                border: "1px solid black",
+                borderRadius: "6px",
+                marginLeft: "120px",
+                width: "364px",
+              }}
+              // style={{ height: '40px', border: "1px solid #ddd", borderRadius: '8px' }}
               onChange={handleSearchChange}
             />
             {searchdata && searchdata.length === 0 && (
@@ -248,7 +283,10 @@ const UserContain = ( {userDe})=> {
           <div className='container'>
         <div className='row mt-5 '>
           <div className='col-4'>
-            <button className='btn register-btn' onClick={handleModal}>Register User</button>
+            <button className='btn register-btn' 
+             style={{ marginLeft: "6px", marginTop: "4px",  border: "1px solid black",
+             borderRadius: "6px", }}
+            onClick={handleModal}>Register User</button>
           </div>
           <div className='col-6 ms-3'>
         <div className='custom-dropdown'>
@@ -281,7 +319,14 @@ const UserContain = ( {userDe})=> {
               className="form-control"
               placeholder="Search User ..."
               aria-label="Search"
-              style={{ height: '40px', border: "1px solid #ddd", borderRadius: '8px' }}
+              style={{
+                height: "40px",
+                border: "1px solid black",
+                borderRadius: "6px",
+                marginLeft: "190px",
+                width: "364px",
+              }}
+              // style={{ height: '40px', border: "1px solid #ddd", borderRadius: '8px' }}
               onChange={handleSearchChange}
             />
             {searchdata && searchdata.length === 0 && (
@@ -322,7 +367,11 @@ const UserContain = ( {userDe})=> {
           <div className='container'>
         <div className='row mt-5 '>
           <div className='col-2'>
-            <button className='btn register-btn' onClick={handleModal} >Register User</button>
+            <button className='btn register-btn' 
+             style={{ marginLeft: "6px", marginTop: "4px",  border: "1px solid black",
+             borderRadius: "6px", }}
+            
+            onClick={handleModal} >Register User</button>
           </div>
           <div className='col-7'>
             <input
@@ -330,7 +379,15 @@ const UserContain = ( {userDe})=> {
               className="form-control"
               placeholder="Search User ..."
               aria-label="Search"
-              style={{ height: '40px', border: "1px solid #ddd", borderRadius: '8px' }}
+              style={{
+                height: "40px",
+                border: "1px solid black",
+                borderRadius: "6px",
+                marginLeft: "190px",
+                width: "364px",
+              }}
+
+              // style={{ height: '40px', border: "1px solid #ddd", borderRadius: '8px' }}
               onChange={handleSearchChange}
             />
             {searchdata && searchdata.length === 0 && (
@@ -418,7 +475,11 @@ const UserContain = ( {userDe})=> {
           <div className='container'>
         <div className='row mt-5 '>
           <div className='col-4'>
-            <button className='btn register-btn' onClick={handleModal}>Register User</button>
+            <button className='btn register-btn'
+            style={{ marginLeft: "6px", marginTop: "4px",  border: "1px solid black",
+            borderRadius: "6px", }} 
+            
+            onClick={handleModal}>Register User</button>
           </div>
           <div className='col-6 ms-3'>
         <div className='custom-dropdown'>
@@ -451,7 +512,14 @@ const UserContain = ( {userDe})=> {
               className="form-control"
               placeholder="Search User ..."
               aria-label="Search"
-              style={{ height: '40px', border: "1px solid #ddd", borderRadius: '8px' }}
+              style={{
+                height: "40px",
+                border: "1px solid black",
+                borderRadius: "6px",
+                marginLeft: "120px",
+                width: "364px",
+              }}
+              // style={{ height: '40px', border: "1px solid #ddd", borderRadius: '8px' }}
               onChange={handleSearchChange}
             />
             {searchdata && searchdata.length === 0 && (

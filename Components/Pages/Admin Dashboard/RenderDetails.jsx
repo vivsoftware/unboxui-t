@@ -63,12 +63,12 @@ const RenderDetails = ({
     if (option === 'View Bid') {
       // Handle view bid functionality
       console.log("View Bid clicked for tender ID:", tenderId);
-    } 
+    }
     else if (option === 'Delete') {
       // Handle delete functionality
       const isConfirmed = window.confirm("Are you sure you want to delete this tender?");
       if (isConfirmed) {
-        axios.delete(`${spring_boot_url}/tender/${tenderId}`)
+        axios.delete(`${spring_boot_url}api/tender/${tenderId}`)
           .then(response => {
             console.log("Tender deleted successfully:", response.data);
           })
@@ -152,7 +152,8 @@ const RenderDetails = ({
                     <button
                       className="btn register-btn"
                       onClick={handleCreateTender}
-                      style={{ marginLeft: "6px", marginTop: "60px" }}
+                      style={{ marginLeft: "6px", marginTop: "4px",  border: "1px solid black",
+                      borderRadius: "6px", }}
                     >
                       Create Tender
                     </button>
@@ -165,9 +166,10 @@ const RenderDetails = ({
                       aria-label="Search"
                       style={{
                         height: "40px",
-                        border: "1px solid #ddd",
-                        borderRadius: "8px",
-                        marginLeft: "-230px",
+                        border: "1px solid black",
+                        borderRadius: "6px",
+                        marginLeft: "120px",
+                        width: "364px",
                       }}
                     />
                   </div>
@@ -175,18 +177,19 @@ const RenderDetails = ({
                 <div className="row mt-5 SI-table">
                   <h2 className="mb-2">Tender List</h2>
                   <table className="table">
-                    <thead className="table-header">
+                    <thead className="table-header" style={{}}>
                       <tr>
-                        <th>Sr.No</th>
-                        <th>RFQ Name</th>
+                        <th>T.Id</th>
+                        <th>T.Name</th>
                         <th>Tender Create Date</th>
-                        <th>Closing Date</th>
+                        <th>Tender Closing Date</th>
+                        <th>Purpose</th>
+                        <th>Status</th>
                         <th>View</th>
                         <th>Options</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <p>Checking</p>
                       {(Array.isArray(tenderBack?.tender) ? tenderBack.tender : Array.isArray(tender) ? tender : []).map((elem, index) => (
 
                         <tr key={index + 1} className="table-row">
@@ -196,10 +199,11 @@ const RenderDetails = ({
                           <td>{elem && formatDate(elem.createdAt)}</td>{" "}
                           {/* Added a null check */}
                           <td>{elem && elem.tenderClosingDate}</td>{" "}
+                          <td>{elem.purpose}</td>
                           {/* Added a null check */}
-                          <td>{elem && elem.createdBy}</td>{" "}
+                          {/* <td>{elem && elem.createdBy}</td>{" "} */}
                           {/* Added a null check */}
-                          <td>{tenderBids && tenderBids[elem?.id]}</td>{" "}
+                          {/* <td>{tenderBids && tenderBids[elem?.id]}</td>{" "} */}
                           {/* Changed to safe access */}
                           <td>Pubished</td>
                           <td>
@@ -243,7 +247,7 @@ const RenderDetails = ({
                                 width="20px"
                                 height="20px"
                                 alt="Options"
-                              />
+                              />s
                             </button>
                             {isDropdownVisible && (
                               <div
@@ -253,7 +257,7 @@ const RenderDetails = ({
                                   top: "100%",
                                   left: "65px",
                                   transform: "translateY(-100%)",
-                                  zIndex: "1",
+                                  zIndex: "1",s
                                 }}
                               > */}
                             {/* <p onClick={handleBidClick}>View Bid</p>
