@@ -30,17 +30,17 @@ const RenderNewComponent = ({tender}) => {
       setShowSearchCard(false);
     }
   };
-  const style = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    width: 400,
-    bgcolor: "background.paper",
-    border: "4px solid #ff8400",
-    boxShadow: 24,
-    p: 4,
-  };
+  // const style = {
+  //   position: "absolute",
+  //   top: "50%",
+  //   left: "50%",
+  //   transform: "translate(-50%, -50%)",
+  //   width: 400,
+  //   bgcolor: "background.paper",
+  //   border: "4px solid #ff8400",
+  //   boxShadow: 24,
+  //   p: 4,
+  // };
   const handleNextButton = () => {
     setNextButton(!nextButton);
     console.log("clicked next");
@@ -161,13 +161,13 @@ const RenderNewComponent = ({ }) => {
   }, []);
 
 
-  const searchRFQ = (e) => {
-    axios.get(`${spring_boot_url}api/userRfq/search?query=${searchQuery}`)
-      .then(resp => {
-        console.log(resp.data.json);
-        setsearchRFQdata(resp.data);
-      });
-  };
+  // const searchRFQ = (e) => {
+  //   axios.get(`${spring_boot_url}api/userRfq/search?query=${searchQuery}`)
+  //     .then(resp => {
+  //       console.log(resp.data.json);
+  //       setsearchRFQdata(resp.data);
+  //     });
+  // };
 
   const handleViewRFQDetailsClick = (userData) => {
     openModal(userData);
