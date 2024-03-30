@@ -6,7 +6,7 @@ import spring_boot_url from '../../../Utils/springApi';
 import DashboardLoader from '../../Element/DashboardLoader';
 import ModalComponent from '../Admin Dashboard/ModalComponent';
 
-const UserContain = ( {userDe})=> {
+const UserContain = ( {registeredUser})=> {
   const [isDropdownVisible, setDropdownVisible] = useState(false);
   const [showDetails, setShowDetails] = useState(true);
   const [searchdata, setsearchdata] = useState(true);
