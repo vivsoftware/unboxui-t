@@ -1,3 +1,4 @@
+
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { MdKeyboardBackspace, MdOutlineVerified } from "react-icons/md";
@@ -6,27 +7,71 @@ import { toast } from 'react-toastify';
 import { Input } from 'reactstrap';
 import spring_boot_url from '../../../Utils/springApi';
 import BidNext from './BidNext';
+
 const BidSubmit = ({ BidTender }) => {
     const [bidMessage, setBidMessage] = useState(false);
     const [message, setMessage] = useState(true);
-    const [description, setdescription] = useState(true);
-    const [openingDate, setopeningDate] = useState(true);
-    const [closingDate, setclosingDate] = useState(true);
     const [annualRevenue, setannualRevenue] = useState(true);
     const [yearsInBusiness, setyearsInBusiness] = useState(true);
     const [industriesServed, setindustriesServed] = useState(true);
     const [numberOfEmployees, setnumberOfEmployees] = useState(true);
     const [certifications, setcertifications] = useState(true);
     const [bidAmount, setbidAmount] = useState(true);
+    const [technicalSpecs, settechnicalSpecs] = useState(true);
+    const [otherDocs,setotherDocs] = useState(true); 
     const [bidSubmissionDate, setbidSubmissionDate] = useState(true);
     const [bidData, setBidData] = useState(false);
-    const router = useRouter();
+
+
+    const [backtoNext, setBacktoNext] = useState(false);
 
     const handleBacktoBids = () => {
-        setMessage(!message);
+        setMessage(true);
+
     }
     const handleBidProcess = () => {
-        setBidMessage(!bidMessage);
+
+        const requiredFields = [
+            'annualRevenue',
+            'employeeNumber',
+            'bussinessYears',
+            'industriesServed',
+            'certification',
+            'bidAmount',
+            // 'technicalSpecs',
+            // 'otherDocs'
+        ];
+
+
+        const isFormValid = requiredFields.every(field => {
+            const value = document.querySelector(`#${field}`).value.trim();
+            return value !== ''; // Check if value is not empty
+        });
+
+        if (isFormValid) {
+            // Store form data
+
+
+            // Store form data
+            const formData = {
+                annualRevenue: document.querySelector('#annualRevenue').value,
+                employeeNumber: document.querySelector('#employeeNumber').value,
+                bussinessYears: document.querySelector('#bussinessYears').value,
+                industriesServed: document.querySelector('#industriesServed').value,
+                certification: document.querySelector('#certification').value,
+                bidAmount: document.querySelector('#bidAmount').value,
+                // technicalSpecs: document.querySelector('#technicalSpecs').value,
+                // otherDocs: document.querySelector('#otherDocs').value,
+            };
+
+            localStorage.setItem('formData', JSON.stringify(formData));
+            //setBacktoNext(true);
+            setBidMessage(true);
+        } else {
+            alert('Please fill in all the required fields');
+        }
+        //////////////////end/////////////// 
+        //setBidMessage(!bidMessage)
     }
 
     const handleReload = () => {
@@ -43,14 +88,14 @@ const BidSubmit = ({ BidTender }) => {
             userId: `${BidTender?.userId}`,
             bidSubmissionDate: "546",
             description: `${BidTender.description}`,
-            closingDate:"258",
+            closingDate: "258",
             bidAmount,
-            bidId: "45",   
-                     annualRevenue,
+            bidId: "45",
+            annualRevenue,
             numberOfEmployees,
             yearsInBusiness,
             industriesServed,
-            openingDate:"2323",
+            openingDate: "2323",
             certifications: 'UR',
             originalFilename: "FILE"
 
@@ -119,7 +164,7 @@ const BidSubmit = ({ BidTender }) => {
                                                         <label>Annual Revenue :</label>
                                                     </div>
                                                     <div className='col-7'>
-                                                        <Input type='number' placeholder='10,00,00,000' value={annualRevenue}
+                                                        <Input type='number' placeholder='10,00,00,000' id='annualRevenue' value={annualRevenue}
                                                             onChange={(e) => setannualRevenue(e.target.value)}
                                                             required />
 
@@ -130,7 +175,7 @@ const BidSubmit = ({ BidTender }) => {
                                                         <label>No. of Employees :</label>
                                                     </div>
                                                     <div className='col-7'>
-                                                        <Input type='number' placeholder='200' value={numberOfEmployees}
+                                                        <Input type='number' placeholder='200' id='employeeNumber' value={numberOfEmployees}
                                                             onChange={(e) => setnumberOfEmployees(e.target.value)}
                                                             required />
                                                     </div>
@@ -140,7 +185,7 @@ const BidSubmit = ({ BidTender }) => {
                                                         <label>Years in Business :</label>
                                                     </div>
                                                     <div className='col-7'>
-                                                        <Input type='number' placeholder='20' value={yearsInBusiness}
+                                                        <Input type='number' placeholder='20' id='bussinessYears' value={yearsInBusiness}
                                                             onChange={(e) => setyearsInBusiness(e.target.value)}
                                                             required />
                                                     </div>
@@ -150,7 +195,7 @@ const BidSubmit = ({ BidTender }) => {
                                                         <label>Industries Served :</label>
                                                     </div>
                                                     <div className='col-7'>
-                                                        <Input type='text' placeholder='0' value={industriesServed}
+                                                        <Input type='number' placeholder='0' id='industriesServed' value={industriesServed}
                                                             onChange={(e) => setindustriesServed(e.target.value)}
                                                             required />
                                                     </div>
@@ -160,10 +205,10 @@ const BidSubmit = ({ BidTender }) => {
                                                         <label>Certifications : </label>
                                                     </div>
                                                     <div className='col-7' style={{ display: 'flex', flexDirection: 'column' }}>
-                                                        <Input type='checkbox' />UR
-                                                        <Input type='checkbox' />ISO
-                                                        <Input type='checkbox' />GST
-                                                        <Input type='checkbox' />Other
+                                                        <Input type='checkbox' id='certification' />UR
+                                                        <Input type='checkbox' id='certification' />ISO
+                                                        <Input type='checkbox' id='certification' />GST
+                                                        <Input type='checkbox' id='certification' />Other
                                                     </div>
                                                 </div>
                                             </div>
@@ -176,17 +221,17 @@ const BidSubmit = ({ BidTender }) => {
                                                     <label>Bid Amount :</label>
                                                 </div>
                                                 <div className='col-7'>
-                                                    <Input type='number' placeholder='50,00,000' value={bidAmount}
-                                                onChange={(e) => setbidAmount(e.target.value)}
-                                                required />
+                                                    <Input type='number' placeholder='50,00,000' id='bidAmount' value={bidAmount}
+                                                        onChange={(e) => setbidAmount(e.target.value)}
+                                                        required />
                                                 </div>
                                             </div>
-                                            <div className='row mt-1'>
+                                            {/* <div className='row mt-1'>
                                                 <div className='col-5'>
                                                     <label>Upload Technical Specs: </label>
                                                 </div>
                                                 <div className='col-7'>
-                                                    <Input type='file' placeholder='50,00,000' />
+                                                    <Input type='file' placeholder='50,00,000' id='technicalSpecs' />
                                                 </div>
                                             </div>
                                             <div className='row mt-1'>
@@ -246,7 +291,7 @@ const BidSubmit = ({ BidTender }) => {
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> */}
                                         </div>
                                     </div>
                                 </div>

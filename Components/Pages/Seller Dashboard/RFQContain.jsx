@@ -140,7 +140,10 @@ useEffect(() => {
         <div className='container RFQ-card'>
           <div className='row mt-5'>
             <div className='col-2 '>
-              <button className='btn register-btn' onClick={handleCreateRFQModal}>Create RFQ</button>
+              <button className='btn register-btn' 
+                 style={{ marginLeft: "6px", marginTop: "4px",  border: "1px solid black",
+                 borderRadius: "6px", }}
+              onClick={handleCreateRFQModal}>Create RFQ</button>
             </div>
   
             <div className='col-10 '>
@@ -149,7 +152,14 @@ useEffect(() => {
                 className="form-control"
                 placeholder="Search RFQ ..."
                 aria-label="Search"
-                style={{ height: '40px', border: "1px solid #ddd", borderRadius: '8px' }}
+                style={{
+                  height: "40px",
+                  border: "1px solid black",
+                  borderRadius: "6px",
+                  marginLeft: "120px",
+                  width: "364px",
+                }}
+                // style={{ height: '40px', border: "1px solid #ddd", borderRadius: '8px' }}
                 onChange={handleSearchChange}
               />
               {searchResults && searchResults.length === 0 && (
@@ -198,7 +208,10 @@ useEffect(() => {
           <div className='container-fluid'>
           <div className='row mt-5'>
             <div className='col-5 '>
-              <button className='btn register-btn' onClick={handleCreateRFQModal}>Create RFQ</button>
+              <button className='btn register-btn' 
+                style={{ marginLeft: "6px", marginTop: "4px",  border: "1px solid black",
+                borderRadius: "6px", }}
+              onClick={handleCreateRFQModal}>Create RFQ</button>
             </div>
   
             <div className='col-6 '>
@@ -208,7 +221,15 @@ useEffect(() => {
                 className="form-control"
                 placeholder="Search RFQ ..."
                 aria-label="Search"
-                style={{ height: '40px', border: "1px solid #ddd", borderRadius: '8px' }}
+                style={{
+                  height: "40px",
+                  border: "1px solid black",
+                  borderRadius: "6px",
+                  marginLeft: "120px",
+                  width: "364px",
+                }}
+
+                // style={{ height: '40px', border: "1px solid #ddd", borderRadius: '8px' }}
                 onChange={handleSearchChange}
               />
               {searchdata && searchdata.length === 0 && (
@@ -245,7 +266,10 @@ useEffect(() => {
         <div className='d-none d-xl-block d-md-block d-sm-none'>
           <div className='row mt-5'>
             <div className='col-2'>
-              <button className='btn register-btn' onClick={handleCreateRFQModal}>Create RFQ</button>
+              <button className='btn register-btn' 
+                style={{ marginLeft: "6px", marginTop: "4px",  border: "1px solid black",
+                borderRadius: "6px", }}
+              onClick={handleCreateRFQModal}>Create RFQ</button>
             </div>
 
             <div className='col-10'>
@@ -254,7 +278,14 @@ useEffect(() => {
                 className="form-control"
                 placeholder="Search RFQ ..."
                 aria-label="Search"
-                style={{ height: '40px', border: "1px solid #ddd", borderRadius: '8px' }}
+                style={{
+                  height: "40px",
+                  border: "1px solid black",
+                  borderRadius: "6px",
+                  marginLeft: "210px",
+                  width: "364px",
+                }}
+                // style={{ height: '40px', border: "1px solid #ddd", borderRadius: '8px' }}
                 onChange={handleSearchChange}
               />
               {searchdata && searchdata.length === 0 && (

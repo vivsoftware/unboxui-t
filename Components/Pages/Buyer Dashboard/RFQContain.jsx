@@ -224,7 +224,12 @@ const RFQContain = ({ rfq }) => {
         <div className='container RFQ-card'>
           <div className='row mt-5'>
             <div className='col-2 '>
-              <button className='btn register-btn' onClick={handleCreateRFQModal} style={{ marginLeft: '6px', marginTop: '60px' }}>Create RFQ</button>
+              <button className='btn register-btn'
+              style={{ marginLeft: "6px", marginTop: "4px",  border: "1px solid black",
+              borderRadius: "6px", }} 
+              onClick={handleCreateRFQModal}               
+              // style={{ marginLeft: '6px', marginTop: '60px' }}
+              >Create RFQ</button>
             </div>
             <div className='col-10 '>
               <input
@@ -232,7 +237,14 @@ const RFQContain = ({ rfq }) => {
                 className="form-control"
                 placeholder="Search RFQ ..."
                 aria-label="Search"
-                style={{ height: '40px', border: "1px solid #ddd", borderRadius: '8px', marginLeft: '-230px' }}
+                style={{
+                  height: "40px",
+                  border: "1px solid black",
+                  borderRadius: "6px",
+                  marginLeft: "120px",
+                  width: "364px",
+                }}
+                // style={{ height: '40px', border: "1px solid #ddd", borderRadius: '8px', marginLeft: '-230px' }}
                 onChange={handleSearchChange}
               />
               {
