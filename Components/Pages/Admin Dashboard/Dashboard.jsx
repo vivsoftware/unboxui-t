@@ -725,14 +725,14 @@ const Dashboard = ({ userDe, activeTab, sellers, buyers }) => {
                                     ))}
                                 </tbody> */}
                                 <tbody>
-                                {TenderNo?.slice(0, 5).map((tender, index) => (
-                                <tr key={index + 1}>
-                                    <td>{index + 1}</td>
-                                    <td>{tender.id}</td>
-                                    <td>{tender?.projectName}</td>
-                                </tr>
-                            ))}
-                        </tbody>
+                                    {TenderNo?.slice(0, 5).map((tender, index) => (
+                                        <tr key={index + 1}>
+                                            <td>{index + 1}</td>
+                                            <td>{tender.id}</td>
+                                            <td>{tender?.projectName}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
                             </table>
                         </div>
                         <div className='row'>
@@ -753,7 +753,7 @@ const Dashboard = ({ userDe, activeTab, sellers, buyers }) => {
                             <th>PId</th>
                             <th>Project Name</th>
                         </tr>
-                         <tbody>
+                        <tbody>
                             {TenderNo?.slice(0, 5).map((tender, index) => (
                                 <tr key={index + 1}>
                                     <td>{index + 1}</td>
@@ -761,19 +761,19 @@ const Dashboard = ({ userDe, activeTab, sellers, buyers }) => {
                                     <td>{tender?.projectName}</td>
                                 </tr>
                             ))}
-                        </tbody> 
+                        </tbody>
                     </table>
                     <div>
-                            <Modal
-                                keepMounted
-                                open={openPurchase}
-                                onClose={handleClosePurchase}
-                                aria-labelledby="keep-mounted-modal-title"
-                                aria-describedby="keep-mounted-modal-description"
-                            >
-                                <Box sx={style}>
-                                    <h3 className='mb-2' style={{ marginLeft: '350px', marginTop: '-10px' }}>Purchase List</h3>
-                                    <div className="my-modal-content1" style={{ display: "flex-relative" }}>
+                        <Modal
+                            keepMounted
+                            open={openPurchase}
+                            onClose={handleClosePurchase}
+                            aria-labelledby="keep-mounted-modal-title"
+                            aria-describedby="keep-mounted-modal-description"
+                        >
+                            <Box sx={style}>
+                                <h3 className='mb-2' style={{ marginLeft: '350px', marginTop: '-10px' }}>Purchase List</h3>
+                                <div className="my-modal-content1" style={{ display: "flex-relative" }}>
 
 
                                         <div className='row mt-5 SI-table' style={{ height: '960px', width: '760px', marginLeft: '0px' }}>
@@ -815,9 +815,9 @@ const Dashboard = ({ userDe, activeTab, sellers, buyers }) => {
                         </div> 
                 </div>
                 <div className='row'>
-                <div className='col-12 text-end'>
-                                <button className='btn' onClick={() => handleOpenPurchase()} style={{ backgroundColor: 'white', color: "#FF8400", height: '20px', padding: '0' }} >View All</button>
-                            </div>
+                    <div className='col-12 text-end'>
+                        <button className='btn' onClick={() => handleOpenPurchase()} style={{ backgroundColor: 'white', color: "#FF8400", height: '20px', padding: '0' }} >View All</button>
+                    </div>
                 </div>
                 <div className='details1' id='last'>
                     <div className='details12' id='last' >

@@ -4,7 +4,7 @@ import { Col, Container, Row } from 'reactstrap'
 import { SellerDashboardData } from '../../../Data/SellerDashboardData'
 import AllTabContain from './AllTabContain'
 
-const SellerDashboard = ({rfq, tender, userDe}) => {
+const SellerDashboard = ({rfq,registeredUser, tender, userDe}) => {
     const [activeTab, setActiveTab] = useState(0);
     const [num, setNum] = useState(1);
     const [showMenu, setShowMenu] = useState();
@@ -41,7 +41,7 @@ const SellerDashboard = ({rfq, tender, userDe}) => {
                         </div>
                     </Col>
                     <Col lg='10' md='10' >
-                        <AllTabContain activeTab={activeTab} num={num}  rfq={rfq} tender={tender} userDe={userDe} />
+                        <AllTabContain activeTab={activeTab} num={num}  rfq={rfq} tender={tender} registeredUser={registeredUser} userDe={userDe} />
                     </Col>
                 </Row>
             </Container>

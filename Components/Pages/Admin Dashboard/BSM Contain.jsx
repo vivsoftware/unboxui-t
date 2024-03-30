@@ -149,7 +149,6 @@ const BSMContain = ({ Tender, Rfq }) => {
         setUserDe(resp.data);
       });
   }
-
   const handleCreateTender = () => {
     setShowDetails(false);
   }
@@ -612,12 +611,10 @@ const BSMContain = ({ Tender, Rfq }) => {
           <div className='row mt-2'>
             <div className='col-10'></div>
             <div className='col-1'>
-              <button className='btn back-btn' onClick={sendmail}>
+              {/* <button className='btn back-btn' onClick={sendmail}>
                 Back
-              </button>
+              </button> */}
             </div>
-
-
             <div className='col-1'>
 
               {/* {selectTender && selectUser ? ( */}
@@ -633,11 +630,7 @@ const BSMContain = ({ Tender, Rfq }) => {
                 </button>
 
               )}
-
             </div>
-
-
-
           </div>
         </div>
       </div>
@@ -670,7 +663,6 @@ const BSMContain = ({ Tender, Rfq }) => {
               )}
             </div>
             <div className='row'>
-
               <div className='mobile-userCard'>
                 {searchRFQdata?.length > 0 ? (
                   <>
