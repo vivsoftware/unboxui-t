@@ -4,6 +4,7 @@ import axios from 'axios';
 import Link from 'next/link';
 import spring_boot_url from '../../../Utils/springApi';
 import BidSubmit from './bidSubmit';
+
 const bidViewContain = ({ BidTender, userDe }) => {
     const [details, setDetails] = useState(false);
     const [uploadRfq, setuploadRfq] = useState("");

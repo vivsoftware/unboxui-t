@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 import { Input } from 'reactstrap';
 import spring_boot_url from '../../../Utils/springApi';
 import BidNext from './BidNext';
+import bidViewContain from './bidView';
 
 const BidSubmit = ({ BidTender }) => {
     const [bidMessage, setBidMessage] = useState(false);
@@ -26,7 +27,8 @@ const BidSubmit = ({ BidTender }) => {
     const [backtoNext, setBacktoNext] = useState(false);
 
     const handleBacktoBids = () => {
-        setMessage(true);
+        setMessage(!message);
+        // setMessage(true);
 
     }
     const handleBidProcess = () => {
@@ -137,15 +139,17 @@ const BidSubmit = ({ BidTender }) => {
 
 
     return (
-        <>
+    <>
+        {/* { bidMessage ? (
+            <BidNext/>
+         ) : message ? (
+            <bidViewContain/>
+         ) : ( 
+            <> */}
+      
             {bidMessage ? (<BidNext />) : (
-
-                //    {/* {bidMessage && <BidView />}
-                //       {!bidMessage && ( */}
-                //    {/* {message && <BidView />}
-                //   {!message && ( */}
-                <>
-
+           <>
+        
                     <div className='container'>
                         <div className='row mt-2'>
                             <p onClick={handleBacktoBids} style={{ color: '#FF8400', fontSize: '20px' }}><MdKeyboardBackspace /> Back</p>
@@ -226,7 +230,7 @@ const BidSubmit = ({ BidTender }) => {
                                                         required />
                                                 </div>
                                             </div>
-                                            {/* <div className='row mt-1'>
+                                            <div className='row mt-1'>
                                                 <div className='col-5'>
                                                     <label>Upload Technical Specs: </label>
                                                 </div>
@@ -291,7 +295,7 @@ const BidSubmit = ({ BidTender }) => {
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div> */}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
