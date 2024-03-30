@@ -91,9 +91,9 @@ const Dashboard = ({ userDe, activeTab, sellers, buyers }) => {
     //     setopenrfq(true);
     // };
 
-    // const handleClosePurchase = () => {
-    //     setopenrfq(false);
-    // };
+    const handleClosePurchase = () => {
+        setopenrfq(false);
+    };
 
     const handleViewDetailsClick = (userData) => {
         openModal(userData);

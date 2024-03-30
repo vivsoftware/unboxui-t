@@ -72,13 +72,13 @@ const TenderContain = ({ rfq, tender, userDe }) => {
     setsearchRFQdata(null);
    };
  
-   console.log("tender id ------ ", tender.userId);
+  //  console.log("tender id ------ ", tender.userId);
    const handleOptionClick = (option, rfq, tender) => {
      handleClose();
  
      if (option === 'View Bid') {
        // Handle view bid functionality
-       console.log("View Bid clicked for tender ID:", tender.userId);
+      //  console.log("View Bid clicked for tender ID:", tender.userId);
        console.log("View Bid clicked for rfq ID:", rfq.id);
      }
      else if (option === 'Delete') {
