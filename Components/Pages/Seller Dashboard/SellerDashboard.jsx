@@ -20,6 +20,7 @@ const SellerDashboard = ({rfq, registeredUser,tender, userDe}) => {
         setShowMenu(!showMenu);
     }
    console.log("Menu", showMenu)
+   console.log("sellersDashboard tender", tender);
     return (
         <>
         <div className='d-none d-xl-block d-md-block d-sm-none'>

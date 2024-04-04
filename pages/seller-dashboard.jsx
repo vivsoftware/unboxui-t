@@ -63,34 +63,41 @@ const sellerDashboard = () => {
   }, [userId]);
 
 
-  useEffect(() => {
-    axios.get(`${spring_boot_url}api/tender/${userId}`)
-      .then(resp => {
-        settender(resp.data);
-        console.log("settender in s-d", tender);
-        console.log("userid in s-d", userId);
-      })
-      .catch(error => {
-        console.error('Error fetching user RFQ data:', error);
-      });
-  }, [userId]);
+  useEffect(() => {
+    axios.get(`${spring_boot_url}api/tender/${userId}`)
+      .then(resp => {
+        console.log("tender status in s-d ", resp.status);
+        console.log("tender response", resp.data);
+        settender(resp.data);
+        // console.log("settender in s-d", tender);
+        console.log("userid in s-d", userId);
+      })
+      .catch(error => {
+        console.error('Error fetching user RFQ data:', error);
+      });
+  }, [userId]);
 
+  
+  useEffect(() => {
+    if (registeredUser) {
+      console.log("Registerd user ID:", registeredUser);
+    }
+  }, [registeredUser]);
 
-  useEffect(() => {
-    if (registeredUser) {
-      console.log("Registerd user ID:", registeredUser);
-    }
-  }, [registeredUser]);
-  
-  return (
-    <>
-      <Layout />
-      <SellerDashboard rfq={rfq} tender={tender} userDe={userDe} userId={userId} registeredUser={registeredUser} />
-      <RegisterSIModal />
-      <CreateRFQModal rfq={rfq} />
-      <DashboardFooter />
-    </>
-  );
+  useEffect(() => {
+    console.log("tender in sellerDashboard:", tender);
+  }, [tender]);
+  
+  
+  return (
+    <>
+      <Layout />
+      <SellerDashboard rfq={rfq} tender={tender} userDe={userDe} userId={userId} registeredUser={registeredUser}  />
+      <RegisterSIModal />
+      <CreateRFQModal rfq={rfq} />
+      <DashboardFooter />
+    </>
+  );
 };
 
 
