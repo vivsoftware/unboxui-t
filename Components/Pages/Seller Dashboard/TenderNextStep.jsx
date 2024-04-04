@@ -83,6 +83,8 @@ const TenderNextStep = ({ Tenderselectdata }) => {
             router.reload();
         }, 2000);
     };
+
+    console.log("Tenderselectdata in TenderNextStep", Tenderselectdata);
     ///////////////////////////////////////////////////////////// TENDER CREATION LOGIC ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     const CreateTender = () => {
         const userDetails = {
@@ -138,7 +140,7 @@ const TenderNextStep = ({ Tenderselectdata }) => {
                 }
             })
             .catch(error => {
-                toast.success(`This Tender Allready exist `, {
+                toast.warning(`This Tender Allready exist `, {
                     position: toast.POSITION.BOTTOM_CENTER,
                 });
             });

@@ -169,8 +169,10 @@ const sellerDashboard = () => {
   useEffect(() => {
     axios.get(`${spring_boot_url}api/tender/${userId}`)
       .then(resp => {
+        console.log("tender status in s-d ", resp.status);
+        console.log("tender response", resp.data);
         settender(resp.data);
-        console.log("settender in s-d", tender);
+        // console.log("settender in s-d", tender);
         console.log("userid in s-d", userId);
       })
       .catch(error => {
@@ -178,16 +180,22 @@ const sellerDashboard = () => {
       });
   }, [userId]);
 
+  
   useEffect(() => {
     if (registeredUser) {
       console.log("Registerd user ID:", registeredUser);
     }
   }, [registeredUser]);
+
+  useEffect(() => {
+    console.log("tender in sellerDashboard:", tender);
+  }, [tender]);
+  
   
   return (
     <>
       <Layout />
-      <SellerDashboard rfq={rfq} tender={tender} userDe={userDe} userId={userId} registeredUser={registeredUser} />
+      <SellerDashboard rfq={rfq} tender={tender} userDe={userDe} userId={userId} registeredUser={registeredUser}  />
       <RegisterSIModal />
       <CreateRFQModal rfq={rfq} />
       <DashboardFooter />

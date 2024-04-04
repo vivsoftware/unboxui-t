@@ -627,7 +627,11 @@ const Dashboard = ({ userDe, activeTab, sellers, buyers }) => {
                                                                 {/* <td>{index + 1}</td> */}
                                                                 <td>{buyer.id}</td>
                                                                 <td>{buyer?.firstName}</td>
+                                                                <td>{buyer?.id}</td>
+                                                                <td>{buyer?.email}</td>
                                                                 <td>{buyer?.phoneNumber}</td>
+                                                                <td>{buyer?.company}</td>
+                                                                <td>{buyer?.userTypes}</td>
                                                             </tr>
                                                         ))}
                                                     </tbody>
@@ -692,9 +696,14 @@ const Dashboard = ({ userDe, activeTab, sellers, buyers }) => {
                                     {RfqNo?.slice(0, 5).map((RfqNo, index) => (
                                         <tr key={index + 1}>
                                             <td>{index + 1}</td>
+                                            <td>{RfqNo.name}</td>
                                             <td>{RfqNo.id}</td>
-                                            <td>{RfqNo?.firstName}</td>
+                                            {/* <td>{RfqNo?.firstName}</td>
+                                            <td>{RfqNo?.phoneNumber}</td> */}
+                                            <td>{RfqNo?.email}</td>
                                             <td>{RfqNo?.phoneNumber}</td>
+                                            <td>{RfqNo?.company}</td>
+                                            <td>{RfqNo?.userTypes}</td>
                                         </tr>
                                     ))}
                                 </tbody>

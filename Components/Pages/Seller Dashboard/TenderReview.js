@@ -12,17 +12,18 @@ import TenderNextStep from './TenderNextStep';
 const TenderReview = ({ Tenderselectdata }) => {
     const [backtoNext, setBacktoNext] = useState(false);
     const [formData, setFormData] = useState({});
-    const [opportunityAmount, setopportunityAmount] = useState(false);
-    const [tenderClosingDate, settenderClosingDate] = useState(false);
-    const [deliveryPeriod, setdeliveryPeriod] = useState(false);
-    const [diliveryLocation, setdiliveryLocation] = useState(false);
-    const [anaualRevenue, setanaualRevenue] = useState(false);
-    const [noOfEmployees, setnoOfEmployees] = useState(false);
-    const [yearsInBusiness, setyearsInBusiness] = useState(false);
-    const [industriesServed, setindustriesServed] = useState(false);
-    const [certification, setcertification] = useState(false);
-    const [tenderDiscription, settenderDescription] = useState(false);
-    const [tenderCheck, settenderCheck] = useState(false);
+    //chnaged hook to null from false
+    const [opportunityAmount, setopportunityAmount] = useState('');
+    const [tenderClosingDate, settenderClosingDate] = useState('');
+    const [deliveryPeriod, setdeliveryPeriod] = useState('');
+    const [diliveryLocation, setdiliveryLocation] = useState('');
+    const [anaualRevenue, setanaualRevenue] = useState('');
+    const [noOfEmployees, setnoOfEmployees] = useState('');
+    const [yearsInBusiness, setyearsInBusiness] = useState('');
+    const [industriesServed, setindustriesServed] = useState('');
+    const [certification, setcertification] = useState('');
+    const [tenderDiscription, settenderDescription] = useState('');
+    const [tenderCheck, settenderCheck] =useState('');
 
     const router = useRouter();
 
@@ -38,7 +39,7 @@ const TenderReview = ({ Tenderselectdata }) => {
         setBacktoNext(!backtoNext);
     }
 
-
+    console.log("Tenderselectdata in TenderReview", Tenderselectdata);
     ///////////////////////////////////////////////////////////// TENDER CREATION LOGIC ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
    const CreateTender = () => {
     const userDetails = {
@@ -67,13 +68,16 @@ const TenderReview = ({ Tenderselectdata }) => {
         originalFilename: "FILE"
 
     };
-    fetch(`${spring_boot_url}api/tender/${Tenderselectdata.userId}`, {
+    fetch(`${spring_boot_url}api/tender/create/${Tenderselectdata.userId}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(userDetails),
     })
         .then((resp) => {
             // setRfqData(resp.data);
+
+            console.log("create tender response", resp);
+            console.log("create tender response status", resp.status);
             if (resp.ok === true) {
                 toast.warning(`Tender Publishing Please Wait.....`, {
                     position: toast.POSITION.BOTTOM_CENTER,
@@ -82,86 +86,24 @@ const TenderReview = ({ Tenderselectdata }) => {
                     toast.success(`Tender Published to Seller `, {
                         position: toast.POSITION.BOTTOM_CENTER,
                     });
-                    handleReload();
+                    //handleReload(); to be implemented
                 }, 3000);
             }
             else {
-                toast.error(`This Tender Allready exist `, {
+                toast.error(`Getting Wrong Status Check Response`, {
                     position: toast.POSITION.BOTTOM_CENTER,
                 });
             }
         })
         .catch(error => {
-            toast.success(`This Tender Allready exist `, {
+            toast.warn(`This Tender Allready exist error`, {
                 position: toast.POSITION.BOTTOM_CENTER,
             });
         });
         console.log("create tender Called");
 }
 
-    // const CreateTender = () => {
-    //     const userDetails = {
-    //         purpose: `${selectRfqdata?.purpose}`,
-    //         productName: `${selectRfqdata?.productName}`,
-    //         email: `${selectRfqdata?.email}`,
-    //         modelNo: `${selectRfqdata?.modelNo}`,
-    //         createdBy: `${selectRfqdata?.createdBy}`,
-    //         rfqName: `${selectRfqdata?.projectName}`,
-    //         rfqId: `${selectRfqdata?.id}`,
-    //         phoneNumber: `${selectRfqdata?.phoneNumber}`,
-    //         deliveryDate: `${selectRfqdata?.deliveryDate}`,
-    //         purposeOfRfq: `${selectRfqdata?.purposeOfRfq}`,
-    //         description: `${selectRfqdata?.description}`,
-    //         quantity: `${selectRfqdata?.quantity}`,
-    //         tenderDiscription: `${formData.description}`,
-    //         opportunityAmount: `${formData.opportunityAmount}`,
-    //         tenderClosingDate: `${formData.tenderClosingDate}`,
-    //         deliveryPeriod: `${formData.deliveryPeriod}`,
-    //         diliveryLocation: `${formData.deliveryLocation}`,
-    //         anaualRevenue: `${formData.annualRevenue}`,
-    //         noOfEmployees: `${formData.employeeNumber}`,
-    //         yearsInBusiness: `${formData.bussinessYears}`,
-    //         industriesServed: `${formData.industriesServed}`,
-    //         certification: 'UR',
-    //         originalFilename: "FILE"
-
-    //     };
-    //     fetch(`${spring_boot_url}api/tender/${selectRfqdata.userId}`, {
-    //         method: 'POST',
-    //         headers: { 'Content-Type': 'application/json' },
-    //         body: JSON.stringify(userDetails),
-    //     })
-    //         .then((resp) => {
-    //             // setRfqData(resp.data);
-    //             if (resp.ok === true) {
-    //                 toast.warning(`Tender Publishing Please Wait.....`, {
-    //                     position: toast.POSITION.BOTTOM_CENTER,
-    //                 });
-    //                 setTimeout(() => {
-    //                     toast.success(`Tender Published to Seller `, {
-    //                         position: toast.POSITION.BOTTOM_CENTER,
-    //                     });
-
-                
-    //                 }, 3000);
-
-    //                 router.reload();
-
-    //             }
-    //             else {
-    //                 toast.error(`This Tender Allready exist `, {
-    //                     position: toast.POSITION.BOTTOM_CENTER,
-    //                 });
-    //             }
-    //         })
-    //         .catch(error => {
-    //             toast.success(`This Tender Allready exist `, {
-    //                 position: toast.POSITION.BOTTOM_CENTER,
-    //             });
-    //         });
-    // };
-
-    // const router = useRouter();
+    
 
     ////////////end///////////
 
