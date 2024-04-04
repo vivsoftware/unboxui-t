@@ -8,6 +8,7 @@ import Modal from "@mui/material/Modal";
 import axios from "axios";
 import spring_boot_url from "../../../Utils/springApi";
 
+
 const RenderNewComponent = ({tender}) => {
   const [nextButton, setNextButton] = useState(false);
   const [searchRFQdata, setsearchRFQdata] = useState(true);
@@ -30,17 +31,17 @@ const RenderNewComponent = ({tender}) => {
       setShowSearchCard(false);
     }
   };
-  // const style = {
-  //   position: "absolute",
-  //   top: "50%",
-  //   left: "50%",
-  //   transform: "translate(-50%, -50%)",
-  //   width: 400,
-  //   bgcolor: "background.paper",
-  //   border: "4px solid #ff8400",
-  //   boxShadow: 24,
-  //   p: 4,
-  // };
+  const style = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 400,
+    bgcolor: "background.paper",
+    border: "4px solid #ff8400",
+    boxShadow: 24,
+    p: 4,
+  };
   const handleNextButton = () => {
     setNextButton(!nextButton);
     console.log("clicked next");
@@ -206,7 +207,7 @@ const RenderNewComponent = ({ }) => {
 
   return (
     <>
-      {nextButton ? <TenderNextStep Tenderselectdata={Tenderselectdata} /> : (
+      {nextButton ? <TenderNextStep selectRfqdata={selectRfqdata}/> : (
         <>
           <div className='d-none d-xl-block d-md-block d-sm-none'>
             <div className='fluid-container'>

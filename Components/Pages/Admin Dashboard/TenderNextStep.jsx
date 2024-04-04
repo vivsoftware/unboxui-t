@@ -4,6 +4,7 @@ import { Input } from 'reactstrap';
 import spring_boot_url from '../../../Utils/springApi';
 import TenderContain from './TenderContain';
 import TenderReview from './TenderReviews';
+import RenderNewComponent from './RenderNewComponent';
 
 
 const TenderNextStep = ({ Tenderselectdata }) => {
@@ -203,6 +204,7 @@ const TenderNextStep = ({ Tenderselectdata }) => {
                 <TenderReview  Tenderselectdata={Tenderselectdata}/>
             ) : backtoTender ? (
                 <TenderContain />
+                // <RenderNewComponent/>
             ) : (
                 <>
                     <div className='container'>

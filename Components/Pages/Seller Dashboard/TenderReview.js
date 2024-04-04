@@ -175,11 +175,9 @@ const TenderReview = ({ Tenderselectdata }) => {
 
 
     return (
-
         <>
         {backtoNext ? (
             <TenderNextStep Tenderselectdata={Tenderselectdata}/>
-           
         ) : (
             <div className='container'>
                 <p onClick={handleBacktoTenders} style={{ color: '#FF8400', fontSize: '20px' }}><MdKeyboardBackspace /> Back</p>

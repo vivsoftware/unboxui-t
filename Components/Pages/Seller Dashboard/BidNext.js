@@ -1,12 +1,11 @@
-
-import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react';
+import { MdKeyboardBackspace } from "react-icons/md";
 import { Input } from 'reactstrap';
-import { MdKeyboardBackspace, MdOutlineVerified } from "react-icons/md";
 import BidSubmit from './bidSubmit';
 
 
-const BidNext = () => {
+const BidNext = (BidTender) => {
     const [backtoBid, setBacktoBid] = useState(false);
     const [formData, setFormData] = useState({})
 
@@ -20,23 +19,23 @@ const BidNext = () => {
             setFormData(JSON.parse(storedData));
         }
     }, []);
-    /////////changes////////////////
+    /////////changes end////////////////
 
     const handleBacktoBid = () => {
         setBacktoBid(!backtoBid);
+        //setBacktoBid(true);
     }
 
-
     return (
-        // <>
-        //     {backtoBid ? (
-        //         <BidSubmit />
-
-        //     ) : (
-                <>
-                    {backtoBid && <BidSubmit />}
-                    {!backtoBid && (
-                        <>
+        <>
+        {backtoBid ? (
+            <BidSubmit BidTender={BidTender}/>
+           
+        ) : (
+                // <>
+                //     {backtoBid && <BidSubmit />}
+                //     {!backtoBid && (
+                //         <>
                 <div className='container'>
                     <p onClick={handleBacktoBid} style={{ color: '#FF8400', fontSize: '20px' }}><MdKeyboardBackspace /> Back</p>
 
@@ -98,28 +97,22 @@ const BidNext = () => {
                                     <td><Input type='number' placeholder='0' value={formData.bidAmount || ''} disabled /></td>
                                     {/* <td>50,00,000</td> */}
                                 </tr>
-                                <tr className='table-row'>
-                                    <td>7</td>
-                                    <td>Technical Specs :</td>
-                                    <td><Input type='file' placeholder='' value={formData.technicalSpecs || ''} disabled /></td>
-                                    {/* <td>50,00,000</td> */}
-                                </tr>
-                                <tr className='table-row'>
-                                        <td>8</td>
+                                {/* <tr className='table-row'>
+                                        <td>7</td>
                                         <td>Required Other Docs : </td>
                                         <td>
                                         <Input type='number' placeholder='0' value={formData.otherDocs|| ''} disabled />
                                             <Input type='checkbox' />GST &ensp;
                                             <Input type='checkbox' />CIN &ensp;
-                                            <Input type='checkbox' />CRC <br /><br />
-                                    
+                                            <Input type='checkbox' />CRC <br /><br /> */}
+                                {/* 
                                             <p className='text-center'>MSME<MdOutlineVerified className='verified ' /></p>
                                             <p className='text-center'>Bank Mandot <MdOutlineVerified className='verified ' /></p>
                                             <p className='text-center'>CC Copy <MdOutlineVerified className='verified ' /></p>
 
                                         </td>
 
-                                    </tr>
+                                    </tr> */}
                             </tbody>
                         </table>
 
@@ -132,7 +125,7 @@ const BidNext = () => {
                         <button className='btn compare-btn ms-2'>Submit</button>
                     </div>
                 </div>
-               </>
+              // </>
 
     )
 }

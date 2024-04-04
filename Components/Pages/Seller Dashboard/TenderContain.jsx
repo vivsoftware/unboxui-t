@@ -72,25 +72,27 @@ const TenderContain = ({ rfq, tender, userDe }) => {
     setsearchRFQdata(null);
    };
  
- 
-   const handleOptionClick = (option, tenderId) => {
+  //  console.log("tender id ------ ", tender.userId);
+   const handleOptionClick = (option, rfq, tender) => {
      handleClose();
  
      if (option === 'View Bid') {
        // Handle view bid functionality
-       console.log("View Bid clicked for tender ID:", tenderId);
+      //  console.log("View Bid clicked for tender ID:", tender.userId);
+       console.log("View Bid clicked for rfq ID:", rfq.id);
      }
      else if (option === 'Delete') {
        // Handle delete functionality
        const isConfirmed = window.confirm("Are you sure you want to delete this tender?");
        if (isConfirmed) {
-         axios.delete(`${spring_boot_url}/tender/${tenderId}`)
-           .then(response => {
-             console.log("Tender deleted successfully:", response.data);
-           })
-           .catch(error => {
-             console.error("Error deleting tender:", error);
-           });
+        //  axios.delete(`${spring_boot_url}/tender/${tenderId}`)
+        //    .then(response => {
+        //      console.log("Tender deleted successfully:", response.data);
+        //    })
+        //    .catch(error => {
+        //      console.error("Error deleting tender:", error);
+        //    });
+        console.log("implementing tender delete");
        }
      }
    };

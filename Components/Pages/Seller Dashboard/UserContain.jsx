@@ -16,7 +16,8 @@ const UserContain = ( {registeredUser})=> {
   const [selectedOption, setSelectedOption] = useState('All');
   const [isModalOpen, setModalOpen] = useState(false);
   const [selectedUserData, setSelectedUserData] = useState(null);
-  // const [registeredUsers, setRegisteredUsers] = useState(null); 
+//const [rId, setRid] = useState(null);
+//  const [registeredUsers, setRegisteredUsers] = useState(null); 
 
   const openModal = (userData) => {
     setSelectedUserData(userData);
@@ -34,9 +35,38 @@ const UserContain = ( {registeredUser})=> {
       setSelectedOption(savedOption);
     }
     allUsers();
-    getRegisteredUsers();
-  }, []);
+    if(registeredUser){
+      console.log("registered user in usercontain",registeredUser);
+      // setRid(registeredUser);
+      // console.log("rId", rId);
+      getRegisteredUsers(registeredUser);
+    }
+    
+  }, [registeredUser]);
 
+  const getRegisteredUsers = async (registeredUser) => { 
+    //console.log("rId in getRegisteredUsers", rId);
+    try {
+      const resp = await axios.get(`${spring_boot_url}api/users/registerId/${registeredUser}`);
+      
+      setUserDet(resp.data);
+      resp.data.forEach(user => {
+        console.log("users-registered", user);
+      });
+    } catch (error) {
+      console.error('Error fetching registered users:', error);
+    }
+  
+  };
+
+  // useEffect(() => {
+  //   if (registeredUser) {
+  //     console.log("rajapagal", registeredUser);
+  //     console.log("registered user in usercontain",registeredUser);
+  //     setRegisteredUsers(registeredUser);
+  //   }
+  // })
+  //   console.log("registered user in usercontain test",registeredUsers);
   const toggleFilterDropdown = () => {
     setIsOpen(!isOpen);
   };
@@ -96,43 +126,37 @@ const UserContain = ( {registeredUser})=> {
     dispatch({ type: "REGISTERSIMODAL" });
   };
 
- console.log("registered user in usercontain",registeredUser);
+
 //  console.log("registered user in usercontain",userDe);
-  const getRegisteredUsers = () => {
-    axios.get(`${spring_boot_url}api/registerId/?registerId=${registeredUser?.id}`)
-      .then(resp => {
-        console.log("registered user",resp.data.json);
-        
-      });
-  };
+ 
 
   const allUsers = () =>{
     axios.get(`${spring_boot_url}api/adminuser/allusers`)
     .then(resp => {
       console.log(resp.data.json);
       localStorage.setItem("data", JSON.stringify(resp.data));
-      setUserDet(resp.data);
+      //setUserDet(resp.data);
     });
   }
   const seller = () => {
     axios.get(`${spring_boot_url}api/adminuser/search?query=seller`)
       .then(resp => {
         console.log(resp.data.json);
-        setUserDet(resp.data);
+        //setUserDet(resp.data);
       });
   }
   const buyer = () => {
     axios.get(`${spring_boot_url}api/adminuser/search?query=buyer`)
       .then(resp => {
         console.log(resp.data.json);
-        setUserDet(resp.data);
+        //setUserDet(resp.data);
       });
   }
   const serviceProvider = () => {
     axios.get(`${spring_boot_url}api/adminuser/search?query=service provider`)
       .then(resp => {
         console.log(resp.data.json);
-        setUserDet(resp.data);
+        //setUserDet(resp.data);
       });
   }
   const handleSearchChange = (e) => {
@@ -162,8 +186,9 @@ const UserContain = ( {registeredUser})=> {
     setsearchdata(null);
   };
 
+ 
+// console.log("registered user in usercontain out",registeredUser);
 
-console.log("rajapagal", registeredUser)
 
   if(!userDet){
     return(

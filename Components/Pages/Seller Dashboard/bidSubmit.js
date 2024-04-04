@@ -7,11 +7,13 @@ import { toast } from 'react-toastify';
 import { Input } from 'reactstrap';
 import spring_boot_url from '../../../Utils/springApi';
 import BidNext from './BidNext';
-import bidViewContain from './bidView';
+import TenderContain from './BidContain';
+import BidBack from './bidBack';
+
 
 const BidSubmit = ({ BidTender }) => {
     const [bidMessage, setBidMessage] = useState(false);
-    const [message, setMessage] = useState(true);
+    const [message, setMessage] = useState(false);
     const [annualRevenue, setannualRevenue] = useState(true);
     const [yearsInBusiness, setyearsInBusiness] = useState(true);
     const [industriesServed, setindustriesServed] = useState(true);
@@ -19,18 +21,24 @@ const BidSubmit = ({ BidTender }) => {
     const [certifications, setcertifications] = useState(true);
     const [bidAmount, setbidAmount] = useState(true);
     const [technicalSpecs, settechnicalSpecs] = useState(true);
-    const [otherDocs,setotherDocs] = useState(true); 
+    const [otherDocs, setotherDocs] = useState(true);
     const [bidSubmissionDate, setbidSubmissionDate] = useState(true);
     const [bidData, setBidData] = useState(false);
 
 
     const [backtoNext, setBacktoNext] = useState(false);
+    const router = useRouter();
+
+    // const handleBacktoBids = () => {
+    //     //setMessage(!message);
+    //     console.log("back button clicked", message);
+    //     setMessage(true);
+    // }
 
     const handleBacktoBids = () => {
-        setMessage(!message);
-        // setMessage(true);
-
+        setBacktoNext(true);
     }
+
     const handleBidProcess = () => {
 
         const requiredFields = [
@@ -44,15 +52,12 @@ const BidSubmit = ({ BidTender }) => {
             // 'otherDocs'
         ];
 
-
         const isFormValid = requiredFields.every(field => {
             const value = document.querySelector(`#${field}`).value.trim();
             return value !== ''; // Check if value is not empty
         });
 
         if (isFormValid) {
-            // Store form data
-
 
             // Store form data
             const formData = {
@@ -69,6 +74,7 @@ const BidSubmit = ({ BidTender }) => {
             localStorage.setItem('formData', JSON.stringify(formData));
             //setBacktoNext(true);
             setBidMessage(true);
+
         } else {
             alert('Please fill in all the required fields');
         }
@@ -134,25 +140,22 @@ const BidSubmit = ({ BidTender }) => {
                 });
             });
     };
-
-
-
-
+    console.log("back to bid", message);
     return (
-    <>
-        {/* { bidMessage ? (
-            <BidNext/>
-         ) : message ? (
-            <bidViewContain/>
-         ) : ( 
-            <> */}
-      
-            {bidMessage ? (<BidNext />) : (
-           <>
-        
+        <>
+            {bidMessage ? (
+                <BidNext />
+            ) : backtoNext ? (
+                //  <p>The Great Roshnee Patel</p>
+                <BidBack BidTender={BidTender}/>
+            ) : (
+                <>
+
+                    {/* {bidMessage ? (<BidNext BidTender={BidTender} />) : (
+                    <> */}
                     <div className='container'>
                         <div className='row mt-2'>
-                            <p onClick={handleBacktoBids} style={{ color: '#FF8400', fontSize: '20px' }}><MdKeyboardBackspace /> Back</p>
+                            <p onClick={() => handleBacktoBids(BidTender)} style={{ color: '#FF8400', fontSize: '20px' }}><MdKeyboardBackspace /> Back</p>
                             <div className='row mt-1'>
                                 <p>Tender Id : {BidTender.id}</p>
                                 <p>Description {BidTender.description} </p>

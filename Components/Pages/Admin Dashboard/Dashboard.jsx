@@ -87,13 +87,13 @@ const Dashboard = ({ userDe, activeTab, sellers, buyers }) => {
     const handleCloserfq = () => {
         setopenrfq(false);
     };
-    // const handleOpenPurchase = () => {
-    //     setopenrfq(true);
-    // };
+    const handleOpenPurchase = () => {
+        setopenrfq(true);
+    };
 
-    // const handleClosePurchase = () => {
-    //     setopenrfq(false);
-    // };
+    const handleClosePurchase = () => {
+        setopenrfq(false);
+    };
 
     const handleViewDetailsClick = (userData) => {
         openModal(userData);
@@ -137,13 +137,13 @@ const Dashboard = ({ userDe, activeTab, sellers, buyers }) => {
         // allUsers();
         allbuyer();
     }, []);
-    ////////////////////////changes end////////////////////////////
+    /////////////////////////////////changes end////////////////////////////////////////////////////////////////////
     const handleRFQ = () => {
         return (
             <div className={`${activeTab === '0' ? 'active' : ''}`} tabId={0}></div>
         )
     }
-    ///////////////////////////////get all tender and rfq details //////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////get all tender and rfq details //////////////////////////////////////////////////////////////////////////////////////////////////
     useEffect(() => {
         axios.get(`${spring_boot_url}api/userRfq`)
             .then(resp => {
@@ -156,9 +156,9 @@ const Dashboard = ({ userDe, activeTab, sellers, buyers }) => {
                 setTendero(resp.data);
             });
     }, []);
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    ////////////////////////////////////////////////////// pie chart code//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////././././././././././././././////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///\/\/\/\/\/\/\.\/\.\/.\./.\/.\..\/.\..\.\/\/././././././././//////////////////////.././././././././././../......................//////////////////////............//////////////..............//////////////././././././//////////////////
+    //////////././././././././../././././///////////////////////././/../././././././././///////////////////// pie chart code/////////////////////////////////////////////////////////////////////
     const data11 = [
         ["RFQs", "Tenders"],
         ["RFQs", RfqNo?.length],
@@ -240,7 +240,6 @@ const Dashboard = ({ userDe, activeTab, sellers, buyers }) => {
             </div >
             {/* ////////////////////////////////////////////////////////////////////////////////////////////////////////////// */}
             {/* desktop view 2nd block */}
-
             <div className='gridrfq-container' id="grid1">
                 <div className='details' id='grid'>
                     <h3 className='text-center mb-1'>Buyer Details</h3>
@@ -262,10 +261,6 @@ const Dashboard = ({ userDe, activeTab, sellers, buyers }) => {
                                 ))}
                             </tbody>
                         </table>
-
-
-
-
                         {/* //////////////////////////////////////////////buyer-view pop modal////////////// */}
                         <div>
                             <Modal
@@ -278,7 +273,6 @@ const Dashboard = ({ userDe, activeTab, sellers, buyers }) => {
                                 <Box sx={style}>
                                     <h3 className='mb-2' style={{ marginLeft: '350px', marginTop: '-10px' }}>Buyer List</h3>
                                     <div className="my-modal-content1" style={{ display: "flex-relative" }}>
-
                                         <div className='row mt-5 SI-table' style={{ height: '960px', width: '760px', marginLeft: '0px' }}>
                                             <table className="table">
                                                 <thead className='table-header'>
@@ -344,9 +338,6 @@ const Dashboard = ({ userDe, activeTab, sellers, buyers }) => {
                                 ))}
                             </tbody>
                         </table>
-
-
-
                         {/* //////////////////////////////////////////////seller-view pop modal////////////// */}
                         <div>
                             <Modal

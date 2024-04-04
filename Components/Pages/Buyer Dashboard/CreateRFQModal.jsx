@@ -5,7 +5,6 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { Input, Modal, ModalBody, ModalHeader } from 'reactstrap';
-import Box from '@mui/material/Box';
 import { auth } from '../../../Config/firebase';
 import spring_boot_url from '../../../Utils/springApi';
 const CreateRFQModal = () => {
@@ -38,7 +37,7 @@ const CreateRFQModal = () => {
     const [user, setuser] = useState(null)
     const dispatch = useDispatch();
 
-    
+
     const toggle = () => {
         // Clear form fields and reset radio button selection when modal is closed
         setSelectedOption('');
@@ -61,17 +60,17 @@ const CreateRFQModal = () => {
         border: '4px solid #ff8400',
         boxShadow: 24,
         p: 4,
-      };
+    };
     const handleClose = () => {
         setOpen(false);
         // setuploadRfq(null);
-      }
-      const handleOpen = (elem) => {
+    }
+    const handleOpen = (elem) => {
         setOpen(true);
         setYes(true)
-
+        CreateRfq();
         // ssetrfqdata(elem);
-      };
+    };
     const handleOptionChange = (value) => {
         setSelectedOption(value);
         // Clear form fields when an option other than 'product' is selected
@@ -216,7 +215,6 @@ const CreateRFQModal = () => {
                         }
                     } catch (error) {
                         setUploadShow(false);
-
                         console.error('Error fetching data:', error);
                         return null; // or handle accordingly
                     }
@@ -272,13 +270,8 @@ const CreateRFQModal = () => {
                         <Input type='text' className='form-control otp-phone' id='name' placeholder='Name' required />
                     </div> */}
                     <div className="form-group">
-
-
-
                         <label className='form-label font-light'>Project Name</label>
-
                         <Input type='text' className='form-control otp-phone' id='name' placeholder='Project Name' required value={projectName} onChange={(e) => setprojectName(e.target.value)} />
-
 
                         <label className='form-label font-light'>Purpose of RFQ</label>
                         <div className="form-check">
@@ -416,7 +409,7 @@ const CreateRFQModal = () => {
                             </form>
                         </div>
                     )}
-                      <div className="form-group">
+                    <div className="form-group">
                         {Yes ? (
                             <div>
                                 <label htmlFor="document">Upload Document(optional)</label>
@@ -440,7 +433,7 @@ const CreateRFQModal = () => {
                             <p></p>
                         )}
                     </div>
-                    
+
                     <div className='row'>
                         <div className='col-lg-6 col-md-12 col-sm-12'>
                             <button type="button" className="btn registerSI-btn mt-2" onClick={CreateRfq}>Save</button>
