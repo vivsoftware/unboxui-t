@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { FaEye } from "react-icons/fa";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import spring_boot_url from '../../../Utils/springApi';
 import DashboardLoader from '../../Element/DashboardLoader';
 import ViewRFQModal from '../Admin Dashboard/ViewRFQModal';
@@ -49,6 +49,7 @@ const RFQContain = ({rfq,tender}) => {
     ))
   }
   const dispatch = useDispatch();
+  const rfqList = useSelector((state) => state.rfqList);
   const handleCreateRFQModal = () => {
     dispatch({ type: "CREATERFQMODAL" });
 

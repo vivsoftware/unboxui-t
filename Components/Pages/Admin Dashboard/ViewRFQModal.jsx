@@ -22,7 +22,29 @@ const ViewRFQModal = ({ isOpen, onClose, userData }) => {
   //       setuploadRfq(resp.data);
   //     });
   // }, []);
+  console.log("checking user data", userData);
+  const rfqDelete = async () => {
 
+    try {
+      const resp = await axios.delete(`${spring_boot_url}api/userRfq/${userData.id}`)
+      .then(resp => {
+        console.log("delete status",resp.status);
+        if (resp.status === 204) {
+           console.log("deleted successfully");
+           dispatch({type:"DELETE_RFQ", payload:userData.id});
+           onClose();
+        }
+      })
+    } catch (error) {
+      console.log("error in delete rfq", error);
+    }
+     
+  }
+  const handelRfqDelete = () => {
+    console.log("clicked delete");
+    rfqDelete();
+    // console.log("implementing delete rfq");
+  }
 
 
 
@@ -38,7 +60,7 @@ const ViewRFQModal = ({ isOpen, onClose, userData }) => {
         <p>Customer Email Id: {userData.email}</p>
         <p>Customer Phone No.: {userData.phoneNumber}</p>
         <button onClick={editProfile}>Edit</button>
-        <button onClick={onClose}>Delete</button>
+        <button onClick={handelRfqDelete}>Delete</button>
         <button onClick={onClose}>Close</button>
       </div>
     </div>
