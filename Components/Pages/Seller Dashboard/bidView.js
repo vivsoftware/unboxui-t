@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 // import BidContain from './BidContain'
 import Link from 'next/link';
 import spring_boot_url from '../../../Utils/springApi';
@@ -29,36 +29,38 @@ const bidViewContain = ({ BidTender, userDe }) => {
 
 
     ////////////////////////////////....attached...file...get...code.....//////////////////////////////////////////////////////////////////
-
-    useEffect(() => {
-        const bidDetails = {
-            tenderId,
-            userId,
-            bidId,
-            description,
-            openingDate,
-            closingDate,
-            annualRevenue,
-            numberOfEmployees,
-            yearsInBusiness,
-            industriesServed,
-            certifications,
-            bidAmount,
-        };
-
-        fetch(`${spring_boot_url}api/sellersbid/add`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(bidDetails),
-        }).then((resp) => {
-            // setRfqData(resp.data);
-            if (resp.ok === true) {
+    const [tenderId, settenderId] = useState("");
 
 
-            }
+const createBid =()=> {
 
-        });
-    }, [])
+    const bidDetails = {
+        tenderId,
+        userId,
+        bidId,
+        description,
+        openingDate,
+        closingDate,
+        annualRevenue,
+        numberOfEmployees,
+        yearsInBusiness,
+        industriesServed,
+        certifications,
+        bidAmount,
+    };
+    fetch(`${spring_boot_url}api/sellersbid/add`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(bidDetails),
+    }).then((resp) => {
+        // setRfqData(resp.data);
+        if (resp.ok === true) {
+        }
+    });
+
+}
+
+        
 
 
 
