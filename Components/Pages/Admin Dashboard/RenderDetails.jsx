@@ -22,7 +22,7 @@ const RenderDetails = ({
   tenderBids,
   handleBidClick,
   handleBackToDetails,
-  tenderBack,
+  // tenderBack,
   formatDate,
   //handleBidDelete,  
 }) => {
@@ -57,24 +57,24 @@ const RenderDetails = ({
   };
 
 
-  const handleOptionClick = (option, tenderId) => {
+  const handleOptionClick = (option, elem) => {
     handleClose();
 
     if (option === 'View Bid') {
       // Handle view bid functionality
-      console.log("View Bid clicked for tender ID:", tenderId);
+      console.log("View Bid clicked for tender ID:", elem?.id);
     }
     else if (option === 'Delete') {
       // Handle delete functionality
       const isConfirmed = window.confirm("Are you sure you want to delete this tender?");
       if (isConfirmed) {
-        axios.delete(`${spring_boot_url}api/tender/${tenderId}`)
-          .then(response => {
-            console.log("Tender deleted successfully:", response.data);
-          })
-          .catch(error => {
-            console.error("Error deleting tender:", error);
-          });
+        axios.delete(`${spring_boot_url}api/tender/${elem.id}`)
+        .then(response => {
+          console.log("Tender deleted successfully:", response.status);
+        })
+        .catch(error => {
+          console.error("Error deleting tender:", error);
+        });
       }
     }
   };
@@ -190,7 +190,7 @@ const RenderDetails = ({
                       </tr>
                     </thead>
                     <tbody>
-                      {(Array.isArray(tenderBack?.tender) ? tenderBack.tender : Array.isArray(tender) ? tender : []).map((elem, index) => (
+                      {(Array.isArray(tender?.tender) ? tender.tender : Array.isArray(tender) ? tender : []).map((elem, index) => (
 
                         <tr key={index + 1} className="table-row">
                           <td>{elem && elem.id}</td> {/* Added a null check */}
@@ -231,7 +231,7 @@ const RenderDetails = ({
                               onClose={handleClose}
                             >
                               {options.map((option) => (
-                                <MenuItem key={option} onClick={() => handleOptionClick(option, tender.id)}>
+                                <MenuItem key={option} onClick={() => handleOptionClick(option, elem)}>
                                   {option}
                                 </MenuItem>
                               ))}
