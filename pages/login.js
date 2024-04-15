@@ -227,7 +227,7 @@ const loginunbox = () => {
                                 </form>
                             </div>
                             <div className='col-md-6 col-sm-12 half-login'>
-                                <h2>Welcome <br /> To<br /> Unbox Industry</h2>
+                                <h2>Welcome To Unbox Industry</h2>
                                 <p>We connect millions of buyers and sellers around the world, empowering people & creating economic opportunity for all.</p>
                                 <Img src="/login-background.png" alt="unboxbackground" />
                             </div>
@@ -241,4 +241,7 @@ const loginunbox = () => {
     )
 };
 export default loginunbox;
+
+
+
 

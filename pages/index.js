@@ -182,6 +182,14 @@ function Home(props) {
           <meta name='viewport' content='width=device-width, initial-scale=1' />
           <link rel="icon" href="/Box.ico" alt="unboxLogo" />
           <link rel="canonical" href="https://www.unboxindustry.com" />
+          <link rel="canonical" href="https://www.unboxindustry.com/login" />
+          <link rel="canonical" href="https://www.unboxindustry.com/shop" />
+          <link rel="canonical" href="https://www.unboxindustry.com/brands" />
+          <link rel="canonical" href="https://www.unboxindustry.com/industries/All" />
+          <link rel="canonical" href="https://www.unboxindustry.com/faq" />
+          <link rel="canonical" href="https://www.unboxindustry.com/about-us" />
+          <link rel="canonical" href="https://www.unboxindustry.com/contact-us" />
+          <link rel="canonical" href="https://www.unboxindustry.com/blogs" />
         </Head>
         <div className='d-none d-xl-block d-md-block d-sm-none'>
           {!data ? (

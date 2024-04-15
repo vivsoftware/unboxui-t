@@ -324,7 +324,7 @@ const RenderDetails = ({ tender, tenderBids, formatDate, handleBidClick, tenderB
                           <td>
                             <button
                               className="option-button"
-                            //onClick={() => handleOpen(elem)}
+                            onClick={() => handleOpen(elem)}
                             >
                               <FaEye />
                             </button>
@@ -434,7 +434,10 @@ const RenderDetails = ({ tender, tenderBids, formatDate, handleBidClick, tenderB
                             <p>No. of Bids : </p>
                           </div>
                           <div className="col-2">
-                            <button className="option-button">
+                          <button
+                              className="option-button"
+                              onClick={() => handleOpen(elem)}
+                            >
                               <FaEye />
                             </button>
                           </div>
