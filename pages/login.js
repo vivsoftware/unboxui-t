@@ -1,18 +1,19 @@
-import Head from 'next/head';
-import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import 'reactjs-popup/dist/index.css';
-import Link from 'next/link';
-import Img from '../Components/Element/Images';
-import Layout4 from '../Layout/Layout4';
-import { useRouter } from 'next/router';
-import spring_boot_url from '../Utils/springApi';
-import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
 import { signInWithEmailAndPassword, } from 'firebase/auth';
+import Head from 'next/head';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
+import 'reactjs-popup/dist/index.css';
+import Img from '../Components/Element/Images';
 import { auth } from '../Config/firebase';
-import ForgotPasswordSection from './page/forgot_password';
 import LoginloaderModle from '../Layout/Element/Loginloadermodle';
+import Layout4 from '../Layout/Layout4';
+import spring_boot_url from '../Utils/springApi';
+import ForgotPasswordSection from './page/forgot_password';
+import Loader from '../Components/Loader';
 
 const loginunbox = () => {
     const [loginError, setLoginError] = useState(false);
@@ -27,6 +28,22 @@ const loginunbox = () => {
     const router = useRouter();
     const [user, setuser] = useState(null)
     const [userDe, setUserDe] = useState(null)
+
+    ///////////changes/////
+    const [login, setLogin] = useState(false);
+    const [showLoader, setShowLoader] = useState(false);
+
+    const handleClickOn = () => {
+        // setLogin(!login);
+        setShowLoader(!showLoader);
+    
+    }
+    // const handleClickOn = () => {
+    //     const router = useRouter();
+    //     router.push('/Loader'); // Replace '/new-page' with the path of the page you want to navigate to
+    // }
+
+    ///////////end/////////
     const handleModal = () => {
         dispatch({ type: "LOGINLOADER" });
     };
@@ -110,9 +127,8 @@ const loginunbox = () => {
                 const errorMessage1 = error.message;
                 if (errorCode === "auth/wrong-password") {
                     setPasswordError("Invalid password. Please try again.");
-                } 
-                else 
-                {
+                }
+                else {
                 }
             });
     }
@@ -148,6 +164,7 @@ const loginunbox = () => {
     };
     return (
         <>
+
             <Layout4 className="home-page">
                 <Head>
                     <title>Log In - Unbox Industry</title>
@@ -227,18 +244,33 @@ const loginunbox = () => {
                                 </form>
                             </div>
                             <div className='col-md-6 col-sm-12 half-login'>
-                                <h2>Welcome <br /> To<br /> Unbox Industry</h2>
-                                <p>We connect millions of buyers and sellers around the world, empowering people & creating economic opportunity for all.</p>
-                                <Img src="/login-background.png" alt="unboxbackground" />
+                                <h2>Welcome To Unbox Industry</h2>
+
+                                <p > We connect millions of buyers and sellers around the world, 
+                                    empowering people &
+                                    creating economic
+                                    opportunity for all.</p>
+                                <Img src="/robo1.png" alt="unboxbackground" className='logoDiv' />
                             </div>
                         </div>
                         <LoginloaderModle />
-
                     </div>
                 </div >
+
+                {/* ////////////changes////////////// */}
+                <button className='btn back-btn' onClick={() => handleClickOn()} style={{ float: 'right' }}>Login</button>
+        
+        {showLoader && <Loader />} {/* Conditionally render Loader */}
+
+
+                {/* ////////////////////end///////// */}
+
             </Layout4 >
         </>
     )
 };
 export default loginunbox;
+
+
+
 

@@ -1,31 +1,30 @@
 "use client"
-import Head from 'next/head';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import Layout4 from '../Layout/Layout4';
-import React, { useEffect, useState, useMemo } from 'react';
-import { fetchAPI } from '../Utils/api';
-import FlowerSubscribe from '../Components/FlowerDemo/FlowerSubscribe';
-import Enquire from './layout/Enquire';
-import { useRouter } from 'next/router';
-import Image from 'next/image';
-import StartModel from '../Layout/Element/StartModel';
-import { auth } from '../Config/firebase';
-import spring_boot_url from '../Utils/springApi';
 import axios from 'axios';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import Head from 'next/head';
+import Image from 'next/image';
+import { useRouter } from 'next/router';
+import React, { useEffect, useMemo, useState } from 'react';
 import Slider from 'react-slick';
-import SkeletonLoader from '../Components/Element/SkeletonLoader';
-import { getStrapiMedia } from '../Utils/media';
-import ElectronicCollection from '../Components/ElectronicDemo/ElectronicCollection';
-import ElectronicInstagramShop from '../Components/ElectronicDemo/ElectronicInstagramShop';
-import ElectronicHurryUp from '../Components/ElectronicDemo/ElectronicHurryUp';
-import FashionService from "../Components/FashionDemo/FashionService";
 import Categories from '../Components/ElectronicDemo/Categories';
-import ElectronicHomeSlider from '../Components/ElectronicDemo/ElectronicHomeSlider';
-import ElectronicTopBanner from '../Components/ElectronicDemo/ElectronicTopBanner';
 import CategorizedProducts from '../Components/ElectronicDemo/Category/categorizedProducts';
-import Brand from '../Components/FlowerDemo/BrandSlider';
 import Customers from '../Components/ElectronicDemo/Customers';
-import cameraCategory from '../Components/ElectronicDemo/Category/camera';
+import ElectronicCollection from '../Components/ElectronicDemo/ElectronicCollection';
+import ElectronicHomeSlider from '../Components/ElectronicDemo/ElectronicHomeSlider';
+import ElectronicHurryUp from '../Components/ElectronicDemo/ElectronicHurryUp';
+import ElectronicInstagramShop from '../Components/ElectronicDemo/ElectronicInstagramShop';
+import ElectronicTopBanner from '../Components/ElectronicDemo/ElectronicTopBanner';
+import SkeletonLoader from '../Components/Element/SkeletonLoader';
+import FashionService from "../Components/FashionDemo/FashionService";
+import Brand from '../Components/FlowerDemo/BrandSlider';
+import FlowerSubscribe from '../Components/FlowerDemo/FlowerSubscribe';
+import { auth } from '../Config/firebase';
+import StartModel from '../Layout/Element/StartModel';
+import Layout4 from '../Layout/Layout4';
+import { fetchAPI } from '../Utils/api';
+import { getStrapiMedia } from '../Utils/media';
+import spring_boot_url from '../Utils/springApi';
+import Enquire from './layout/Enquire';
 
 const cache = {};
 
@@ -146,7 +145,7 @@ function Home(props) {
       <>
         <Layout4 className="home-page">
           <Head>
-            <title>Home</title>
+            <title> Industrial Automation Products And Solutions - Home  </title>
             <meta name="description" content="Unbox Industry offers automation products and solutions with high performance and reliability including drives, control systems, industrial robots & cobots." />
             <meta name="keywords" content="industrial automation, industrial automation products, industrial robots & cobots, industrial grippers and sensors, cameras and industrial robot protective covers" />
             <meta name='viewport' content='width=device-width, initial-scale=1' />
@@ -182,6 +181,14 @@ function Home(props) {
           <meta name='viewport' content='width=device-width, initial-scale=1' />
           <link rel="icon" href="/Box.ico" alt="unboxLogo" />
           <link rel="canonical" href="https://www.unboxindustry.com" />
+          <link rel="canonical" href="https://www.unboxindustry.com/login" />
+          <link rel="canonical" href="https://www.unboxindustry.com/shop" />
+          <link rel="canonical" href="https://www.unboxindustry.com/brands" />
+          <link rel="canonical" href="https://www.unboxindustry.com/industries/All" />
+          <link rel="canonical" href="https://www.unboxindustry.com/faq" />
+          <link rel="canonical" href="https://www.unboxindustry.com/about-us" />
+          <link rel="canonical" href="https://www.unboxindustry.com/contact-us" />
+          <link rel="canonical" href="https://www.unboxindustry.com/blogs" />
         </Head>
         <div className='d-none d-xl-block d-md-block d-sm-none'>
           {!data ? (
