@@ -138,7 +138,7 @@
 }
 
 .half-login h2 {
-    margin-top: 60px;
+    margin-top: 20px;
     text-align: center;
     font-size: 25px;
     font-family: "Work Sans", Arial, sans-serif;
@@ -153,23 +153,20 @@
 }
 
 .half-login Img {
-    width: 172px;
-    height: 210px;
-    margin-top: 20px;
-    margin-left: 120px;
+    width: 450px;
+    height: 259px;
+    margin-top: 32px;
+    margin-left: 5px;
 }
 
 .login-page {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    // margin-left: 115px;
-
+    box-shadow: 12px 10px 10px 12px #646361;
     margin: auto;
     width: 900px;
 }
 
 .login-card {
-    // margin-top: 00px;
-    // margin-left: 25px;
+
     padding: 25px;
     background-color: transparent;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
@@ -492,7 +489,7 @@ p {
     width: 200px;
     object-fit: fill;
     margin-top: 10px;
-    
+
 
 }
 
@@ -1312,6 +1309,9 @@ p {
     .home-page {
         margin-left: auto;
         margin-right: auto;
+        border-radius: 10px;
+        // box-shadow: 0 0 10px rgba(180, 166, 149, 0.1);
+        // box-shadow: 10px 10px 5px 12px lightblue;
 
     }
 
@@ -2646,7 +2646,7 @@ textarea {
     max-height: 425px;
     overflow-y: auto;
     box-shadow: 4px 4px 4px #ddd;
-    
+
 
 }
 
@@ -2671,8 +2671,9 @@ textarea {
     width: 80px;
 
 }
+
 .unsend-btn {
-    width: 80px ;
+    width: 80px;
     height: 40px;
     background-color: rgb(255, 255, 255);
 
@@ -4030,7 +4031,7 @@ textarea {
     // display: none;
     margin-top: -10px; //changes
     margin-right: 320px;
-  
+
 }
 
 
@@ -4123,7 +4124,7 @@ textarea {
 }
 
 
-.team{
+.team {
     align-items: center;
     background-color: #f5f5f5;
     width: 250px;
@@ -4132,15 +4133,17 @@ textarea {
     margin-top: 30px;
     border: 0.5px solid #7a746ee7;
     box-shadow: 5px 10px #ff8400;
+
     // filter: drop-shadow(10px 20px 10px orange);
-   img:hover{
+    img:hover {
         // background-color: #ff8400;
         border-radius: 20px;
         transform: scale(0.9);
 
 
     }
-    a:hover{
+
+    a:hover {
         background-color: #fffefc;
         transform: scale(1.8);
 
@@ -4148,6 +4151,7 @@ textarea {
     }
 
 }
+
 ////////////////////view pop css//////////////
 .my-modal-content1 {
     background: #fff;
@@ -4176,19 +4180,6 @@ textarea {
     width: 100px;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 .footer2 {
     margin-top: 10px;
     background-color: yellow;
@@ -4199,13 +4190,77 @@ textarea {
     border-style: solid;
     border-color: #9C6500;
     text-align: center;
-    
-  }
-  
-  .textsize {
+
+}
+
+.textsize {
     font-size: 16px;
     word-spacing: 4px;
     text-align: center;
     margin-top: -10px;
 
-  }
+}
+
+
+////////////////////////////////////////////new login page css /////////////////////////////////////////////////
+
+.maindiv {
+
+    background-color: #FF8400;
+    width: 1650px;
+    height: 600px;
+    margin-left: 14px;
+    margin-top: 0px;
+    padding-top: 85px;
+    padding-left: 263px;
+}
+
+.secondDiv {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    background-color: #2196F3;
+    padding: 10px;
+    width: 1088px;
+    height: 400px;
+    background-color: white;
+    border-radius: 10px;
+    border: 2px solid #111;
+    margin-left: 10px;
+    padding-top: 0px;
+    padding-left: 36px;
+    align-items: center;
+
+}
+
+.thirdDiv {
+    margin-top: -60px;
+
+}
+
+.logoDiv {
+    // mix-blend-mode: multiply;
+    width: 290px;
+    height: 251px;
+    margin-top: 23px;
+    margin-left: 82px;
+}
+
+
+.logoDiv1 {
+    // mix-blend-mode: multiply;
+    width: 290px;
+    height: 251px;
+    // margin-top: 23px;
+    // margin-left: 82px;
+}
+
+
+
+.secondDiv2ndpart {
+    background-color: #ff8400;
+    height: 397px;
+    width: 628px;
+    padding-left: 37px;
+    margin-left: 122px;
+    border-radius: 10px;
+}
