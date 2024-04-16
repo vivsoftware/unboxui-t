@@ -8,12 +8,11 @@ import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import 'reactjs-popup/dist/index.css';
 import Img from '../Components/Element/Images';
+import Loader from '../Components/Loader';
 import { auth } from '../Config/firebase';
-import LoginloaderModle from '../Layout/Element/Loginloadermodle';
 import Layout4 from '../Layout/Layout4';
 import spring_boot_url from '../Utils/springApi';
 import ForgotPasswordSection from './page/forgot_password';
-import Loader from '../Components/Loader';
 
 const loginunbox = () => {
     const [loginError, setLoginError] = useState(false);
@@ -28,38 +27,25 @@ const loginunbox = () => {
     const router = useRouter();
     const [user, setuser] = useState(null)
     const [userDe, setUserDe] = useState(null)
-
-    ///////////changes/////
-    const [login, setLogin] = useState(false);
-    const [showLoader, setShowLoader] = useState(false);
-
-    const handleClickOn = () => {
-        // setLogin(!login);
-        setShowLoader(!showLoader);
-    
-    }
-    // const handleClickOn = () => {
-    //     const router = useRouter();
-    //     router.push('/Loader'); // Replace '/new-page' with the path of the page you want to navigate to
-    // }
-
-    ///////////end/////////
     const handleModal = () => {
         dispatch({ type: "LOGINLOADER" });
     };
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged((user) => {
             setuser(user);
-            if (user.email) {
+            if (user?.email) {
                 axios.get(`${spring_boot_url}api/users/email?email=${user.email}`)
                     .then(resp => {
                         console.log(resp.data.json);
                         localStorage.setItem("data", JSON.stringify(resp.data));
                         setUserDe(resp.data);
                         if (resp.data) {
+
+                            router.push("/user_dashboard");
+
                         }
                     });
-            } else if (user.phoneNumber) {
+            } else if (user?.phoneNumber) {
                 let phoneNumberd = user.phoneNumber
                 phoneNumberd = phoneNumberd.replace(/\+/g, "");
                 console.log("phonenumbereeeee", phoneNumberd);
@@ -69,6 +55,8 @@ const loginunbox = () => {
                         localStorage.setItem("data", JSON.stringify(resp.data));
                         setUserDe(resp.data);
                         if (resp.data) {
+                            router.push("/user_dashboard");
+
                         }
                     });
             } else {
@@ -97,27 +85,9 @@ const loginunbox = () => {
             .then((userCredential) => {
                 const user = userCredential.user;
                 if (user.email) {
-                    axios.get(`${spring_boot_url}api/users/email?email=${user.email}`)
-                        .then(resp => {
-                            console.log(resp.data.json);
-                            localStorage.setItem("data", JSON.stringify(resp.data));
-                            setUserDe(resp.data);
-                            if (!resp.data) {
-                                console.log("no user found......")
-                                setsingupMessage("Please sign up")
-                                toast(` User not Found Please signup`, {
-                                    position: toast.POSITION.BOTTOM_CENTER,
-                                });
-                            } else {
-                                dispatch({ type: "LOGINLOADER" });
-                            }
-                        });
-                } else if (!user) {
-                    toast(`No user found ... `);
+                    setModal(true)
                 }
-                if (!user) {
-                    setLoginError(true);
-                }
+
             })
             .catch((error) => {
                 const errorCode = error.code;
@@ -164,7 +134,6 @@ const loginunbox = () => {
     };
     return (
         <>
-
             <Layout4 className="home-page">
                 <Head>
                     <title>Log In - Unbox Industry</title>
@@ -246,31 +215,24 @@ const loginunbox = () => {
                             <div className='col-md-6 col-sm-12 half-login'>
                                 <h2>Welcome To Unbox Industry</h2>
 
-                                <p > We connect millions of buyers and sellers around the world, 
+                                <p > We connect millions of buyers and sellers around the world,
                                     empowering people &
                                     creating economic
                                     opportunity for all.</p>
                                 <Img src="/robo1.png" alt="unboxbackground" className='logoDiv' />
                             </div>
                         </div>
-                        <LoginloaderModle />
+                        {sowModal ? (
+                            <Loader user={user} />
+                        ) : (
+                            <p></p>
+                        )}
+                        {/* <LoginloaderModle /> */}
                     </div>
                 </div >
-
-                {/* ////////////changes////////////// */}
-                <button className='btn back-btn' onClick={() => handleClickOn()} style={{ float: 'right' }}>Login</button>
-        
-        {showLoader && <Loader />} {/* Conditionally render Loader */}
-
-
-                {/* ////////////////////end///////// */}
-
             </Layout4 >
         </>
     )
 };
 export default loginunbox;
-
-
-
 

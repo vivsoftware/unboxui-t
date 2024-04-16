@@ -10,6 +10,7 @@ import React, { useEffect, useState } from 'react';
 import PhoneInput from 'react-phone-number-input';
 import 'reactjs-popup/dist/index.css';
 import Img from '../Components/Element/Images';
+import Loader from '../Components/Loader';
 import { auth } from '../Config/firebase';
 import LoginloaderModle from '../Layout/Element/Loginloadermodle';
 import Layout4 from '../Layout/Layout4';
@@ -20,6 +21,8 @@ const phoneLogin = () => {
     const [isProcessing, setIsProcessing] = useState(false);
     const [isTimerActive, setIsTimerActive] = useState(false);
     const [loading, setIsLoading] = useState(false);
+    const [sowModal, setModal] = useState(false);
+
     const startTimer = () => {
         setIsTimerActive(true);
         setTimer(20);
@@ -43,7 +46,6 @@ const phoneLogin = () => {
     const [OTP, setOTP] = useState('');
     const [ErrorMsg, setErrorMsg] = useState('');
     const [ErrorMsg2, setErrorMsg2] = useState('');
-
     const [invalidphonenumber, setInvalidPhoneNumber] = useState('');
     const generateRecaptcha = () => {
         window.recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {
@@ -87,9 +89,9 @@ const phoneLogin = () => {
         confirmationResult.confirm(OTP).then((result) => {
             const user = result.user;
             setIsLoading(true)
-            dispatch({ type: "LOGINLOADER" });
+            setModal(true)
+            // dispatch({ type: "LOGINLOADER" });
         }).catch((error) => {
-            
             setErrorMsg(error.message)
             console.log("Wrong OTP entered. Please try again.", error.message);
             console.log("Wrong OTP .", error);
@@ -114,8 +116,7 @@ const phoneLogin = () => {
         setErrorMsg2(`Firebase: Error (auth/invalid-verification-code).`)
     }, []);
 
-    console.log("Wrong OTP entered. Please try again.", ErrorMsg);
-    console.log("Wrong OTP entered.", ErrorMsg2);
+
 
     return (
         <>
@@ -196,8 +197,12 @@ const phoneLogin = () => {
                                 <p>We connect millions of buyers and sellers around the world, empowering people & creating economic opportunity for all.</p>
                                 <Img src="/phone.gif" alt="unboxbackground" className='logindiv' />
                             </div>
-                        </div>5
+                        </div>
                     </div>
+
+                    {sowModal ? (
+                        <Loader user={user} />
+                    ) : (<p></p>)}
                 </div>
             </Layout4>
         </>
