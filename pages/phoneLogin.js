@@ -89,6 +89,7 @@ const phoneLogin = () => {
             setIsLoading(true)
             dispatch({ type: "LOGINLOADER" });
         }).catch((error) => {
+            
             setErrorMsg(error.message)
             console.log("Wrong OTP entered. Please try again.", error.message);
             console.log("Wrong OTP .", error);
