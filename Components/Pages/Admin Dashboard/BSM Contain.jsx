@@ -196,7 +196,8 @@ const BSMContain = ({ Tender, Rfq }) => {
   const handleTenderSearchChange = (e) => {
     // Clear searchdata if the input is empty
     if (e.target.value.trim() === "") {
-      setsearchdata(null);
+      setsearchdata([]);
+      setTenderSearchQuery([]);
     } else {
       // const query = e.target.value;
       setTenderSearchQuery(e.target.value);
@@ -410,7 +411,9 @@ const BSMContain = ({ Tender, Rfq }) => {
                   style={{ height: '40px', border: "1px solid #ddd", borderRadius: '8px' }}
                   onChange={handleTenderSearchChange}
                 />
-                {searchTenderdata && searchTenderdata.length === 0 && (
+
+                {/* searchTenderdata &&  */}
+                {searchTenderdata.length === 0 && (
                   <p style={{ color: 'red' }}>No Tender found.</p>
                 )}
                 {searchTenderdata && searchTenderdata.length > 0 && (

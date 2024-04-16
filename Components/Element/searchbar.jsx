@@ -9,6 +9,10 @@ import { fetchAPI } from "../../Utils/api";
 import { useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+
+//changes adding debounce,
+import debounce from "lodash.debounce";
+
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   border: "1px solid black",
@@ -49,17 +53,61 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
+let clickCounter = 1;
+
 const PrimarySearchAppBar = ({brands, categories, industries}) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [result, setResult] = useState(null);
-  const [value, setValue] = useState(null);
+  const [value, setValue] = useState("");
   const [loading, setLoading] = useState(false);
   const [loadingProductId, setLoadingProductId] = useState(null);
   const router = useRouter();
+  const abortController = React.useRef(null); // to stop fetching when searchbar is all cleared.
+
+  const debouncedSearch = React.useRef(
+
+    debounce(async(searchValue) => {
+      if(abortController.current){
+        abortController.current.abort();
+      }
+      if (!searchValue) {
+        setResult(null);
+        result;
+      }
+      abortController.current = new AbortController();
+      try{
+        const res = await fetchAPI(
+          `/products?filters[$and][0][product_name][$contains]=${searchValue}&populate=*`,
+          {signal: abortController.current.signal}
+        );
+        setResult(res.data);
+        console.log("fecthing results", res.data);
+      }catch(error){
+        if (error.name !== "AbortError") {
+          console.error("error in featching results:", error);
+        }
+      }
+    },300)
+    
+  ).current;
+
   const handleChange = (event) => {
-    setValue(event.target.value);
-    resetLoading(); // Reset loading state when the search bar is clicked
+
+    const newValue = event.target.value;
+    setValue(newValue);
+    resetLoading(); // Reset loading state when the search bar is clicked 
+    
+    if (newValue.trim() === "") {
+      debouncedSearch.cancel();
+      setResult(null);
+
+    }else{ 
+     
+      debouncedSearch(newValue);
+    }
+
   };
+
 
   const resetLoading = () => {
     setLoading(false);
@@ -69,32 +117,41 @@ const PrimarySearchAppBar = ({brands, categories, industries}) => {
   const handleFocus = () => {
     setShowDropdown(true);
     resetLoading(); // Reset loading state when the search bar is focused
-  };
+  };  
   const handleBlur = () => {
     setTimeout(() => {
       setShowDropdown(false);
     }, 100
     );
   };
-  const handleProductClick = (productId) => {
+  const handleProductClick = (product) => {
     setLoading(true);
-    setLoadingProductId(productId);
+    setLoadingProductId(product);
+
+    console.log("handelProductClickId called times:-", clickCounter++);
     // You can also preload the product page here if needed
     // ...
     // After some loading process, navigate to the product page
-    router.push(`/product/${productId}-${product_slug}`);
+    router.push(`/product/${product.id}-${product.product_slug}`);
   };
 
-  useEffect(() => {
-    value
-      ? fetchAPI(
-          `/products?filters[$and][0][product_name][$contains]=${value}&populate=*`
-        ).then((res) => {
-          setResult(res.data);
-        })
-      : setResult(null);
-  }, [value]);
+  // useEffect(() => {
+  //   const startTime = performance.now();
+  //   value
+  //     ? fetchAPI(
+  //         `/products?filters[$and][0][product_name][$contains]=${value}&populate=*`
+  //       ).then((res) => {
+  //         setResult(res.data);
+  //         const endTime = performance.now();
+  //         const timeTaken = endTime - startTime;
+  //         console.log('time taken', timeTaken);
+  //       })
+  //     : setResult(null);
+  // }, [value]);
 
+  useEffect(() => {
+    console.log("product id", loadingProductId);
+  })
   return (
     <>
         <div className="search-field">
@@ -126,7 +183,7 @@ const PrimarySearchAppBar = ({brands, categories, industries}) => {
                   className={`row mt-1 ${
                     loadingProductId === product.id ? "loading" : ""
                   }`}
-                  onClick={() => handleProductClick(product.id)}
+                  onClick={() => handleProductClick(product)}
                 >
                       <div className="col-3">
                         <Image
