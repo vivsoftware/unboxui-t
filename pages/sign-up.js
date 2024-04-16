@@ -210,7 +210,7 @@ const Register = () => {
                 <p>
                   We connect millions of buyers and sellers around the world, empowering people & creating economic opportunity for all.
                 </p>
-                <Img src="/robo1.png" alt="unboxbackground" className='logoDiv' />
+                <Img src="/zzz.gif" alt="unboxbackground" className='logoDiv' />
               </div>
             </div>
           </div>
