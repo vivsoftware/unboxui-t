@@ -27,7 +27,8 @@ const TenderNextStep = ({ Tenderselectdata }) => {
     const [backtoNext, setBacktoNext] = useState(false);
 
     const handleBacktoTender = () => {
-        setBacktoTender(true);
+        // setBacktoTender(true);
+        setBacktoTender(!backtoTender)
     }
     const handleBidReview = () => {
         ///////////changes/////////////

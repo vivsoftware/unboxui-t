@@ -93,7 +93,6 @@ const RenderDetails = ({ tender, tenderBids, formatDate, handleBidClick, tenderB
 
   const handleCreateTender = () => {
     // setShowDetails(false);
-    setShowDetails(false);
     setNewComponentVisible(true);
     console.log("clicked create tender");
     console.log("show deatils state: ", showDetails);
@@ -103,7 +102,6 @@ const RenderDetails = ({ tender, tenderBids, formatDate, handleBidClick, tenderB
 
 
   //tender search start\\
-
 
 
   const handleTenderSearchChange = (e) => {

@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import { Input } from 'reactstrap';
 import spring_boot_url from '../../../Utils/springApi';
 import TenderNextStep from './TenderNextStep';
-const TenderReview = ({ selectRfqdata }) => {
+const TenderReview = ({ Tenderselectdata }) => {
     const [backtoNext, setBacktoNext] = useState(false);
     const [formData, setFormData] = useState({});
     const [opportunityAmount, setopportunityAmount] = useState(false);

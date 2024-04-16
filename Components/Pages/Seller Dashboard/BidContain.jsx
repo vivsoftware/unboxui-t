@@ -3,10 +3,10 @@ import React, { useEffect, useRef, useState } from 'react';
 import { FaEye } from 'react-icons/fa';
 import spring_boot_url from '../../../Utils/springApi';
 import BidView from './bidView';
+import BidBack from './bidBack';
 
 
 ////////////changes/////////
-
 
 
 
@@ -235,7 +235,7 @@ const TenderContain = ({ rfq, userDe }) => {
 
     return (
         <>
-            {showDetails ? <BidView userDe={userDe} BidTender={BidTender} /> : (
+            {showDetails ? <BidBack userDe={userDe} BidTender={BidTender} /> : (
                 <>
                     <div className='d-none d-xl-block d-md-block d-sm-none'>
                         <div className=' RFQ-card'>

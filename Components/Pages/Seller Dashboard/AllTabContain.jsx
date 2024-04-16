@@ -8,7 +8,7 @@ import SalesContain from './SalesContain';
 import TenderContain from './TenderContain';
 import UserContain from './UserContain';
 
-const AllTabContain = ({activeTab, num ,rfq,tender,userDe }) => {
+const AllTabContain = ({activeTab, registeredUser ,rfq,tender,userDe }) => {
   return (
     <>
       <Col lg='11'>
@@ -29,7 +29,7 @@ const AllTabContain = ({activeTab, num ,rfq,tender,userDe }) => {
           <SalesContain />
         </TabPane>
         <TabPane className={`${activeTab === '5' ? 'active' : ''}`}tabId={5} >
-          <UserContain userDe={userDe} />
+          <UserContain registeredUser={registeredUser} />
         </TabPane>
         <TabPane className={`${activeTab === '6' ? 'active' : ''}`}tabId={6} >
           {/* <Marketplace/> */}
