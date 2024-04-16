@@ -1,21 +1,18 @@
-import Head from 'next/head';
-import React, { useState, useEffect } from 'react';
-import 'reactjs-popup/dist/index.css';
-import Link from 'next/link';
-import Img from '../Components/Element/Images';
-import Layout4 from '../Layout/Layout4';
-import PhoneInput from 'react-phone-number-input'
-import { useRouter } from 'next/router';
-import { ToastContainer, toast } from 'react-toastify';
-import LoginloaderModle from '../Layout/Element/Loginloadermodle';
-import { Dispatch } from 'react';
-import {
-    signInWithPhoneNumber,
-    RecaptchaVerifier
-} from 'firebase/auth';
-import { auth } from '../Config/firebase';
-import Box from '@mui/material/Box';
 import LinearProgress from '@mui/material/LinearProgress';
+import {
+    RecaptchaVerifier,
+    signInWithPhoneNumber
+} from 'firebase/auth';
+import Head from 'next/head';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react';
+import PhoneInput from 'react-phone-number-input';
+import 'reactjs-popup/dist/index.css';
+import Img from '../Components/Element/Images';
+import { auth } from '../Config/firebase';
+import LoginloaderModle from '../Layout/Element/Loginloadermodle';
+import Layout4 from '../Layout/Layout4';
 const phoneLogin = () => {
     const router = useRouter();
     const [value, setvalue] = useState(null)
@@ -93,7 +90,6 @@ const phoneLogin = () => {
             dispatch({ type: "LOGINLOADER" });
         }).catch((error) => {
             setErrorMsg(error.message)
-
             console.log("Wrong OTP entered. Please try again.", error.message);
             console.log("Wrong OTP .", error);
             if (error === "auth/invalid-varification-code") {
@@ -113,11 +109,9 @@ const phoneLogin = () => {
             });
     };
 
-
-
     useEffect(() => {
-        setErrorMsg2( `Firebase: Error (auth/invalid-verification-code).`)
-      }, []);
+        setErrorMsg2(`Firebase: Error (auth/invalid-verification-code).`)
+    }, []);
 
     console.log("Wrong OTP entered. Please try again.", ErrorMsg);
     console.log("Wrong OTP entered.", ErrorMsg2);
@@ -128,7 +122,7 @@ const phoneLogin = () => {
                 <Head>
                     <title>Unbox Industry</title>
                     <meta name='viewport' content='width=device-width, initial-scale=1' />
-                    <link rel="icon" href="/Box.ico" alt="unboxLogo"/>
+                    <link rel="icon" href="/Box.ico" alt="unboxLogo" />
                     <link rel="canonical" href="https://www.unboxindustry.com/phoneLogin" />
                 </Head>
                 <div className='container mt-5 mb-5'>
@@ -171,7 +165,7 @@ const phoneLogin = () => {
                                                     </span>
                                                 ) : (
                                                     <span>
-                                                        {ErrorMsg === ErrorMsg2? (
+                                                        {ErrorMsg === ErrorMsg2 ? (
                                                             <a style={{ color: 'red' }} onClick={resendOTP}>Invalid OTP</a>
                                                         ) : (
                                                             <span style={{ color: 'red' }} onClick={resendOTP}>Resend OTP</span>
@@ -199,9 +193,9 @@ const phoneLogin = () => {
                             <div className='col-md-6 col-sm-12 half-login'>
                                 <h2>Welcome <br /> To<br /> Unbox Industry</h2>
                                 <p>We connect millions of buyers and sellers around the world, empowering people & creating economic opportunity for all.</p>
-                                <Img src="/login-background.png" alt="unboxbackground" />
+                                <Img src="/phone.gif" alt="unboxbackground" className='logindiv' />
                             </div>
-                        </div>
+                        </div>5
                     </div>
                 </div>
             </Layout4>
