@@ -1,3 +1,4 @@
+
 import axios from 'axios';
 import { signInWithEmailAndPassword, } from 'firebase/auth';
 import Head from 'next/head';
@@ -14,7 +15,7 @@ import Layout4 from '../Layout/Layout4';
 import spring_boot_url from '../Utils/springApi';
 import PhoneLog from './PhoneLo';
 import ForgotPasswordSection from './page/forgot_password';
-const loginunbox = () => {
+const EmailLogin = () => {
     const [loginError, setLoginError] = useState(false);
     const notify = () => toast("Login success");
     const [email, setEmail] = useState('');
@@ -23,7 +24,7 @@ const loginunbox = () => {
     const [sowModal, setModal] = useState(false)
     const [singupMessage, setsingupMessage] = useState('');
     const [passwordError, setPasswordError] = useState('');
-    const [phoneloginpage, setphoneloginpage] = useState(true);
+    const [phoneloginpage, setphoneloginpage] = useState(false);
     const router = useRouter();
     const [user, setuser] = useState(null)
     const [userDe, setUserDe] = useState(null)
@@ -33,7 +34,7 @@ const loginunbox = () => {
     };
 
     const phoneloginopen = () => {
-        setphoneloginpage(false)
+        setphoneloginpage(true)
     }
 
 
@@ -140,13 +141,13 @@ const loginunbox = () => {
         setIsModalOpen(false);
     };
 
-    
-///////////////////////////////////////////////////phonlogin code//////////////////////////////////////////////////////////////////////////////////////
-   
 
-return (
+    ///////////////////////////////////////////////////phonlogin code//////////////////////////////////////////////////////////////////////////////////////
+
+
+    return (
         <>
-            {phoneloginpage ? <PhoneLog/> : (
+            {phoneloginpage ? <PhoneLog /> : (
                 <Layout4 className="home-page">
 
                     <Head>
@@ -163,7 +164,7 @@ return (
                             <div className='row'>
                                 <div className='col-md-6 col-sm-12 login-card'>
                                     <div style={{ display: "flex", justifyContent: "space-evenly", marginBottom: '20px' }}>
-                                            <h1 onClick={phoneloginopen} className='login-toggle fw-bold' style={{ fontSize: '25px', color: 'black' }} >Login</h1>
+                                        <h1 onClick={phoneloginopen} className='login-toggle fw-bold' style={{ fontSize: '25px', color: 'black' }} >Login</h1>
 
                                         <Link href="/sign-up">
                                             <h2 className='fw-bold' style={{ fontSize: '25px', color: 'black' }} >Sign Up</h2>
@@ -220,19 +221,15 @@ return (
                                         </div>
                                         <div className='text-login'>
                                             <p className=''>or</p>
-                                            <Link legacyBehavior href="/phoneLogin"><button type="submit" class="btn login_btn">LogIn with Phone</button></Link>
+                                            <button onClick={phoneloginopen} type="submit" class="btn login_btn">LogIn with Phone</button>
                                             <Link legacyBehavior href="/sign-up"><span style={{ marginTop: '10px' }}>Don't have an account? <a className='login-register fw-bold' >SignUp Now</a></span></Link>
                                         </div>
                                     </form>
                                 </div>
                                 <div className='col-md-6 col-sm-12 half-login'>
-                                    <h2>Welcome To Unbox Industry</h2>
-
-                                    <p > We connect millions of buyers and sellers around the world,
-                                        empowering people &
-                                        creating economic
-                                        opportunity for all.</p>
-                                    <Img src="/robo1.png" alt="unboxbackground" className='logoDiv' />
+                                    <h2>Welcome <br /> To<br /> Unbox Industry</h2>
+                                    <p>We connect millions of buyers and sellers around the world, empowering people & creating economic opportunity for all.</p>
+                                    <Img src="/login-background.png" alt="unboxbackground" />
                                 </div>
                             </div>
                             {sowModal ? (
@@ -250,5 +247,5 @@ return (
         </>
     )
 };
-export default loginunbox;
+export default EmailLogin;
 

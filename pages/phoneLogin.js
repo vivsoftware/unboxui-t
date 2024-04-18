@@ -1,8 +1,5 @@
 import LinearProgress from '@mui/material/LinearProgress';
-import {
-    RecaptchaVerifier,
-    signInWithPhoneNumber
-} from 'firebase/auth';
+import { RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -115,9 +112,6 @@ const phoneLogin = () => {
     useEffect(() => {
         setErrorMsg2(`Firebase: Error (auth/invalid-verification-code).`)
     }, []);
-
-
-
     return (
         <>
             <Layout4 className="home-page">
@@ -199,7 +193,6 @@ const phoneLogin = () => {
                             </div>
                         </div>
                     </div>
-
                     {sowModal ? (
                         <Loader user={user} />
                     ) : (<p></p>)}
