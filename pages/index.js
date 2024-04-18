@@ -25,6 +25,7 @@ import { fetchAPI } from '../Utils/api';
 import { getStrapiMedia } from '../Utils/media';
 import spring_boot_url from '../Utils/springApi';
 import Enquire from './layout/Enquire';
+import StartModelMuMi from '../Layout/Element/StartModelMuMi';
 
 const cache = {};
 
@@ -252,7 +253,7 @@ function Home(props) {
         )}
         <Enquire />
         <FlowerSubscribe />
-        {showStartModel && userDe === null ? <StartModel /> : null}
+        {showStartModel && userDe === null ? <StartModelMuMi /> : null}
       </Layout4>
     </>
   );
