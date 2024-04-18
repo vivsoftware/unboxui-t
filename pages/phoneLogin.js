@@ -186,14 +186,14 @@ const phoneLogin = () => {
                                     <div class="mb-3 form-check">
                                     </div>
                                     <p className='text-center' >or</p>
-                                    <Link legacyBehavior href="/login"><button type="submit" class="btn login_btn">LogIn with Email</button></Link>
+                                    <Link legacyBehavior href="/login"><button type="submit" class="btn login_btn">CONTINUE WITH EMAIL</button></Link>
                                     <Link legacyBehavior href="/sign-up"><p className='text-center' style={{ marginTop: '10px' }}>Don't have an account? <a className='login-register fw-bold' href="/page/Register">SignUp Now</a></p></Link>
                                 </form>
                             </div>
                             <div className='col-md-6 col-sm-12 half-login'>
                                 <h2>Welcome <br /> To<br /> Unbox Industry</h2>
                                 <p>We connect millions of buyers and sellers around the world, empowering people & creating economic opportunity for all.</p>
-                                <Img src="/phone.gif" alt="unboxbackground" className='logindiv' />
+                                <Img src="/login-background.png" alt="unboxbackground" className='logindiv' />
                             </div>
                         </div>5
                     </div>

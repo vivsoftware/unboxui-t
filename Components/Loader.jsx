@@ -20,7 +20,6 @@ const Loader = () => {
         return () => clearTimeout(timer);
     }, []); // Run once when component mounts
 
-
     const handleClose = () => {
         setOpen(false);
     };

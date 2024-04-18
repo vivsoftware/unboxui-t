@@ -232,13 +232,15 @@ const loginunbox = () => {
                                         </div>
                                     </div>
                                     <div >
+                            
                                         <button type="submit" class="btn login_btn" onClick={handleClick}>
-                                            LogIn
+                                            CONTINUE
                                         </button>
                                     </div>
                                     <div className='text-login'>
                                         <p className=''>or</p>
-                                        <Link legacyBehavior href="/phoneLogin"><button type="submit" class="btn login_btn">LogIn with Phone</button></Link>
+                                       
+                                        <Link legacyBehavior href="/phoneLogin"><button type="submit" class="btn login_btn">CONTINUE WITH PHONE</button></Link>
                                         <Link legacyBehavior href="/sign-up"><span style={{ marginTop: '10px' }}>Don't have an account? <a className='login-register fw-bold' >SignUp Now</a></span></Link>
                                     </div>
                                 </form>
@@ -246,11 +248,11 @@ const loginunbox = () => {
                             <div className='col-md-6 col-sm-12 half-login'>
                                 <h2>Welcome To Unbox Industry</h2>
 
-                                <p > We connect millions of buyers and sellers around the world, 
+                                <p>We connect millions of buyers and sellers around the world, 
                                     empowering people &
                                     creating economic
                                     opportunity for all.</p>
-                                <Img src="/robo1.png" alt="unboxbackground" className='logoDiv' />
+                                <Img src="/login-background.png" alt="unboxbackground" className='logoDiv'/>
                             </div>
                         </div>
                         <LoginloaderModle />
