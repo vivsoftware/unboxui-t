@@ -56,25 +56,25 @@ const TenderNextStep = ({ Tenderselectdata }) => {
             // Store form data
 
 
-        // Store form data
-        const formData = {
-            opportunityAmount: document.querySelector('#opportunityAmount').value,
-            tenderClosingDate: document.querySelector('#tenderClosingDate').value,
-            deliveryPeriod: document.querySelector('#deliveryPeriod').value,
-            deliveryLocation: document.querySelector('#deliveryLocation').value,
-            description: document.querySelector('#description').value,
-            annualRevenue: document.querySelector('#annualRevenue').value,
-            employeeNumber: document.querySelector('#employeeNumber').value,
-            bussinessYears: document.querySelector('#bussinessYears').value,
-            industriesServed: document.querySelector('#industriesServed').value,
-            certification: document.querySelector('#certification').value,
-        };
+            // Store form data
+            const formData = {
+                opportunityAmount: document.querySelector('#opportunityAmount').value,
+                tenderClosingDate: document.querySelector('#tenderClosingDate').value,
+                deliveryPeriod: document.querySelector('#deliveryPeriod').value,
+                deliveryLocation: document.querySelector('#deliveryLocation').value,
+                description: document.querySelector('#description').value,
+                annualRevenue: document.querySelector('#annualRevenue').value,
+                employeeNumber: document.querySelector('#employeeNumber').value,
+                bussinessYears: document.querySelector('#bussinessYears').value,
+                industriesServed: document.querySelector('#industriesServed').value,
+                certification: document.querySelector('#certification').value,
+            };
 
-        localStorage.setItem('formData', JSON.stringify(formData));
-        setBacktoNext(true);
-    } else {
-        alert('Please fill in all the required fields');
-    }
+            localStorage.setItem('formData', JSON.stringify(formData));
+            setBacktoNext(true);
+        } else {
+            alert('Please fill in all the required fields');
+        }
         //////////////////end///////////////
         // setBacktoNext(!backtoNext);
     }
@@ -149,16 +149,16 @@ const TenderNextStep = ({ Tenderselectdata }) => {
 
     return (
         <>
-        { backtoNext ? (
-            <TenderReview Tenderselectdata={Tenderselectdata}/>
-         ) : backtoTender ? (
-            <TenderContain/>
-         ) : ( 
+            {backtoNext ? (
+                <TenderReview Tenderselectdata={Tenderselectdata} />
+            ) : backtoTender ? (
+                <TenderContain />
+            ) : (
+ 
+                // {/* {backtoTender && <TenderContain />}
+                // {!backtoTender && ( */}
 
-            // {/* {backtoTender && <TenderContain />}
-            // {!backtoTender && ( */}
-
-            <>
+                <>
                     <div className='container'>
                         <p onClick={handleBacktoTender} style={{ color: '#FF8400', fontSize: '20px' }}><MdKeyboardBackspace /> Back</p>
                         <div className='row mt-5'>
