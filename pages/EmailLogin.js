@@ -70,7 +70,9 @@ const EmailLogin = () => {
             } else {
                 setuser(null);
                 if (!user) {
+
                     router.push("/login");
+
                 }
             }
             return () => {
@@ -120,7 +122,6 @@ const EmailLogin = () => {
         setErrorMessage('');
     };
 
-
     const isValidEmail = (email) => {
         // Simple email validation check
         return email.includes('@');
@@ -135,19 +136,17 @@ const EmailLogin = () => {
         setIsModalOpen(true);
     };
 
-
     const closePasswordModal = () => {
         setIsModalOpen(false);
         setIsModalOpen(false);
     };
 
-
-    ///////////////////////////////////////////////////phonlogin code//////////////////////////////////////////////////////////////////////////////////////
-
+    /////////////////////////////////////////////////// phonlogin code //////////////////////////////////////////////////////////////////////////////////////
 
     return (
         <>
             {phoneloginpage ? <PhoneLog /> : (
+                
                 <Layout4 className="home-page">
 
                     <Head>
@@ -169,6 +168,7 @@ const EmailLogin = () => {
                                         <Link href="/sign-up">
                                             <h2 className='fw-bold' style={{ fontSize: '25px', color: 'black' }} >Sign Up</h2>
                                         </Link>
+
                                     </div>
                                     <form className='login-form'>
                                         <div class="mb-3">
