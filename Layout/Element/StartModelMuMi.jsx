@@ -12,7 +12,7 @@ import { signInWithPhoneNumber, RecaptchaVerifier } from "firebase/auth";
 import spring_boot_url from "../../springApi";
 import signUpModal from "./signupModal";
 
-const StartModelMuMi = ({}) => {
+const StartModelMuMi = ({ }) => {
   const [open, setOpen] = useState(false);
   const [phonenumber, setphonenumber] = useState("");
   const [email, setemail] = useState("");
@@ -239,7 +239,112 @@ const StartModelMuMi = ({}) => {
             padding: "8px", // Increase padding for larger size
           }}
         >
-          <div style={{ border: "1px" }}>
+
+          {/* /////////changes////////////// */}
+
+          <div className="bg-image" style={{ width: "800px", height: "440px", borderRadius: "4px",borderRadius: "6px", backgroundColor: "rgb(60, 59, 59)" }}>
+            {/* <img src="bg-image.jpg" alt="image"/> */}
+            <div style={{ border: "1px" }}>
+              <Button
+                onClick={handleClose}
+                style={{ marginLeft: "750px", border: "1px" }}
+              >
+                <FontAwesomeIcon
+                  icon={faTimes}
+                  style={{ color: "#ff8400", fontSize: "24px" }}
+                />
+              </Button>
+            </div>
+            <div className="bg" style={{ height: "300px", width: "280px", marginLeft: "50px", display: "flex", marginTop: "20px", backgroundImage: "url('login-background.png')" }}>
+      
+              <h2
+                // id="modal-modal-title"
+                style={{ marginLeft: "10px", fontSize: "16px", color: "white", marginTop: "-16px" }}
+              >
+                Welcome to Unbox Industry
+              </h2>
+            </div>
+
+            <div
+              className="my-modal-content"
+              style={{ display: "flex-relative", marginLeft: "420px", marginTop: "-309px", width: "338px", height: "330px", }}
+            >
+              <br></br>
+              <h2 style={{ fontSize: "16px", marginLeft: "90px", marginTop:"0px" }}>
+                Login or Sign Up
+              </h2>
+
+              <form>
+                <label class="form-lable">Phone</label>
+                <PhoneInput
+                  international
+                  defaultCountry="IN"
+                  type="tel"
+                  class="form-control"
+                  id="exampleInputPhone"
+                  onChange={setphonenumber}
+                  required
+                />
+                {invalidphonenumber ? (
+                  <span>Invalid Phonenumber</span>
+                ) : (
+                  <span></span>
+                )}
+              </form>
+
+              <button
+                type="submit"
+                className=""
+                style={{ width: "300px", marginLeft: "0px" }}
+                onClick={requestOtp}
+              >
+                CONTINUE
+              </button>
+
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  marginLeft: "4px",
+                  marginTop: "10px",
+                }}
+              >
+                <hr
+                  style={{
+                    width: "80%",
+                    margin: "10px 0",
+                    border: "1px solid ",
+                    borderBottom: "none",
+                  }}
+                />
+                <h5 style={{ margin: "0 10px", fontSize: "12px" }}>Or</h5>
+                <hr
+                  style={{
+                    width: "80%",
+                    margin: "10px 0",
+                    border: "1px solid",
+                    borderBottom: "none",
+                  }}
+                />
+              </div>
+
+              <button
+                type="submit"
+                className=""
+                style={{ width: "300px", marginLeft: "0px" }}
+                onClick={handelEmailContent}
+              >
+                CONTINUE WITH EMAIL-ID
+              </button>
+            </div>
+            <h3 style={{ fontSize: "16px", color: "white", marginLeft: "34px", marginTop: "16px" }}>
+              Sign Up and Go Into the world of Robots
+            </h3>
+          </div>
+          {/* ///////////////end///////////// */}
+
+
+          {/* <div style={{ border: "1px" }}>
             <Button
               onClick={handleClose}
               style={{ marginLeft: "400px", border: "1px" }}
@@ -333,7 +438,9 @@ const StartModelMuMi = ({}) => {
             >
               Continue With Email
             </button>
-          </div>
+          </div> */}
+
+
         </Box>
       ) : showSignUpModal ? (
         <Box
@@ -348,7 +455,100 @@ const StartModelMuMi = ({}) => {
             padding: "8px", // Increase padding for larger size
           }}
         >
-          <div style={{ border: "1px" }}>
+          {/* //////////changes/////////// */}
+          <div className="bg-image" style={{ width: "800px", height: "440px", borderRadius: "4px",borderRadius: "6px", backgroundColor: "rgb(60, 59, 59)" }}>
+            <div style={{ border: "1px" }}>
+              <Button
+                onClick={handleClose}
+                style={{ marginLeft: "750px", border: "1px" }}
+              >
+                <FontAwesomeIcon
+                  icon={faTimes}
+                  style={{ color: "#ff8400", fontSize: "24px" }}
+                />
+              </Button>
+            </div>
+            <div className="bg" style={{ height: "300px", width: "280px", marginLeft: "50px", display: "flex", marginTop: "20px", backgroundImage: "url('login-background.png')" }}>
+              <h2
+                style={{ marginLeft: "10px", fontSize: "16px", color: "white", marginTop: "-16px" }}
+              >
+                Welcome to Unbox Industry
+              </h2>
+            </div>
+
+            <div
+              className="my-modal-content"
+              style={{ display: "flex-relative", marginLeft: "420px", marginTop: "-309px", width: "338px", height: "330px", overflow: "scroll" }}
+            >
+              <br></br>
+              <h2 style={{ fontSize: "16px", marginLeft: "90px" }}>Sign Up</h2>
+              <form style={{ padding: "10px 10px" }}>
+                <label class="form-lable" style={{ marginTop: "10px" }}>
+                  First Name
+                </label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="exampleInputName"
+                  placeholder="Please Enter Your First Name"
+                  required
+                  style={{ marginBottom: "10px" }}
+                />
+                <label class="form-lable">Last Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="exampleInputName"
+                  placeholder="Please Enter Your Last Name"
+                  required
+                  style={{ marginBottom: "10px" }}
+                />
+                <label class="form-lable">Companay Name</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  id="exampleInputEmail"
+                  placeholder="Please Enter Your Companay Email"
+                  required
+                  style={{ marginBottom: "10px" }}
+                />
+                <label class="form-lable">Email</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  id="exampleInputEmail"
+                  placeholder="Please Enter Your Email"
+                  required
+                  style={{ marginBottom: "10px" }}
+                />
+                <label class="form-lable" style={{ marginTop: "10px" }}>
+                  Password
+                </label>
+                <input
+                  type="password"
+                  class="form-control"
+                  id="exampleInputPassword"
+                  placeholder="Please Enter Your Password"
+                  required
+                  style={{ marginBottom: "10px" }}
+                />
+              </form>
+
+              <button
+                type="submit"
+                className=""
+                style={{ width: "300px", marginLeft: "-10px" }}
+              >
+                Sign Up
+              </button>
+            </div>
+            <h3 style={{ fontSize: "16px", color: "white", marginLeft: "34px", marginTop: "16px" }}>
+              Sign Up and Go Into the world of Robots
+            </h3>
+          </div>
+          {/* ///////////end////////////// */}
+
+          {/*<div style={{ border: "1px" }}>
             <Button
               onClick={handleClose}
               style={{ marginLeft: "400px", border: "1px" }}
@@ -437,7 +637,10 @@ const StartModelMuMi = ({}) => {
             >
               Sign Up
             </button>
-          </div>
+        </div> */}
+
+
+
         </Box>
       ) : (
         <Box
@@ -452,7 +655,104 @@ const StartModelMuMi = ({}) => {
             padding: "8px", // Increase padding for larger size
           }}
         >
-          <div style={{ border: "1px" }}>
+
+          {/* /////////////////////changes///////////// */}
+          <div className="bg-image" style={{ width: "800px", height: "440px", borderRadius: "4px",borderRadius: "6px", backgroundColor: "rgb(60, 59, 59)" }}>
+            {/* <img src="bg-image.jpg" alt="image"/> */}
+            <div style={{ border: "1px" }}>
+              <Button
+                onClick={handleClose}
+                style={{ marginLeft: "750px", border: "1px" }}
+              >
+                <FontAwesomeIcon
+                  icon={faTimes}
+                  style={{ color: "#ff8400", fontSize: "24px" }}
+                />
+              </Button>
+            </div>
+            <div className="bg" style={{ height: "300px", width: "280px", marginLeft: "50px", display: "flex", marginTop: "20px", backgroundImage: "url('login-background.png')" }}>
+  
+              <h2
+                style={{ marginLeft: "10px", fontSize: "16px", color: "white", marginTop: "-16px" }}
+              >
+                Welcome to Unbox Industry
+              </h2>
+            </div>
+
+            <div
+              className="my-modal-content"
+              style={{ display: "flex-relative", marginLeft: "420px", marginTop: "-309px", width: "338px", height: "330px", }}
+            >
+
+              <h2 style={{ fontSize: "16px", marginLeft: "90px", marginTop:"20px" }}>
+                Login or Sign Up
+              </h2>
+
+              <form>
+                <label class="form-lable">Email</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  id="exampleInputPhone"
+                  placeholder="Please Enter Your Email"
+                  onChange={(e) => setemail(e.target.value)}
+                  required
+                  style={{ height: "50px" }}
+                />
+              </form>
+
+              <button
+                type="submit"
+                className=""
+                style={{ width: "300px", marginLeft: "0px", marginTop: "30px" }}
+                onClick={isEmailValid}
+              >
+                CONTINUE
+              </button>
+
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  marginLeft: "4px",
+                  marginTop: "10px",
+                }}
+              >
+                <hr
+                  style={{
+                    width: "80%",
+                    margin: "10px 0",
+                    border: "1px solid ",
+                    borderBottom: "none",
+                  }}
+                />
+                <h5 style={{ margin: "0 10px", fontSize: "12px" }}>Or</h5>
+                <hr
+                  style={{
+                    width: "80%",
+                    margin: "10px 0",
+                    border: "1px solid",
+                    borderBottom: "none",
+                  }}
+                />
+              </div>
+
+              <button
+                type="submit"
+                className=""
+                style={{ width: "300px", marginLeft: "0px" }}
+                onClick={handelPhoneContent}
+              >
+                CONTINUE WITH MOBILE NUMBER
+              </button>
+            </div>
+            <h3 style={{ fontSize: "16px", color: "white", marginLeft: "34px", marginTop: "16px" }}>
+              Sign Up and Go Into the world of Robots
+            </h3>
+          </div>
+          {/* /////////////////////end///////////////// */}
+
+          {/* <div style={{ border: "1px" }}>
             <Button
               onClick={handleClose}
               style={{ marginLeft: "400px", border: "1px" }}
@@ -541,7 +841,7 @@ const StartModelMuMi = ({}) => {
             >
               Continue With Phone
             </button>
-          </div>
+          </div> */}
         </Box>
       )}
     </Modal>
