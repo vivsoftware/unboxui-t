@@ -108,7 +108,9 @@ const EmailLogin = () => {
                 if (errorCode === "auth/wrong-password") {
                     setPasswordError("Invalid password. Please try again.");
                 }
-                else {
+                else if(errorCode === "auth/user-not-found") 
+                {
+                    router.push("/sign-up")
                 }
             });
     }

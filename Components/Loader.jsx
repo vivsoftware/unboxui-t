@@ -54,7 +54,6 @@ const Loader = ({ user }) => {
 
     }, []); // Run once when component mounts
 
-
     const handleClose = () => {
         setOpen(false);
     };
