@@ -87,7 +87,7 @@ const StartModelMuMi = ({}) => {
       },
       'expired-callback': () => {
       }
-    }, auth);
+    }, auth); 
   }
   // Rewriting this function
 
