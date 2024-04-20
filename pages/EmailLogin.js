@@ -108,9 +108,7 @@ const EmailLogin = () => {
                 if (errorCode === "auth/wrong-password") {
                     setPasswordError("Invalid password. Please try again.");
                 }
-                else if(errorCode === "auth/user-not-found") 
-                {
-                    router.push("/sign-up")
+                else {
                 }
             });
     }
@@ -148,7 +146,7 @@ const EmailLogin = () => {
     return (
         <>
             {phoneloginpage ? <PhoneLog /> : (
-                
+
                 <Layout4 className="home-page">
 
                     <Head>
@@ -180,7 +178,7 @@ const EmailLogin = () => {
                                                 <div className="error-message" style={{ color: 'red' }}>
                                                     {errorMessage}
                                                 </div>
-                                            )}
+                                            )}  
                                             {loginError && <div className="error-message" style={{ color: 'red' }}>Invalid email or password. Please try again.</div>}
                                             <label for="exampleInputPassword" class="form-label">Password</label>
                                             <input type="password" class="form-control login-input" id="exampleInputPassword" value={password} onChange={handlePasswordChange} />
@@ -200,6 +198,7 @@ const EmailLogin = () => {
                                                     </div>
                                                     <ForgotPasswordSection isOpen={isModalOpen} onClose={closePasswordModal} />
                                                 </div>
+                             
                                             </div>
                                             <div className='d-block d-xl-none d-sm-block'>
                                                 <div className='row'>
