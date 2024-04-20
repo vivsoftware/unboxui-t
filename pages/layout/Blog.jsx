@@ -1,3 +1,4 @@
+
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Col, Container, Row } from 'reactstrap';
@@ -5,7 +6,7 @@ import { Col, Container, Row } from 'reactstrap';
 import BlogCards from '../../Components/Blog/BlogNoSider/BlogCards';
 import PaginationSidebar from '../../Components/Blog/BlogNoSider/PaginationSidebar';
 
-const BlogNoSidebarContain = () => {
+const BlogNoSidebarContain = ({start,pageNumber}) => {
   const dispatch = useDispatch();
   const types = 'GETBLOGDATA';
   const { Blogdatanew } = useSelector((state) => state.BlogReducer);
@@ -15,7 +16,7 @@ const BlogNoSidebarContain = () => {
       <Container>
         <Row className='g-4'>
           <Col xs='12' className='ratio3_2'>
-            <BlogCards BlogDataFilter={BlogDataFilter} />
+            <BlogCards pageNumber={pageNumber} start = {start} BlogDataFilter={BlogDataFilter} />
             <PaginationSidebar />
           </Col>
         </Row>
@@ -25,6 +26,7 @@ const BlogNoSidebarContain = () => {
 };
 
 export default BlogNoSidebarContain;
+
 
 
 

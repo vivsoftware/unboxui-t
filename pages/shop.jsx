@@ -31,7 +31,7 @@ const ShopLeftSidebar = (props) => {
       },
     }).then((res) => {
       settotalproducts(res.data.length);
-      setlastpage(Math.floor(res.data.length / 20) +1)
+      setlastpage(Math.floor(res.data.length / 20) + 1)
 
     });
   }, []);
@@ -92,7 +92,7 @@ const ShopLeftSidebar = (props) => {
     }
   };
   const nextPage = async () => {
-    const nextPage = currentPages +1;
+    const nextPage = currentPages + 1;
     router.push(`/shop?page=${nextPage}`);
     setCurrentPage(nextPage)
 
@@ -103,7 +103,7 @@ const ShopLeftSidebar = (props) => {
     router.push(`/shop?page=${nextPage}`);
     // setCurrentPage(nextPage)
     // if(currentPages=== lastpage){
-    setCurrentPage(`${lastpage}`-1)
+    setCurrentPage(`${lastpage}` - 1)
     // }
   };
   const pageClick = (pageNumber) => {
@@ -146,7 +146,7 @@ const ShopLeftSidebar = (props) => {
       <BreadCrumb parent={'All Products'} title={''} />
       <h1 className='text-center mt-1' style={{ fontSize: '30px' }}>All Products</h1>
       <ShopLeftSidebarContain productData={productData} products={props.alltopic.data} show={show} />
-       {/* <div className='container text-center'>
+      {/* <div className='container text-center'>
        <div className='row d-flex justify-content-center align-items-center'>
         <div className='col-12'>
         <button className="btn pagination-prev-back ms-1" onClick={backPage} disabled={currentPages === 0}>Prev</button>        
@@ -158,38 +158,38 @@ const ShopLeftSidebar = (props) => {
            </div>
           </div>
        </div> */}
-         <div className='container text-center'>
-      <div className='row d-flex justify-content-center align-items-center'>
-        <div className='col-12'>
-          <button className="btn pagination-prev-back ms-1" onClick={backPage} disabled={currentPages === 0}>
-            Prev
-          </button>
-          <button className="btn pagination-prev-back ms-1" onClick={pageOne} >
-            1
-          </button>
-          <button className="btn pagination-prev-back ms-1" onClick={pageTwo} >
-            2
-          </button>
-          <span className='ms-1'>....</span>
-          {currentPages > 2 && (
-            <button className="btn pagination-prev-back ms-1" onClick={() => pageClick(currentPages)}>
-              {currentPages}
+      <div className='container text-center'>
+        <div className='row d-flex justify-content-center align-items-center'>
+          <div className='col-12'>
+            <button className="btn pagination-prev-back ms-1" onClick={backPage} disabled={currentPages === 0}>
+              Prev
             </button>
-          )}
-          {renderButtons()}
-          {/* {currentPages + 5 < totalPages && <span className='ms-1'>....</span>}
+            <button className="btn pagination-prev-back ms-1" onClick={pageOne} >
+              1
+            </button>
+            <button className="btn pagination-prev-back ms-1" onClick={pageTwo} >
+              2
+            </button>
+            <span className='ms-1'>....</span>
+            {currentPages > 2 && (
+              <button className="btn pagination-prev-back ms-1" onClick={() => pageClick(currentPages)}>
+                {currentPages}
+              </button>
+            )}
+            {renderButtons()}
+            {/* {currentPages + 5 < totalPages && <span className='ms-1'>....</span>}
           {currentPages + 1 < totalPages && (
             <></>
             // <button className="btn pagination-prev-back ms-1" onClick={() => pageClick(currentPages + 1)}>
             //   {currentPages + 1}
             // </button>
           )} */}
-          <button className="btn pagination-prev-back ms-1" onClick={nextPage}>
-            Next
-          </button>
+            <button className="btn pagination-prev-back ms-1" onClick={nextPage}>
+              Next
+            </button>
+          </div>
         </div>
       </div>
-    </div>
       <Enquire />
       <FlowerSubscribe />
       <CanvasOffset productData={productData} products={props.alltopic.data} />
